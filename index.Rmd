@@ -1,0 +1,36 @@
+---
+title: "Impact of Active Design on Physical Activity and Transportation in New York City"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: lumen
+---
+
+<div style="text-align:center; margin-top:20px; font-size:24px; color:#333;">
+  Welcome to Our Final Project for P8105!
+</div>
+
+<style type="text/css">
+
+h1.title {
+  text-align: center; font-weight:bold;
+}
+
+</style>
+
+&nbsp;
+
+<div style="position:relative; text-align:center; color:white;">
+<img src="Active Design.jpg" alt="Active Design" style="width:100%; max-height:600px; object-fit:cover;">
+
+</div>
+
+### Motivation Behind Active Design
+According to the [New York State Department of Health](https://www.health.ny.gov/press/releases/2023/2023-06-20_obesity.htm), approximately two-thirds of adult New Yorkers have a Body Mass Index (BMI) classified as either obese (29.1%) or overweight (34.5%), impacting over 8.4 million adults across New York State. Additionally, the [NYC Mayor's Office of Climate and Environmental Justice](https://climate.cityofnewyork.us/initiatives/nyc-greenhouse-gas-inventories/?utm_source=chatgpt.com) reports that transportation accounts for approximately 30% of the city's greenhouse gas emissions. By examining the impact of active design on physical activity and transportation, this project aims to provide insights that can inform policies to improve public health and reduce environmental impact in New York City.
+
+### Screencast
+Click on the video below to explore the capabilities of this site and enjoy a summary of our key highlights.
+
+<iframe width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
