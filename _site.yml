@@ -7,6 +7,10 @@ navbar:
       href: datasource.html
     - text: "Prevalence Analysis"
       href: prevalence.html
+    - text:  "EDA"
+      href: eda.html
+    - text: "Model Analysis"
+      href: model.html
     - text: "Final Report"
       href: report.html
     - text: "The Team"
