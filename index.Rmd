@@ -22,7 +22,7 @@ h1.title {
 &nbsp;
 
 <div style="position:relative; text-align:center; color:white;">
-<img src="Active Design.jpg" alt="Active Design" style="width:100%; max-height:600px; object-fit:cover;">
+<img src="Pics/Active Design.jpg" alt="Active Design" style="width:100%; max-height:600px; object-fit:cover;">
 
 </div>
 

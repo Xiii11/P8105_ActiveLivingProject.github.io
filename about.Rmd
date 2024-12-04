@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: "Our Team Members"
 output: 
   html_document:
     toc: true
@@ -7,8 +7,25 @@ output:
     theme: lumen
 ---
 
-### About this site
+----------------
 
-Sometimes you need to say a bit about the site -- how it was made, where it's hosted, where the source code can be found. 
+## **Anni Wang**
+Introduction Place holder<br>
+Learn more about [Anni](website link place holder)
 
-If this is for a project or analysis, I recommend giving some details about the R package versions that you used to create the content.
+## **Qi Cai**
+Introduction Place holder<br>
+Learn more about [Qi](website link place holder)
+
+## **Xi Peng**
+Introduction Place holder<br>
+Learn more about [Xi](website link place holder)
+
+## **Yifan Shi**
+Introduction Place holder<br>
+Learn more about [Yifan](website link place holder)
+
+---
+
+<span style="font-size: 1.5em;"> Thank you for reviewing this website and hope you find the resources helpful!
+![](Pics/giphy (1).webp)
