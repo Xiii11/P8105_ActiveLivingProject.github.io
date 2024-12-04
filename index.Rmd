@@ -33,7 +33,7 @@ According to the [New York State Department of Health](https://www.health.ny.gov
 One of our group members is doing her internship on a street safety program in Brooklyn. When she was doing literature review she found out that research shows well-designed urban areas with pedestrian-friendly streets and mixed-use spaces encourage people to walk more and drive less, which can help reduce obesity rates. This active design also lowers city pollution by cutting down on car use, aiding environmental efforts against climate change. Cities like New York are incorporating these principles into their urban planning policies to promote healthier lifestyles and environmental sustainability. Studies support the idea that features such as accessible stairs, attractive walking paths, and bike lanes not only make physical activity more appealing but are effective in transforming urban areas into healthier, greener spaces. We were inspired from those findings and would like to know more in the relationship between sidewalk areas and people's choice on commuting ways.
 
 ###Initial questions:
-We were interested in exploring  the availability of sidewalk areas and the percentage of walking among commuters influence obesity rates across different boroughs?
+We were interested in exploring  the availability of sidewalk areas and the percentage of walking among commuters influence obesity rates across different boroughs.
 ###Data: 
 Commuting modes: https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary
 Overweight and Obesity:https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary
