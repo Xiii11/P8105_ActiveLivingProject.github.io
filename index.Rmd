@@ -26,8 +26,14 @@ h1.title {
 
 </div>
 
-### Motivation Behind Active Design
 According to the [New York State Department of Health](https://www.health.ny.gov/press/releases/2023/2023-06-20_obesity.htm), approximately two-thirds of adult New Yorkers have a Body Mass Index (BMI) classified as either obese (29.1%) or overweight (34.5%), impacting over 8.4 million adults across New York State. Additionally, the [NYC Mayor's Office of Climate and Environmental Justice](https://climate.cityofnewyork.us/initiatives/nyc-greenhouse-gas-inventories/?utm_source=chatgpt.com) reports that transportation accounts for approximately 30% of the city's greenhouse gas emissions. By examining the impact of active design on physical activity and transportation, this project aims to provide insights that can inform policies to improve public health and reduce environmental impact in New York City.
+
+<div style="position:relative; text-align:center; color:white;">
+<img src="Pics/giphy.gif" alt="Active Design" style="width:80%; max-height:400px; object-fit:cover;">
+
+</div>
+
+---
 
 ### Screencast
 Click on the video below to explore the capabilities of this site and enjoy a summary of our key highlights.
