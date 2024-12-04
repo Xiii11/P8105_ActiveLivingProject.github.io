@@ -3,17 +3,15 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "About"
-      href: about.html
     - text: "Data Source"
       href: datasource.html
     - text: "Prevalence Analysis"
       href: prevalence.html
     - text: "Final Report"
       href: report.html
-    - icon: fa-envelope fa-lg
-      href: mailto:<you@youremail.com>
+    - text: "The Team"
+      href: about.html
     - icon: fa-github fa-lg
-      href: http://github.com/<YOUR_GH_NAME>/
+      href: https://github.com/Xiii11/P8105_ActiveLivingProject.github.io
 output:
   html_document
