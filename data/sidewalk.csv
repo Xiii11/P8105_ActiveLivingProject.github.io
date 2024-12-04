@@ -1,0 +1,49 @@
+TimePeriod,GeoType,GeoID,GeoRank,Geography,Percent of land area
+2014,UHF42,101,4,Kingsbridge - Riverdale,3.5
+2014,UHF42,102,4,Northeast Bronx,6.9
+2014,UHF42,103,4,Fordham - Bronx Pk,7.1
+2014,UHF42,104,4,Pelham - Throgs Neck,4.9
+2014,UHF42,105,4,Crotona -Tremont,8.6
+2014,UHF42,106,4,High Bridge - Morrisania,9.7
+2014,UHF42,107,4,Hunts Point - Mott Haven,6.8
+2014,UHF42,201,4,Greenpoint,9.3
+2014,UHF42,202,4,Downtown - Heights - Slope,8.8
+2014,UHF42,203,4,Bedford Stuyvesant - Crown Heights,10.5
+2014,UHF42,204,4,East New York,8.2
+2014,UHF42,205,4,Sunset Park,6.1
+2014,UHF42,206,4,Borough Park,9.5
+2014,UHF42,207,4,East Flatbush - Flatbush,8.1
+2014,UHF42,208,4,Canarsie - Flatlands,4.6
+2014,UHF42,209,4,Bensonhurst - Bay Ridge,7.4
+2014,UHF42,210,4,Coney Island - Sheepshead Bay,7.4
+2014,UHF42,211,4,Williamsburg - Bushwick,10.8
+2014,UHF42,301,4,Washington Heights,8.9
+2014,UHF42,302,4,Central Harlem - Morningside Heights,11.0
+2014,UHF42,303,4,East Harlem,7.0
+2014,UHF42,304,4,Upper West Side,10.1
+2014,UHF42,305,4,Upper East Side,10.7
+2014,UHF42,306,4,Chelsea - Clinton,11.1
+2014,UHF42,307,4,Gramercy Park - Murray Hill,11.0
+2014,UHF42,308,4,Greenwich Village - SoHo,11.3
+2014,UHF42,309,4,Union Square - Lower East Side,9.6
+2014,UHF42,310,4,Lower Manhattan,10.0
+2014,UHF42,401,4,Long Island City - Astoria,9.1
+2014,UHF42,402,4,West Queens,7.8
+2014,UHF42,403,4,Flushing - Clearview,6.8
+2014,UHF42,404,4,Bayside - Little Neck,6.2
+2014,UHF42,405,4,Ridgewood - Forest Hills,6.6
+2014,UHF42,406,4,Fresh Meadows,6.0
+2014,UHF42,407,4,Southwest Queens,8.0
+2014,UHF42,408,4,Jamaica,7.7
+2014,UHF42,409,4,Southeast Queens,7.6
+2014,UHF42,410,4,Rockaways,3.7
+2014,UHF42,501,4,Port Richmond,4.5
+2014,UHF42,502,4,Stapleton - St. George,4.1
+2014,UHF42,503,4,Willowbrook,2.7
+2014,UHF42,504,4,South Beach - Tottenville,3.5
+2014,Borough,1,1,Bronx,6.2
+2014,Borough,2,1,Brooklyn,7.8
+2014,Borough,3,1,Manhattan,9.9
+2014,Borough,4,1,Queens,7.0
+2014,Borough,5,1,Staten Island,3.5
+2014,Citywide,1,0,New York City,6.6
