@@ -4,7 +4,7 @@ navbar:
   title: "Home"
   right:
     - text: "Data Source"
-      href: datasource.html
+      href: final.html
     - text:  "EDA"
       href: eda.html
     - text: "Model Analysis"
