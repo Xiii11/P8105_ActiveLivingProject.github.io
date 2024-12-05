@@ -1,0 +1,44 @@
+---
+---
+<div class="title-box">
+  <h1>Impact of Active Design on Physical Activity and Transportation in New York City</h1>
+</div>
+
+<div class="textbox">
+  <p>One of our group members is doing her internship on a street safety program in Brooklyn. When she was doing literature review she found out that research shows well-designed urban areas with pedestrian-friendly streets and mixed-use spaces encourage people to walk more and drive less, which can help reduce obesity rates. This active design also lowers city pollution by cutting down on car use, aiding environmental efforts against climate change. Cities like New York are incorporating these principles into their urban planning policies to promote healthier lifestyles and environmental sustainability. Studies support the idea that features such as accessible stairs, attractive walking paths, and bike lanes not only make physical activity more appealing but are effective in transforming urban areas into healthier, greener spaces. We were inspired from those findings and would like to know more in the relationship between sidewalk areas and people's choice on commuting ways.</p>
+  
+<p style="text-align:center; font-size:14px; font-style:italic; color:gray;">
+  Click on the video below to explore the capabilities of this site and enjoy a summary of our key highlights.
+</p>
+
+  <iframe width="560" height="315" src="" frameborder="0" border="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+```{css, echo=FALSE}
+body {
+  background-image: url('Pics/Active Design.jpg');
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+}
+
+.title-box {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 20px;
+}
+
+.textbox {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.textbox iframe {
+  display: block;
+  margin: 0 auto;
+}
+
