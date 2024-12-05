@@ -268,3 +268,5 @@ The total effect of sidewalk area percentage on obesity rates is significant, wi
 These results underscore the potential of urban planning strategies, such as increasing sidewalk coverage, to reduce obesity rates by promoting active commuting behaviors like walking. While sidewalk area itself may not directly impact obesity, its ability to foster environments conducive to walking plays a pivotal role in improving health outcomes. Policymakers should consider prioritizing pedestrian-friendly infrastructure and complementary interventions to encourage walking and other forms of physical activity.
 
 In conclusion, the mediation analysis confirms that the relationship between sidewalk area and obesity rates is largely mediated by walking behavior. These findings support the value of enhancing walkability in urban areas to address public health challenges like obesity, while also prompting future research to explore other mediating factors and potential variations across demographic or geographic contexts. 
+
+Next, we will try to plot mediation analysis
