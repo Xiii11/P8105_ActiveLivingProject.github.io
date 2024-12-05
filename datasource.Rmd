@@ -7,10 +7,15 @@ output:
     theme: lumen
 ---
 
-### Data Source
+## **Data Sources**
 
-Sometimes you need to say a bit about the site -- how it was made, where it's hosted, where the source code can be found. 
+For part 1, we utilized [Walking, driving, and cycling](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary) and [Overweight](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary) from The Official Website of the City of New York. 
 
-If this is for a project or analysis, I recommend giving some details about the R package versions that you used to create the content.
+The [Walking, driving, and cycling](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary) dataset covers various commuting modes used by adults, focusing on public transit, biking, walking, and driving using private vehicles. This information provides insights into transportation availability and choices.The dataset provides aggregated data for overlapping four-year intervals, starting from 2007 and extending to 2021. Each interval represents a rolling four-year period. We use the latest 2017-2021 dataset to do data analysis.
 
-### Data Import and Tidy
+The [Overweight](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary) provides insights into the prevalence of overweight or obesity among adults across New York City. The data spans from 2003 to 2022, with yearly updates available. It offers granular breakdowns by geographical boundaries including citywide, borough, and UHF34 regions. The dataset includes key metrics such as the number of individuals classified as overweight or obese and the percentage prevalence.
+
+## **Data Import and Tidy**
+### *Part 1: Commuting mode and Obesity*
+
+
