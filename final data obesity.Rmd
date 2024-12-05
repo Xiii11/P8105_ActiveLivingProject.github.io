@@ -12,6 +12,8 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(knitr)
+library(gridExtra)
+library(reshape2)
 ```
 
 ```{r}
@@ -55,8 +57,13 @@ borough_with_highest_obesity <- borough_data %>%
 print(borough_with_highest_obesity)
 ```
 Bronx has the highest overweight rate in 2022.
+
+
 ```{r}
-#Obesity Rates by Borough in NYC, 2022
+#interactive plot for Obesity Rates and Numbers by Borough in NYC, 2022
+library(ggplot2)
+library(plotly)
+
 obesity_plot <- ggplot(overweight_df, aes(x = geography, y = obesity_rate, fill = geography)) +
   geom_bar(stat = "identity", color = "black") +
   geom_text(aes(label = number_clean),  
@@ -68,19 +75,30 @@ obesity_plot <- ggplot(overweight_df, aes(x = geography, y = obesity_rate, fill 
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-# Print the plot
-print(obesity_plot)
+interactive_plot <- ggplotly(obesity_plot)
+interactive_plot
 
 ```
 
 
 
-
 ```{r}
 # Create a line plot to show the trend of obesity rates by year for each borough
-obesity_trend_plot <- ggplot(overweight_overall_df, aes(x = time_period, y = obesity_rate, group = geography, color = geography)) +
+obesity_trend_plot <- ggplot(overweight_overall_df, aes(
+  x = time_period,
+  y = obesity_rate,
+  group = geography,
+  color = geography
+)) +
   geom_line() +
-  geom_point() +  
+  geom_point(aes(
+    text = paste(
+      "Borough:", geography,
+      "<br>GeoID:", geo_id,
+      "<br>Year:", time_period,
+      "<br>Rate:", obesity_rate
+    )
+  )) +  
   labs(
     title = "Trend of Obesity Rates by Year and Borough",
     x = "Year",
@@ -90,10 +108,14 @@ obesity_trend_plot <- ggplot(overweight_overall_df, aes(x = time_period, y = obe
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-# Print the plot
-print(obesity_trend_plot)
+# Convert ggplot to interactive plotly plot and enable custom tooltip
+interactive_trend_plot <- ggplotly(obesity_trend_plot, tooltip = "text")
+
+# Print the interactive plot
+interactive_trend_plot
 
 ```
+
 
 
 
