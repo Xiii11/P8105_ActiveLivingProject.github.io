@@ -11,12 +11,12 @@
 
 
 
-<title>Project Report</title>
+<title>index2.knit</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -29,9 +29,6 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -224,69 +221,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -294,16 +228,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -353,78 +277,72 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Project Report</h1>
 
 </div>
 
 
-<div id="motivation" class="section level1">
-<h1><strong>Motivation</strong></h1>
+<div class="title-box">
+<h1>
+Impact of Active Design on Physical Activity and Transportation in New
+York City
+</h1>
 </div>
-<div id="related-work" class="section level1">
-<h1><strong>Related Work</strong></h1>
+<div class="textbox">
+<p>
+One of our group members is doing her internship on a street safety
+program in Brooklyn. When she was doing literature review she found out
+that research shows well-designed urban areas with pedestrian-friendly
+streets and mixed-use spaces encourage people to walk more and drive
+less, which can help reduce obesity rates. This active design also
+lowers city pollution by cutting down on car use, aiding environmental
+efforts against climate change. Cities like New York are incorporating
+these principles into their urban planning policies to promote healthier
+lifestyles and environmental sustainability. Studies support the idea
+that features such as accessible stairs, attractive walking paths, and
+bike lanes not only make physical activity more appealing but are
+effective in transforming urban areas into healthier, greener spaces. We
+were inspired from those findings and would like to know more in the
+relationship between sidewalk areas and people’s choice on commuting
+ways.
+</p>
+<p style="text-align:center; font-size:14px; font-style:italic; color:gray;">
+Click on the video below to explore the capabilities of this site and
+enjoy a summary of our key highlights.
+</p>
+<p><iframe width="560" height="315" src="" frameborder="0" border="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 </div>
-<div id="initial-questions" class="section level1">
-<h1><strong>Initial Questions</strong></h1>
-<p>We were interested in exploring the availability of sidewalk areas
-and the percentage of walking among commuters influence obesity rates
-across different boroughs and neighborhoods. The purposes of this
-project is to answer the following questions:</p>
-<ul>
-<li>What are the most popular commuting methods in different
-boroughs?<br />
-</li>
-<li>Which area (by borough) has the highest obesity rate?<br />
-</li>
-<li>What is the association between sidewalk areas and the percentage of
-walking among commuters by boroughs?<br />
-</li>
-<li>How does the availability of sidewalk areas and the percentage of
-walking among commuters influence obesity rates across different
-boroughs?</li>
-</ul>
-</div>
-<div id="data-sources-and-cleaning" class="section level1">
-<h1><strong>Data Sources and Cleaning</strong></h1>
-<p>Due to the limitations of the variables and information within the
-dataset, the data cleaning process was conducted independently for each
-analysis part.</p>
-<div id="part-1." class="section level2">
-<h2>Part 1.</h2>
-</div>
-<div id="part-2." class="section level2">
-<h2>Part 2.</h2>
-</div>
-<div id="part-3." class="section level2">
-<h2>Part 3.</h2>
-</div>
-</div>
-<div id="eda" class="section level1">
-<h1><strong>EDA</strong></h1>
-</div>
-<div id="model-building" class="section level1">
-<h1><strong>Model Building</strong></h1>
-<div id="key-indicators" class="section level2">
-<h2>Key Indicators</h2>
-</div>
-<div id="linear-model-interaction-model" class="section level2">
-<h2>Linear model (interaction model)</h2>
-</div>
-<div id="causal-mediation-analysis" class="section level2">
-<h2>Causal mediation analysis</h2>
-</div>
-</div>
-<div id="conclusion" class="section level1">
-<h1><strong>Conclusion</strong></h1>
-</div>
-<div id="discussion" class="section level1">
-<h1><strong>Discussion</strong></h1>
-</div>
+<style type="text/css">
+body {
+  background-image: url('Pics/Active Design.jpg');
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+}
+
+.title-box {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 20px;
+}
+
+.textbox {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.textbox iframe {
+  display: block;
+  margin: 0 auto;
+}
+
+</style>
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -457,35 +375,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
