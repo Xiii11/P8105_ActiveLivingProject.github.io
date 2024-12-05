@@ -31,7 +31,11 @@ overweight_df <- read_csv("data/overweight2022.csv") %>%
 ```
 
     ## Rows: 40 Columns: 7
+<<<<<<< HEAD
     ## ── Column specification ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+=======
+    ## ── Column specification ──────────────────────────────────────────────────────────
+>>>>>>> bd3a6f628603fc7c5670fb9df5495445fb184c79
     ## Delimiter: ","
     ## chr (4): GeoTypeDesc, Geography, Number, Percent
     ## dbl (3): TimePeriod, GeoID, GeoRank
@@ -52,8 +56,14 @@ print(na_check)
 ```
 
     ## # A tibble: 0 × 10
+<<<<<<< HEAD
     ## # ℹ 10 variables: time_period <dbl>, geo_type_desc <chr>, geo_id <dbl>, geo_rank <dbl>, geography <chr>, number <chr>, percent <chr>, obesity_rate_raw <chr>,
     ## #   obesity_rate <dbl>, number_clean <dbl>
+=======
+    ## # ℹ 10 variables: time_period <dbl>, geo_type_desc <chr>, geo_id <dbl>,
+    ## #   geo_rank <dbl>, geography <chr>, number <chr>, percent <chr>,
+    ## #   obesity_rate_raw <chr>, obesity_rate <dbl>, number_clean <dbl>
+>>>>>>> bd3a6f628603fc7c5670fb9df5495445fb184c79
 
 ``` r
 overweight_overall_df <- read_csv("data/overweightoverall.csv") %>%
@@ -66,7 +76,11 @@ overweight_overall_df <- read_csv("data/overweightoverall.csv") %>%
 ```
 
     ## Rows: 800 Columns: 7
+<<<<<<< HEAD
     ## ── Column specification ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+=======
+    ## ── Column specification ──────────────────────────────────────────────────────────
+>>>>>>> bd3a6f628603fc7c5670fb9df5495445fb184c79
     ## Delimiter: ","
     ## chr (4): GeoType, Geography, Number, Percent
     ## dbl (3): TimePeriod, GeoID, GeoRank
@@ -99,8 +113,15 @@ borough_with_highest_obesity <- borough_data %>%
 print(borough_with_highest_obesity)
 ```
 
+<<<<<<< HEAD
     ##   time_period geo_type_desc geo_id geo_rank geography  number           percent obesity_rate
     ## 1        2022       Borough      1        1     Bronx 693,000 65.5 (61.7, 69.0)         65.5
+=======
+    ##   time_period geo_type_desc geo_id geo_rank geography  number           percent
+    ## 1        2022       Borough      1        1     Bronx 693,000 65.5 (61.7, 69.0)
+    ##   obesity_rate
+    ## 1         65.5
+>>>>>>> bd3a6f628603fc7c5670fb9df5495445fb184c79
 
 Bronx has the highest overweight rate in 2022.
 

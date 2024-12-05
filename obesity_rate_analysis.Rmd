@@ -1,0 +1,6 @@
+---
+title: "obesity_rate_analysis"
+author: "Yifan Shi"
+date: "2024-12-05"
+output: github_document
+---
