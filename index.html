@@ -11,12 +11,12 @@
 
 
 
-<title>Impact of Active Design on Physical Activity and Transportation in New York City</title>
+<title>index.knit</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -29,9 +29,6 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -224,69 +221,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -294,16 +228,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -353,97 +277,72 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Impact of Active Design on Physical
-Activity and Transportation in New York City</h1>
 
 </div>
 
 
-<div
-style="text-align:center; margin-top:20px; font-size:24px; color:#333;">
-<p>Welcome to Our Final Project for P8105!</p>
+<div class="title-box">
+<h1>
+Impact of Active Design on Physical Activity and Transportation in New
+York City
+</h1>
+</div>
+<div class="textbox">
+<p>
+One of our group members is doing her internship on a street safety
+program in Brooklyn. When she was doing literature review she found out
+that research shows well-designed urban areas with pedestrian-friendly
+streets and mixed-use spaces encourage people to walk more and drive
+less, which can help reduce obesity rates. This active design also
+lowers city pollution by cutting down on car use, aiding environmental
+efforts against climate change. Cities like New York are incorporating
+these principles into their urban planning policies to promote healthier
+lifestyles and environmental sustainability. Studies support the idea
+that features such as accessible stairs, attractive walking paths, and
+bike lanes not only make physical activity more appealing but are
+effective in transforming urban areas into healthier, greener spaces. We
+were inspired from those findings and would like to know more in the
+relationship between sidewalk areas and people’s choice on commuting
+ways.
+</p>
+<p style="text-align:center; font-size:14px; font-style:italic; color:gray;">
+Click on the video below to explore the capabilities of this site and
+enjoy a summary of our key highlights.
+</p>
+<p><iframe width="560" height="315" src="" frameborder="0" border="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 </div>
 <style type="text/css">
+body {
+  background-image: url('Pics/Active Design.jpg');
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+}
 
-h1.title {
-  text-align: center; font-weight:bold;
+.title-box {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 20px;
+}
+
+.textbox {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.textbox iframe {
+  display: block;
+  margin: 0 auto;
 }
 
 </style>
-<p> </p>
-<div style="position:relative; text-align:center; color:white;">
-<p><img src="Pics/Active%20Design.jpg" alt="Active Design" style="width:100%; max-height:600px; object-fit:cover;"></p>
-</div>
-<p>According to the <a
-href="https://www.health.ny.gov/press/releases/2023/2023-06-20_obesity.htm">New
-York State Department of Health</a>, approximately two-thirds of adult
-New Yorkers have a Body Mass Index (BMI) classified as either obese
-(29.1%) or overweight (34.5%), impacting over 8.4 million adults across
-New York State. Additionally, the <a
-href="https://climate.cityofnewyork.us/initiatives/nyc-greenhouse-gas-inventories/?utm_source=chatgpt.com">NYC
-Mayor’s Office of Climate and Environmental Justice</a> reports that
-transportation accounts for approximately 30% of the city’s greenhouse
-gas emissions. By examining the impact of active design on physical
-activity and transportation, this project aims to provide insights that
-can inform policies to improve public health and reduce environmental
-impact in New York City.</p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD ###Related work One of our group
-members is doing her internship on a street safety program in Brooklyn.
-When she was doing literature review she found out that research shows
-well-designed urban areas with pedestrian-friendly streets and mixed-use
-spaces encourage people to walk more and drive less, which can help
-reduce obesity rates. This active design also lowers city pollution by
-cutting down on car use, aiding environmental efforts against climate
-change. Cities like New York are incorporating these principles into
-their urban planning policies to promote healthier lifestyles and
-environmental sustainability. Studies support the idea that features
-such as accessible stairs, attractive walking paths, and bike lanes not
-only make physical activity more appealing but are effective in
-transforming urban areas into healthier, greener spaces. We were
-inspired from those findings and would like to know more in the
-relationship between sidewalk areas and people’s choice on commuting
-ways.</p>
-###Initial questions: We were interested in exploring the availability
-of sidewalk areas and the percentage of walking among commuters
-influence obesity rates across different boroughs. ###Data: Commuting
-modes: <a
-href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary"
-class="uri">https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary</a>
-Overweight and Obesity:<a
-href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary"
-class="uri">https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary</a>
-Sidewalk area:<a
-href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/active-design/?id=2181#display=summary"
-class="uri">https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/active-design/?id=2181#display=summary</a>
-###Exploratory analysis ###Additional analysis ###Discussion =======
-<div style="position:relative; text-align:center; color:white;">
-<p><img src="Pics/giphy.gif" alt="Active Design" style="width:80%; max-height:400px; object-fit:cover;"></p>
-</div>
-<hr />
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>189d3a63eaf2261c6f13fa2250fd1fcedd6f9bf0 ### Screencast Click on the
-video below to explore the capabilities of this site and enjoy a summary
-of our key highlights.</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-<iframe width="560" height="315" src title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
-</iframe>
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -476,35 +375,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
