@@ -5,6 +5,167 @@ output:
     toc: true
     toc_float: true
     theme: lumen
+    code_folding: hide
 ---
 
-## Key 
+Load packages and import cleaned dataframes.
+```{r, message = FALSE}
+library(ggridges)
+library(tidyverse)
+library(plotly)
+library(gridExtra)
+library(reshape2)
+
+commuting_df = read.csv("data/commuting.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  rename(geo_type = geo_type_desc) |> 
+  filter(
+    geo_type %in% c("UHF 42", "Citywide", "Borough"))
+
+overweight_overall_df = read_csv("data/overweightoverall.csv", na = c("NA",".","")) |> 
+  janitor::clean_names()
+
+sidewalk_df = read_csv("data/sidewalk.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  mutate(neighborhood_geo_id = paste(geography, geo_id, sep = ", ")) 
+
+commuting_sidewalk_df = 
+  inner_join(commuting_df, sidewalk_df, by = c("geo_id", "geo_rank", "geography")) |> 
+  select(-time_period.x, - time_period.y, everything()) |> 
+  mutate(
+    bicycle_info = paste0(bicycle_number, " (", bicycle_percent, "%)"),
+    car_truck_van_info = paste0(car_truck_or_van_number, " (", car_truck_or_van_percent, "%)"),
+    public_transport_info = paste0(public_transportation_number, " (", public_transportation_percent, "%)"),
+    walked_info = paste0(walked_number, " (", walked_percent, "%)")
+  )
+```
+
+## **Distribution of Sidewalk Coverage**
+```{r, message = FALSE, warning = FALSE}
+Sidewalk_distri = ggplot(sidewalk_df, aes(x = neighborhood_geo_id , y = percent_of_land_area)) +
+  geom_col(fill = "skyblue1", color = "black", alpha = 0.8) +
+  labs(x = "Neighborhood (Geo ID)", y = "Percent of Sidewalk Coverage (%)",
+       title = "Distribution of Sidewalk Area by Neighborhood (Geo ID)") +
+  theme_minimal() +
+  theme(axis.text.x = element_blank()) 
+
+ggplotly(Sidewalk_distri)
+```
+
+The presented dataset examines the distribution of `Sidewalk Area` across different `Neighborhoods`, represented as a percentage of the total land area. The data ranges from a minimum of approximately `r min(pull(sidewalk_df,percent_of_land_area),na.rm = TRUE)`%  to a maximum of over `r max(pull(sidewalk_df,percent_of_land_area),na.rm = TRUE)`% . The interquartile range, which captures the middle 50% of the data, lies between approximately `r quantile(pull(sidewalk_df,percent_of_land_area),0.25,na.rm = TRUE)`% and `r quantile(pull(sidewalk_df,percent_of_land_area),0.75,na.rm = TRUE)`%, with the median percentage at `r median(pull(sidewalk_df,percent_of_land_area),na.rm = TRUE)`%. 
+
+The distribution shows considerable variation in sidewalk coverage, which could be significant for studying how built environment features influence transportation choices and public health outcomes. This baseline understanding of sidewalk distribution will be valuable for examining potential correlations with commuting patterns and obesity rates across neighborhoods.
+
+<hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
+
+## **Commute Mode and Sidewalk Coverage**
+```{r, message = FALSE, warning = FALSE}
+stacked_data = commuting_sidewalk_df |> 
+  select(neighborhood_geo_id, bicycle_percent, car_truck_or_van_percent, 
+         public_transportation_percent, walked_percent) |> 
+  melt(id.vars = "neighborhood_geo_id", 
+       variable.name = "Commute_Mode", 
+       value.name = "Percent")
+
+csassocci_chart <- ggplot(stacked_data, aes(y = neighborhood_geo_id, x = Percent, fill = Commute_Mode)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Commute Mode and Sidewalk Coverage",
+       y = "Neighborhood (Geo ID)",
+       x = "Percent of Sidewalk Coverage (%)",
+       fill = "Commute Mode") +
+  theme_minimal() +
+  theme(axis.text.y = element_blank(),legend.position = "none") +
+  scale_fill_manual(values = c("lightpink", "darkolivegreen", "gold","thistle"))
+
+ggplotly(csassocci_chart)
+```
+
+This chart provides an overview of commuting patterns across neighborhoods, categorized by `Commute Mode`—bicycle, car/truck/van, public transportation, and walking—and represented by their `Neighborhood (Geo ID)`. Public transportation (**<span style="color:darkolivegreen;">darkolivegreen</span>**) is the predominant mode in most neighborhoods, while walking (**<span style="color:thistle;">thistle</span>**) varies widely, likely reflecting differences in walkability and urban infrastructure. Bicycle commuting (**<span style="color:lightpink;">lightpink</span>**) is minimal across all areas, and reliance on car/truck/van (**<span style="color:gold;">gold</span>**) shows variability, potentially indicating disparities in access to alternative modes of transit like public transportation. The chart effectively highlights commuting behaviors, though adding specific indicators or overlays to visualize sidewalk coverage would strengthen the analysis of its influence on transportation choices.
+
+<hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
+
+## **Obesity/Overweight and Sidewalk Coverage**
+```{r, message = FALSE, warning = FALSE}
+filtered_obs_data <- overweight_overall_df |> 
+  filter(time_period >= 2014 & time_period <= 2022) |> 
+  mutate(percent = as.numeric(gsub("\\(.*?\\)", "", percent)))
+
+obs_dictri = filtered_obs_data |> 
+  plot_ly(
+    x = ~time_period,
+    y = ~percent,
+    color = ~geography,
+    type = 'scatter',
+    mode = 'lines+markers',
+    text = ~paste("neighborhood:", geography, "<br>Year:", time_period, "<br>Percentage:", percent),
+    hoverinfo = 'text'
+  ) |> 
+  layout(
+    title = list(text = "Obesity Trend by Neighborhood (2014-2022)", x = 0.5),
+    xaxis = list(title = "Year"),
+    yaxis = list(title = "Obesity Percentage (%)"),
+    legend = list(
+      title = list(
+      x = 1.05,  
+      y = 0.5,
+      xanchor = "left",
+      yanchor = "middle",
+      orientation = "v",
+      font = list(size = 6)
+    ),
+    clickmode = 'event+select'
+  ))
+
+ggplotly(obs_dictri)
+```
+<p style="text-align:center; font-size:14px; font-style:italic; color:gray;">
+  Please click a neighborhood to explore in detail.
+</p>
+
+This chart highlights the relationship between obesity trends and potential influences of sidewalk coverage and commute modes across neighborhoods from 2014 to 2022. Neighborhoods with higher obesity percentages, such as parts of the Bronx and Staten Island, might reflect areas with lower walkability or limited alternative commute options like walking or cycling, possibly due to less extensive sidewalk infrastructure or greater reliance on car/truck transportation. Conversely, neighborhoods like Manhattan, with consistently lower obesity percentages, likely benefit from higher walkability, robust public transportation systems, and better sidewalk coverage, encouraging active commuting. The data underscores the importance of urban design and accessible sidewalks in promoting healthier commuting behaviors and reducing obesity disparities across neighborhoods.
+
+```{r, message = FALSE, warning = FALSE}
+osassoci_df = overweight_overall_df |> 
+  filter(time_period %in% c(2014, 2022)) |> 
+  mutate(year = as.factor(time_period)) |> 
+  inner_join(sidewalk_df, by = c("geo_id","geography")) |> 
+  select(geography, number, percent, percent_of_land_area, year) |> 
+  rename(
+    obs_number = number,
+    obs_percent = percent
+  ) |> 
+  separate(
+    obs_percent, 
+    into = c("obs_percent", "obs_percent_range"), 
+    sep = "\\s*\\(\\s*", 
+    convert = TRUE
+  ) |>
+  mutate(obs_percent_range = str_remove(obs_percent_range, "\\)$"))
+
+osassoci_plot = ggplot(osassoci_df, aes(x = percent_of_land_area, y = as.numeric(obs_percent), color = year)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(se = FALSE, color = "gold", linetype = "solid") +
+  labs(
+    title = "Sidewalk Area vs. Obesity (2014 and 2022)",
+    x = "Percent of Sidewalk Coverage (%)",
+    y = "Obesity Percentage (%)"
+  ) +
+  facet_wrap(~year, ncol = 2) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    axis.title = element_text(size = 12),
+    legend.position = "none"
+  )
+
+ggplotly(osassoci_plot)
+```
+
+This visualization compares the relationship between sidewalk coverage and obesity percentages in 2014 and 2022. In 2014, there is a less consistent association, with obesity percentages showing minimal variation across different levels of sidewalk coverage. Conversely, in 2022, a more distinct trend emerges, suggesting a stronger negative relationship between sidewalk coverage and obesity percentages, particularly at higher levels of sidewalk coverage. This shift may reflect increased effectiveness of urban infrastructure or public health initiatives over time. However, outliers and variability in both years highlight the need for further exploration into neighborhood-specific factors influencing these dynamics.
+
+
+
+
+
+
+
