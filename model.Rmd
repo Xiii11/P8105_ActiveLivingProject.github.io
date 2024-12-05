@@ -270,3 +270,25 @@ These results underscore the potential of urban planning strategies, such as inc
 In conclusion, the mediation analysis confirms that the relationship between sidewalk area and obesity rates is largely mediated by walking behavior. These findings support the value of enhancing walkability in urban areas to address public health challenges like obesity, while also prompting future research to explore other mediating factors and potential variations across demographic or geographic contexts. 
 
 Next, we will try to plot mediation analysis
+```{r}
+# Create a data frame for effects
+effects_data <- data.frame(
+  Effect = c("ACME (Indirect Effect)", "ADE (Direct Effect)", "Total Effect"),
+  Estimate = c(-0.910, -0.631, -1.542),
+  CI_Lower = c(-1.436, -1.460, -2.349),
+  CI_Upper = c(-0.430, 0.180, -0.740)
+)
+
+# Plot the effects with confidence intervals
+ggplot(effects_data, aes(x = Effect, y = Estimate)) +
+  geom_bar(stat = "identity", fill = "skyblue", alpha = 0.8) +
+  geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.2, color = "black") +
+  labs(
+    title = "Decomposition of Total Effect: Mediation Analysis",
+    x = "Effect Type",
+    y = "Effect Estimate"
+  ) +
+  theme_minimal()
+
+```
+
