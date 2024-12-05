@@ -1,14 +1,58 @@
 ---
 title: "Project Report"
-output: 
+output:
   html_document:
     toc: true
     toc_float: true
     theme: lumen
 ---
 
-### About this site
 
-Sometimes you need to say a bit about the site -- how it was made, where it's hosted, where the source code can be found. 
+# **Motivation**
 
-If this is for a project or analysis, I recommend giving some details about the R package versions that you used to create the content.
+
+# **Related Work**
+
+
+# **Initial Questions**
+We were interested in exploring the availability of sidewalk areas and the percentage of walking among commuters influence obesity rates across different boroughs and neighborhoods.
+The purposes of this project is to answer the following questions:
+
+- What are the most popular commuting methods in different boroughs?  
+- Which area (by borough) has the highest obesity rate?  
+- What is the association between sidewalk areas and the percentage of walking among commuters by boroughs?  
+- How does the availability of sidewalk areas and the percentage of walking among commuters influence obesity rates across different boroughs?  
+
+
+# **Data Sources and Cleaning**
+Due to the limitations of the variables and information within the dataset, the data cleaning process was conducted independently for each analysis part.
+
+## Part 1.
+
+## Part 2.
+
+## Part 3.
+
+
+# **EDA**
+
+# **Model Building**
+
+## Key Indicators
+
+## Linear model (interaction model)
+
+## Causal mediation analysis
+
+
+# **Conclusion**
+
+
+# **Discussion**
+
+
+
+
+
+
+
