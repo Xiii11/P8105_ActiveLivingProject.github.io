@@ -2,7 +2,214 @@
 title: "Model Analysis"
 output: 
   html_document:
-    toc: true
+    toc: false
     toc_float: true
     theme: lumen
+    code_folding: hide
 ---
+
+Load packages and import cleaned dataframes.
+```{r, message = FALSE, warning = FALSE}
+library(ggridges)
+library(tidyverse)
+library(plotly)
+library(gridExtra)
+library(reshape2)
+
+commuting_df = read.csv("data/commuting.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  rename(geo_type = geo_type_desc) |> 
+  filter(
+    geo_type %in% c("UHF 42", "Citywide", "Borough"))
+
+overweight_overall_df = read_csv("data/overweightoverall.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  rename(
+    obs_number = number,
+    obs_percent = percent
+  ) |> 
+  separate(
+    obs_percent, 
+    into = c("obs_percent", "obs_percent_range"), 
+    sep = "\\s*\\(\\s*", 
+    convert = TRUE
+  ) |>
+  mutate(obs_percent_range = str_remove(obs_percent_range, "\\)$"))
+
+sidewalk_df = read_csv("data/sidewalk.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  mutate(neighborhood_geo_id = paste(geography, geo_id, sep = ", ")) 
+
+commuting_sidewalk_df = 
+  inner_join(commuting_df, sidewalk_df, by = c("geo_id", "geo_rank", "geography")) |> 
+  select(-time_period.x, -time_period.y, everything()) |> 
+  mutate(
+    bicycle_info = paste0(bicycle_number, " (", bicycle_percent, "%)"),
+    car_truck_van_info = paste0(car_truck_or_van_number, " (", car_truck_or_van_percent, "%)"),
+    public_transport_info = paste0(public_transportation_number, " (", public_transportation_percent, "%)"),
+    walked_info = paste0(walked_number, " (", walked_percent, "%)")
+  )
+```
+
+## **Association between sidewalk areas and the percentage of walking among commuters **
+```{r, message = FALSE, warning = FALSE}
+side_walking_data <- commuting_sidewalk_df |> 
+  select(geography, percent_of_land_area, walked_percent) |> 
+  mutate(
+    walked_percent = as.numeric(walked_percent),
+    percent_of_land_area = as.numeric(percent_of_land_area)
+  ) |> 
+  filter(!is.na(walked_percent) & !is.na(percent_of_land_area))  
+
+lm_model = lm(walked_percent ~ percent_of_land_area, data = side_walking_data)
+lm_summary = summary(lm_model)
+
+detailed_model_table = data.frame(
+  Statistic = c(
+    "Intercept Estimate", "Intercept Std. Error", "Intercept t-value", "Intercept p-value",
+    "Slope Estimate (percent_of_land_area)", "Slope Std. Error", "Slope t-value", "Slope p-value",
+    "Residual Std. Error", "R-squared", "Adjusted R-squared", "F-statistic", "F-statistic p-value"
+  ),
+  Value = c(
+    lm_summary$coefficients[1, "Estimate"],
+    lm_summary$coefficients[1, "Std. Error"],
+    lm_summary$coefficients[1, "t value"],
+    lm_summary$coefficients[1, "Pr(>|t|)"],
+    lm_summary$coefficients[2, "Estimate"],
+    lm_summary$coefficients[2, "Std. Error"],
+    lm_summary$coefficients[2, "t value"],
+    lm_summary$coefficients[2, "Pr(>|t|)"],
+    lm_summary$sigma,
+    lm_summary$r.squared,
+    lm_summary$adj.r.squared,
+    lm_summary$fstatistic[1],
+    pf(
+      lm_summary$fstatistic[1],
+      lm_summary$fstatistic[2],
+      lm_summary$fstatistic[3],
+      lower.tail = FALSE
+    )
+  )
+)
+
+library(ggplot2)
+ggplot(commuting_sidewalk_df, aes(x = percent_of_land_area, y = walked_percent)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "skyblue1") +
+  labs(title = "Relationship between Sidewalk Area and Walking Commuters", font = 7,
+       x = "Sidewalk Area Percentage",
+       y = "Walking Commuters Percentage") +
+  theme_minimal()
+
+
+coefficients_q3 <- coef(lm_model)
+equation_q3 <- paste0(
+  "$$ \\text{Walking Commuters Percentage} = \\beta_0 + \\beta_1 \\cdot \\text{Sidewalk Area Percentage} \\\\",
+  "\\beta_0 = ", round(coefficients_q3[1], 3), ", \\beta_1 = ", round(coefficients_q3[2], 3), " $$"
+)
+
+cat(equation_q3)
+
+knitr::kable(detailed_model_table,caption = "Detailed Linear Model Summary")
+
+```
+
+### Conclusion
+#### The linear model indicates a significant positive relationship between the percentage of land area allocated to sidewalks and the percentage of commuters who walk. The slope coefficient of <b>1.9624</b> suggests that for every 1% increase in sidewalk area, the proportion of walking commuters increases by approximately 1.96 percentage points. The adjusted R-squared value (<b>0.408</b>) demonstrates that the model explains about 40.8% of the variability in walking commuter rates.
+
+<hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
+
+## **Influence of sidewalk areas and walking commuters on obesity rates **
+```{r, message = FALSE, warning = FALSE}
+sw_obs_data = overweight_overall_df |> 
+  filter(time_period %in% c(2014, 2022)) |> 
+  mutate(obs_percent = as.numeric(gsub("\\*|\\(|\\)", "", obs_percent))) |> 
+  select(geo_id, geography, obs_percent) |> 
+  inner_join(commuting_sidewalk_df, by = c("geo_id", "geography")) |> 
+  select(geography, percent_of_land_area, walked_percent, obs_percent) |> 
+  mutate(
+    walked_percent = as.numeric(walked_percent),
+    percent_of_land_area = as.numeric(percent_of_land_area),
+    obs_percent = as.numeric(obs_percent)
+  ) |> 
+  filter(!is.na(walked_percent) & !is.na(percent_of_land_area) & !is.na(obs_percent)) 
+
+lm_model_obesity = lm(obs_percent ~ percent_of_land_area + walked_percent, data = sw_obs_data)
+lm_summary_obesity = summary(lm_model_obesity)
+
+detailed_model_table_obesity <- data.frame(
+  Statistic = c(
+    "Intercept Estimate",
+    "Intercept Std. Error",
+    "Intercept t-value",
+    "Intercept p-value",
+    "Sidewalk Area Slope Estimate",
+    "Sidewalk Area Slope Std. Error",
+    "Sidewalk Area Slope t-value",
+    "Sidewalk Area Slope p-value",
+    "Walking Commuters Slope Estimate",
+    "Walking Commuters Slope Std. Error",
+    "Walking Commuters Slope t-value",
+    "Walking Commuters Slope p-value",
+    "Residual Std. Error",
+    "R-squared",
+    "Adjusted R-squared",
+    "F-statistic",
+    "F-statistic p-value"
+  ),
+  Value = c(
+    lm_summary_obesity$coefficients[1, "Estimate"],
+    lm_summary_obesity$coefficients[1, "Std. Error"],
+    lm_summary_obesity$coefficients[1, "t value"],
+    lm_summary_obesity$coefficients[1, "Pr(>|t|)"],
+    lm_summary_obesity$coefficients[2, "Estimate"],
+    lm_summary_obesity$coefficients[2, "Std. Error"],
+    lm_summary_obesity$coefficients[2, "t value"],
+    lm_summary_obesity$coefficients[2, "Pr(>|t|)"],
+    lm_summary_obesity$coefficients[3, "Estimate"],
+    lm_summary_obesity$coefficients[3, "Std. Error"],
+    lm_summary_obesity$coefficients[3, "t value"],
+    lm_summary_obesity$coefficients[3, "Pr(>|t|)"],
+    lm_summary_obesity$sigma,
+    lm_summary_obesity$r.squared,
+    lm_summary_obesity$adj.r.squared,
+    lm_summary_obesity$fstatistic[1],
+    pf(
+      lm_summary_obesity$fstatistic[1],
+      lm_summary_obesity$fstatistic[2],
+      lm_summary_obesity$fstatistic[3],
+    )
+  )
+)
+
+sw_obs_data_plot = 
+  ggplot(sw_obs_data, aes(x = percent_of_land_area, y = obs_percent, color = walked_percent)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", formula = y ~ x + walked_percent, 
+              color = "skyblue1", linetype = "solid", size = 1) + 
+  labs(
+    title = "Influence of Sidewalk Areas and Walking Commuters on Obesity Rates",
+    x = "Sidewalk Area Percentage",
+    y = "Obesity Percentage",
+    color = "Walking Commuters Percentage"
+  ) +
+  theme_minimal()
+
+ggplotly(sw_obs_data_plot)
+
+coefficients_q4 <- coef(lm_model_obesity)
+equation_q4 <- paste0(
+  "$$ \\text{Obesity Percentage} = \\beta_0 + \\beta_1 \\cdot \\text{Sidewalk Area Percentage} + \\beta_2 \\cdot \\text{Walking Commuters Percentage} \\\\",
+  "\\beta_0 = ", round(coefficients_q4[1], 3), ", \\beta_1 = ", round(coefficients_q4[2], 3), ", \\beta_2 = ", round(coefficients_q4[3], 3), " $$"
+)
+
+cat(equation_q4)
+
+knitr::kable(
+  detailed_model_table_obesity,
+  caption = "Detailed Linear Model Summary for Obesity Rates"
+)
+```
+
+### Conclusion:
+#### While both sidewalk area percentage and walking commuter rates are modeled as predictors of obesity rates, only walking commuter rates show a statistically significant relationship. This highlights the importance of promoting active commuting as a means to potentially reduce obesity rates. The model indicates that encouraging walking as a commute mode may have a measurable impact on public health outcomes.
