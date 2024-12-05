@@ -9,10 +9,10 @@ output:
 
 
 # **Motivation**
-
+According to the [New York State Department of Health](https://www.health.ny.gov/press/releases/2023/2023-06-20_obesity.htm), approximately two-thirds of adult New Yorkers have a Body Mass Index (BMI) classified as either obese (29.1%) or overweight (34.5%), impacting over 8.4 million adults across New York State. Additionally, the [NYC Mayor's Office of Climate and Environmental Justice](https://climate.cityofnewyork.us/initiatives/nyc-greenhouse-gas-inventories/?utm_source=chatgpt.com) reports that transportation accounts for approximately 30% of the city's greenhouse gas emissions. By examining the impact of active design on physical activity and transportation, this project aims to provide insights that can inform policies to improve public health and reduce environmental impact in New York City.
 
 # **Related Work**
-
+One of our group members is doing her internship on a street safety program in Brooklyn. When she was doing literature review she found out that research shows well-designed urban areas with pedestrian-friendly streets and mixed-use spaces encourage people to walk more and drive less, which can help reduce obesity rates. This active design also lowers city pollution by cutting down on car use, aiding environmental efforts against climate change. Cities like New York are incorporating these principles into their urban planning policies to promote healthier lifestyles and environmental sustainability. Studies support the idea that features such as accessible stairs, attractive walking paths, and bike lanes not only make physical activity more appealing but are effective in transforming urban areas into healthier, greener spaces. We were inspired from those findings and would like to know more in the relationship between sidewalk areas and people's choice on commuting ways.
 
 # **Initial Questions**
 We were interested in exploring the availability of sidewalk areas and the percentage of walking among commuters influence obesity rates across different boroughs and neighborhoods.
@@ -30,7 +30,7 @@ Due to the limitations of the variables and information within the dataset, the 
 ## Part 1.
 
 ## Part 2.
-
+The difference in obesity rates between the Bronx and Manhattan from 2003 to 2022 might relate to the presence of sidewalks. Manhattan, with its abundance of well-maintained sidewalks, encourages walking and active lifestyles, likely contributing to its lower obesity rates. In contrast, fewer and poorly maintained sidewalks in the Bronx may limit physical activity opportunities for residents, possibly leading to higher obesity rates. Enhancing sidewalk infrastructure in the Bronx could promote more physical activity and help reduce these rates.
 ## Part 3.
 
 
