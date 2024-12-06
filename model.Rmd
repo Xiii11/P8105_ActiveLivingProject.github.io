@@ -222,6 +222,24 @@ summary(lm_interaction)
 ```
 
 ```{r}
+interaction_summary <- summary(lm_interaction)
+
+interaction_results <- data.frame(
+  Term = rownames(interaction_summary$coefficients),
+  Estimate = interaction_summary$coefficients[, "Estimate"],
+  `Std. Error` = interaction_summary$coefficients[, "Std. Error"],
+  `t-value` = interaction_summary$coefficients[, "t value"],
+  `p-value` = interaction_summary$coefficients[, "Pr(>|t|)"]
+)
+
+knitr::kable(
+  interaction_results,
+  caption = "Interaction Analysis Results",
+  digits = 3
+)
+```
+
+```{r}
 library(ggplot2)
 
 # Generate an interaction plot
