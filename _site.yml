@@ -10,7 +10,7 @@ navbar:
         - text: "Neighborhood Level"
           href: eda.html
         - text: "Borough Level"
-          href: final.html
+          href: eda2.html
     - text: "Model Analysis"
       href: model.html
   right:
