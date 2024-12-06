@@ -4,7 +4,7 @@ output:
   html_document:
     toc: true
     toc_float: true
-    theme: lumen
+    theme: flatly
     code_folding: hide
 ---
 
@@ -29,7 +29,7 @@ The purposes of this project is to answer the following questions:
 # **Data Sources and Cleaning**
 Due to the limitations of the variables and information within the dataset, the data cleaning process was conducted independently for each analysis part.
 
-## Part 1.
+## Part 1. Major Datasets
 Firstly, we processed both `neighborhood- and borough-level` commuting data, focusing on four commuting methods: bicycle, car/truck/van, public transportation, and walking. These methods are represented in terms of both absolute numbers and percentages. We clean the dataset by removing unnecessary columns, renaming variables for clarity (e.g., `geography` renamed to `neighborhood` and `borough` accordingly based on analysis needs), and converting numeric data from character format to ensure proper analysis.
 
 Next, we pivot the data into a long format, enabling a flexible structure for analysis and visualization by method and borough. The dataset is sorted by `geo_id` for a consistent ordering of boroughs. This preparation provides a clean and organized dataset that supports further exploratory analysis of commuting patterns and their relationships to sidewalk and obesity factors.
