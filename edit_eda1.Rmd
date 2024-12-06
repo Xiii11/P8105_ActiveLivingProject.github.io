@@ -1,0 +1,85 @@
+---
+title: "Untitled"
+author: "cathy"
+date: "2024-12-06"
+output: html_document
+---
+```{r}
+library(tidyverse)
+library(janitor)
+library(knitr)
+library(gridExtra)
+library(reshape2)
+library(plotly)
+```
+```
+
+
+```{r}
+commuting_df = read.csv("data/commuting.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  rename(geo_type = geo_type_desc) |> 
+  filter(
+    geo_type %in% c("UHF 42", "Citywide", "Borough"))
+```
+
+draw graphs for commuting percent
+first for counts graph
+```{r}
+uhf42_data = commuting_df  |> 
+  filter(geo_type == "UHF 42")  |> 
+  select(geography, bicycle_number, car_truck_or_van_number, 
+         public_transportation_number, walked_number,
+         bicycle_percent, car_truck_or_van_percent,
+         public_transportation_percent, walked_percent)
+         
+uhf42_counts <- uhf42_data |> 
+  select(geography, bicycle_number, car_truck_or_van_number, 
+         public_transportation_number, walked_number)  |> 
+  melt(id.vars = "geography", 
+       variable.name = "Commute_Mode", 
+       value.name = "Count")
+       
+  uhf42_counts$Count = as.numeric(gsub(",", "", uhf42_counts$Count))    
+
+custom_colors = c("lightpink", "darkolivegreen", "gold", "thistle")
+
+
+plot_counts <- plot_ly(uhf42_counts, 
+                       x = ~geography, y = ~Count, 
+                       color = ~Commute_Mode,  type = "bar",
+                       colors = custom_colors) %>%
+  layout(title = list(text = "Commuting Mode Counts by UHF 42 Neighborhoods", font = list(size = 9)),
+         xaxis = list(title = "Neighborhood", tickangle = 45),
+         yaxis = list(title = "Count"),
+         barmode = "stack",
+         legend = list(title = list(text = "Commute Mode"),
+                       font = list(size = 7)),
+         font = list(size = 7))
+         
+plot_counts
+```
+
+second for percentage graph
+```{r}
+uhf42_percentages = uhf42_data  |> 
+  select(geography, bicycle_percent, car_truck_or_van_percent,
+         public_transportation_percent, walked_percent)  |> 
+  melt(id.vars = "geography", variable.name = "Commute_Mode", value.name = "Percent")
+
+# Plot for Percentages
+plot_percentages <- plot_ly(uhf42_percentages, 
+                            x = ~geography, y = ~Percent, 
+                            color = ~Commute_Mode, type = "bar",
+                            colors = custom_colors) %>%
+  layout(title = list(text = "Commuting Mode Percentages by UHF 42 Neighborhoods", font = list(size = 9)),
+         xaxis = list(title = "Neighborhood", tickangle = 45),
+         yaxis = list(title = "Percentage", ticksuffix = "%", range = c(0, 100)),
+         barmode = "stack",
+         legend = list(title = list(text = "Commute Mode"),
+                       font = list(size = 7)),
+         font = list(size = 7))
+plot_percentages         
+```
+
+
