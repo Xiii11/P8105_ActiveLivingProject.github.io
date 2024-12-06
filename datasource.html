@@ -13,10 +13,10 @@
 
 <title>Data Source</title>
 
-<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -33,10 +33,13 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -221,6 +224,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -363,6 +369,14 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Data Source</h1>
@@ -397,27 +411,503 @@ overweight or obese and the percentage prevalence.</p>
 </div>
 <div id="data-import-and-tidy" class="section level2">
 <h2><strong>Data Import and Tidy</strong></h2>
-<p>We loaded essential libraries from the tidyverse ecosystem along with
-other helpful packages like janitor for cleaning column names, ggplot2
-for visualization, and plotly for interactive plots. We proceed to
-import our data using both read.csv() and read_csv() from the readr
-package, specifying NA values to accurately handle missing data right
-from the start. We then standardize column names to a uniform format
-with janitor::clean_names() function, which simplifies further coding
-and analysis. Moreover,we also transform the data by converting numeric
-fields from string format to actual numbers, removing commas for
-accurate calculations, and filtering the dataset to include only
-borough-level data ### <em>Part 1: Commuting mode and Obesity</em> For
-commnuting mode, to find out the most popular commuting ways in
-different boroughs, we reformat the data into a long format, listing
-each mode of commuting per borough and then use this formatted data to
-create interactive bar charts with plotly, showing the count of
-commuters by method for each borough and providing detailed hover text.
-The plot_ly() function is used to construct these visualizations,
-providing dynamic insights with options like hover text for detailed
-data points, and layout() to enhance chart readability and aesthetics.
-We then repeat the process for percentages, showing what portion of the
-population uses each commuting method</p>
+<div id="part-1-commuting-mode-and-obesity" class="section level3">
+<h3><em>Part 1: Commuting mode and Obesity</em></h3>
+<p>Firstly, we process borough-level commuting data, focusing on four
+commuting methods: bicycle, car/truck/van, public transportation, and
+walking. These methods are represented in terms of both absolute numbers
+and percentages. We clean the dataset by removing unnecessary columns,
+renaming variables for clarity (e.g., <code>geography</code> renamed to
+<code>borough</code>), and converting numeric data from character format
+to ensure proper analysis.</p>
+<p>Next, we pivot the data into a long format, enabling a flexible
+structure for analysis and visualization by method and borough. The
+dataset is sorted by <code>geo_id</code> for a consistent ordering of
+boroughs. This preparation provides a clean and organized dataset that
+supports further exploratory analysis of commuting patterns and their
+relationships to sidewalk and obesity factors.</p>
+<p>The final dataset <code>commuting_data</code> showed below.</p>
+<pre class="r"><code>library(tidyverse)
+library(janitor)
+library(knitr)
+library(kableExtra)
+
+commuting_df = 
+  read.csv(&quot;data/commuting.csv&quot;, na = c(&quot;NA&quot;,&quot;.&quot;,&quot;&quot;)) |&gt; 
+   janitor::clean_names()
+
+borough_df = 
+  commuting_df  |&gt; 
+  filter(geo_type_desc == &quot;Borough&quot;) |&gt; 
+  select(-geo_type_desc) |&gt;  
+  rename(borough = geography) |&gt;  
+  mutate(across(
+    c(bicycle_number, 
+      car_truck_or_van_number, 
+      public_transportation_number, 
+      walked_number),
+                ~as.numeric(gsub(&quot;,&quot;, &quot;&quot;, .))))
+
+commuting_data = borough_df |&gt; 
+  pivot_longer(
+    cols = -c(time_period, geo_id, geo_rank, borough), 
+    names_to = c(&quot;method&quot;, &quot;.value&quot;),
+    names_pattern = &quot;(.*)_(number|percent)$&quot;
+  ) |&gt; 
+  select(-geo_rank) |&gt; 
+  arrange(geo_id)
+
+commuting_data |&gt; 
+  knitr::kable(
+    digits = 3, 
+    caption = &quot;Commuting Data by Borough&quot;, 
+    align = rep(&quot;l&quot;, ncol(commuting_data))  
+  ) |&gt; 
+  kableExtra::kable_styling(
+    bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),
+    font_size = 12
+  ) |&gt; 
+  kableExtra::scroll_box(width = &quot;100%&quot;, height = &quot;300px&quot;)</code></pre>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover table-condensed" style="font-size: 12px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+Commuting Data by Borough
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+time_period
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+geo_id
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+borough
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+method
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+number
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+Bronx
+</td>
+<td style="text-align:left;">
+bicycle
+</td>
+<td style="text-align:left;">
+2589
+</td>
+<td style="text-align:left;">
+0.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+Bronx
+</td>
+<td style="text-align:left;">
+car_truck_or_van
+</td>
+<td style="text-align:left;">
+164218
+</td>
+<td style="text-align:left;">
+28.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+Bronx
+</td>
+<td style="text-align:left;">
+public_transportation
+</td>
+<td style="text-align:left;">
+324274
+</td>
+<td style="text-align:left;">
+56.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+Bronx
+</td>
+<td style="text-align:left;">
+walked
+</td>
+<td style="text-align:left;">
+41772
+</td>
+<td style="text-align:left;">
+7.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+Brooklyn
+</td>
+<td style="text-align:left;">
+bicycle
+</td>
+<td style="text-align:left;">
+24134
+</td>
+<td style="text-align:left;">
+2.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+Brooklyn
+</td>
+<td style="text-align:left;">
+car_truck_or_van
+</td>
+<td style="text-align:left;">
+274494
+</td>
+<td style="text-align:left;">
+22.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+Brooklyn
+</td>
+<td style="text-align:left;">
+public_transportation
+</td>
+<td style="text-align:left;">
+663716
+</td>
+<td style="text-align:left;">
+53.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+Brooklyn
+</td>
+<td style="text-align:left;">
+walked
+</td>
+<td style="text-align:left;">
+104403
+</td>
+<td style="text-align:left;">
+8.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+Manhattan
+</td>
+<td style="text-align:left;">
+bicycle
+</td>
+<td style="text-align:left;">
+20706
+</td>
+<td style="text-align:left;">
+2.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+Manhattan
+</td>
+<td style="text-align:left;">
+car_truck_or_van
+</td>
+<td style="text-align:left;">
+67721
+</td>
+<td style="text-align:left;">
+7.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+Manhattan
+</td>
+<td style="text-align:left;">
+public_transportation
+</td>
+<td style="text-align:left;">
+450560
+</td>
+<td style="text-align:left;">
+50.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+Manhattan
+</td>
+<td style="text-align:left;">
+walked
+</td>
+<td style="text-align:left;">
+167318
+</td>
+<td style="text-align:left;">
+18.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+Queens
+</td>
+<td style="text-align:left;">
+bicycle
+</td>
+<td style="text-align:left;">
+7082
+</td>
+<td style="text-align:left;">
+0.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+Queens
+</td>
+<td style="text-align:left;">
+car_truck_or_van
+</td>
+<td style="text-align:left;">
+437872
+</td>
+<td style="text-align:left;">
+38.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+Queens
+</td>
+<td style="text-align:left;">
+public_transportation
+</td>
+<td style="text-align:left;">
+511929
+</td>
+<td style="text-align:left;">
+45.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+Queens
+</td>
+<td style="text-align:left;">
+walked
+</td>
+<td style="text-align:left;">
+64864
+</td>
+<td style="text-align:left;">
+5.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+Staten Island
+</td>
+<td style="text-align:left;">
+bicycle
+</td>
+<td style="text-align:left;">
+408
+</td>
+<td style="text-align:left;">
+0.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+Staten Island
+</td>
+<td style="text-align:left;">
+car_truck_or_van
+</td>
+<td style="text-align:left;">
+138342
+</td>
+<td style="text-align:left;">
+63.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+Staten Island
+</td>
+<td style="text-align:left;">
+public_transportation
+</td>
+<td style="text-align:left;">
+57509
+</td>
+<td style="text-align:left;">
+26.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017-21
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+Staten Island
+</td>
+<td style="text-align:left;">
+walked
+</td>
+<td style="text-align:left;">
+6023
+</td>
+<td style="text-align:left;">
+2.7
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We proceed to import our data using both read.csv() and read_csv()
+from the readr package, specifying NA values to accurately handle
+missing data right from the start. We then standardize column names to a
+uniform format with janitor::clean_names() function, which simplifies
+further coding and analysis. Moreover,we also transform the data by
+converting numeric fields from string format to actual numbers, removing
+commas for accurate calculations, and filtering the dataset to include
+only borough-level data</p>
 <p>Similarly,for overweight&amp;obesity dataset, we first create a bar
 chart using ggplot2 to display obesity rates and corresponding numbers
 for each NYC borough, enhancing clarity with direct textual annotations
@@ -429,7 +919,8 @@ line plot, also made interactive with plotly, includes tooltips that
 provide detailed data insights when users hover over any point, thus
 enabling a deeper understanding of obesity trends within each
 borough.</p>
-<p>###<em>Part 2:</em></p>
+<p>The final dataset <code>obesity_data</code> showed below.</p>
+</div>
 </div>
 
 
@@ -467,6 +958,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {
