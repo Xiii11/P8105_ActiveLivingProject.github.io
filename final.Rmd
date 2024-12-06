@@ -116,6 +116,7 @@ The presented dataset examines the percentage distribution of commuting modes ac
 
 <hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
 
+## **Distribution of Obesity in 2022**
 ```{r, message = FALSE}
 overweight2022_df = 
   read.csv("data/overweight2022.csv", na = c("NA",".","")) |> 
@@ -151,11 +152,7 @@ borough_data = overweight2022_df  |>
 
 borough_with_highest_obesity = borough_data  |> 
   filter(obesity_rate == max(obesity_rate))
-```
-Bronx has the highest overweight rate in 2022.
 
-## **Distribution of Obesity in 2022**
-```{r}
 custom_colors = c("lightpink", "darkolivegreen", "gold", "thistle", "#a6cee3")
 
 obesity_plotly <- plot_ly(data = overweight_df, 
@@ -173,6 +170,7 @@ obesity_plotly <- plot_ly(data = overweight_df,
          legend = list(title = "Borough"))
 ggplotly(obesity_plotly, tooltip = "text")
 ```
+Bronx has the highest overweight rate in 2022.
 
 ## **Trend of Obesity Rate by Year**
 ```{r}
