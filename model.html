@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Model Analysis</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="datasource.html">Data Source</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    EDA
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="eda.html">Neighborhood Level</a>
+    </li>
+    <li>
+      <a href="final.html">Borough Level</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="model.html">Model Analysis</a>
+</li>
+<li>
+  <a href="report.html">Final Report</a>
+</li>
+<li>
+  <a href="about.html">The Team</a>
+</li>
+<li>
+  <a href="https://github.com/Xiii11/P8105_ActiveLivingProject.github.io">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Model Analysis</h1>
+
+</div>
+
+
+<div id="introduction" class="section level1">
+<h1><strong>Introduction</strong></h1>
+<p>Urban environments play a crucial role in shaping public health
+outcomes, particularly in promoting active commuting behaviors like
+walking. Sidewalk infrastructure and walkability are often cited as key
+factors influencing physical activity levels and, consequently, obesity
+rates. However, understanding the nuanced relationships between urban
+design, commuter behavior, and health outcomes requires robust
+data-driven analyses.</p>
+<p>This model analysis explores the interplay between <strong>sidewalk
+area percentage</strong>, <strong>walking commuter rates</strong>, and
+<strong>obesity rates</strong> across neighborhoods. Specifically, the
+analysis seeks to answer the following questions:</p>
+<ol style="list-style-type: decimal">
+<li>How does the availability of sidewalks influence walking commuter
+rates?<br />
+</li>
+<li>What is the impact of sidewalk area percentage and walking commuter
+rates on obesity rates?<br />
+</li>
+<li>Do walking commuter rates mediate the relationship between sidewalk
+infrastructure and obesity outcomes?<br />
+</li>
+<li>Are there interaction effects between sidewalk availability and
+walking behavior on obesity?<br />
+</li>
+<li>How do neighborhoods cluster based on sidewalk coverage, walking
+rates, and obesity levels?</li>
+</ol>
+<p>By addressing these questions, this analysis aims to provide
+actionable insights for urban planning and public health policies. The
+findings underscore the importance of pedestrian-friendly infrastructure
+in promoting active lifestyles, reducing obesity rates, and fostering
+healthier communities. Through statistical modeling, interaction
+testing, mediation analysis, and clustering, we uncover both direct and
+indirect pathways linking sidewalk infrastructure to health
+outcomes.</p>
+<hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
+<pre class="r"><code>library(ggridges)
+library(tidyverse)
+library(plotly)
+library(gridExtra)
+library(reshape2)
+library(mediation)
+library(dplyr)
+
+commuting_df = read.csv(&quot;data/commuting.csv&quot;, na = c(&quot;NA&quot;,&quot;.&quot;,&quot;&quot;)) |&gt; 
+  janitor::clean_names() |&gt; 
+  rename(geo_type = geo_type_desc) |&gt; 
+  filter(
+    geo_type %in% c(&quot;UHF 42&quot;, &quot;Citywide&quot;, &quot;Borough&quot;))
+
+overweight_overall_df = read_csv(&quot;data/overweightoverall.csv&quot;, na = c(&quot;NA&quot;,&quot;.&quot;,&quot;&quot;)) |&gt; 
+  janitor::clean_names() |&gt; 
+  rename(
+    obs_number = number,
+    obs_percent = percent
+  ) |&gt; 
+  separate(
+    obs_percent, 
+    into = c(&quot;obs_percent&quot;, &quot;obs_percent_range&quot;), 
+    sep = &quot;\\s*\\(\\s*&quot;, 
+    convert = TRUE
+  ) |&gt;
+  mutate(obs_percent_range = str_remove(obs_percent_range, &quot;\\)$&quot;))
+
+sidewalk_df = read_csv(&quot;data/sidewalk.csv&quot;, na = c(&quot;NA&quot;,&quot;.&quot;,&quot;&quot;)) |&gt; 
+  janitor::clean_names() |&gt; 
+  mutate(neighborhood_geo_id = paste(geography, geo_id, sep = &quot;, &quot;)) 
+
+commuting_sidewalk_df = 
+  inner_join(commuting_df, sidewalk_df, by = c(&quot;geo_id&quot;, &quot;geo_rank&quot;, &quot;geography&quot;)) |&gt; 
+  dplyr::select(-time_period.x, -time_period.y, everything()) |&gt; 
+  mutate(
+    bicycle_info = paste0(bicycle_number, &quot; (&quot;, bicycle_percent, &quot;%)&quot;),
+    car_truck_van_info = paste0(car_truck_or_van_number, &quot; (&quot;, car_truck_or_van_percent, &quot;%)&quot;),
+    public_transport_info = paste0(public_transportation_number, &quot; (&quot;, public_transportation_percent, &quot;%)&quot;),
+    walked_info = paste0(walked_number, &quot; (&quot;, walked_percent, &quot;%)&quot;)
+  )</code></pre>
+</div>
+<div id="simple-linear-regression" class="section level1">
+<h1><strong>Simple Linear Regression</strong></h1>
+<div
+id="we-begin-by-examining-the-direct-relationship-between-sidewalk-area-percentage-and-walking-commuter-rates.-a-simple-linear-regression-model-was-built-to-quantify-how-the-availability-of-sidewalk-infrastructure-influences-the-proportion-of-residents-who-walk-to-work.-this-analysis-serves-as-a-foundation-for-understanding-the-basic-relationship-between-urban-design-and-commuting-behavior-before-exploring-more-complex-relationships."
+class="section level4">
+<h4>We begin by examining the direct relationship between sidewalk area
+percentage and walking commuter rates. A <strong>simple linear
+regression</strong> model was built to quantify how the availability of
+sidewalk infrastructure influences the proportion of residents who walk
+to work. This analysis serves as a foundation for understanding the
+basic relationship between urban design and commuting behavior before
+exploring more complex relationships.</h4>
+<p><span class="math display">\[Y_{Walking Commuters Percentage}=\beta_0
++ \beta_1X_{Sidewalk Area Percentage} + \epsilon\]</span></p>
+<pre class="r"><code>side_walking_data = commuting_sidewalk_df |&gt; 
+  dplyr::select(geography, percent_of_land_area, walked_percent) |&gt; 
+  mutate(
+    walked_percent = as.numeric(walked_percent),
+    percent_of_land_area = as.numeric(percent_of_land_area)
+  ) |&gt; 
+  filter(!is.na(walked_percent) &amp; !is.na(percent_of_land_area))  
+
+lm_model = lm(walked_percent ~ percent_of_land_area, data = side_walking_data)
+lm_summary = summary(lm_model)
+
+library(ggplot2)
+ggplot(commuting_sidewalk_df, aes(x = percent_of_land_area, y = walked_percent)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, color = &quot;skyblue1&quot;) +
+  labs(title = &quot;Relationship between Sidewalk Area and Walking Commuters&quot;, font = 7,
+       x = &quot;Sidewalk Area Percentage&quot;,
+       y = &quot;Walking Commuters Percentage&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="model_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code># Create the coefficient results table
+simplr_coefficient_results = data.frame(
+  Effect = c(&quot;Intercept&quot;, &quot;Slope&quot;),
+  Estimate = c(lm_summary$coefficients[1,1], lm_summary$coefficients[2,1]),
+  &#39;CI.Lower&#39; = c(lm_summary$coefficients[1,1] - 1.96 * lm_summary$coefficients[1,2],
+                 lm_summary$coefficients[2,1] - 1.96 * lm_summary$coefficients[2,2]),
+  &#39;CI.Upper&#39; = c(lm_summary$coefficients[1,1] + 1.96 * lm_summary$coefficients[1,2],
+                 lm_summary$coefficients[2,1] + 1.96 * lm_summary$coefficients[2,2]),
+  &#39;p.value&#39; = c(lm_summary$coefficients[1,4], lm_summary$coefficients[2,4])
+)
+
+knitr::kable(simplr_coefficient_results, 
+                caption = &quot;Simple Linear Regression Coefficients&quot;,
+                digits = 3) </code></pre>
+<table>
+<caption>Simple Linear Regression Coefficients</caption>
+<thead>
+<tr class="header">
+<th align="left">Effect</th>
+<th align="right">Estimate</th>
+<th align="right">CI.Lower</th>
+<th align="right">CI.Upper</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Intercept</td>
+<td align="right">-5.307</td>
+<td align="right">-10.588</td>
+<td align="right">-0.026</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="even">
+<td align="left">Slope</td>
+<td align="right">1.962</td>
+<td align="right">1.297</td>
+<td align="right">2.628</td>
+<td align="right">0.000</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># Create the model statistics table
+simplr_model_statistics = data.frame(
+  Statistic = c(&quot;Slope Std.Error&quot;, &quot;Slope t-value&quot;, &quot;Slope p-value&quot;, 
+                &quot;R-squared&quot;, &quot;Adjusted R-squared&quot;, &quot;F-statistic&quot;, 
+                &quot;F-statistic p-value&quot;, &quot;Residual Std. Error&quot;),
+  Value = c(lm_summary$coefficients[2,2],
+            lm_summary$coefficients[2,3],
+            lm_summary$coefficients[2,4],
+            lm_summary$r.squared,
+            lm_summary$adj.r.squared,
+            lm_summary$fstatistic[1],
+            pf(lm_summary$fstatistic[1], 
+               lm_summary$fstatistic[2], 
+               lm_summary$fstatistic[3], 
+               lower.tail = FALSE),
+            lm_summary$sigma)
+)
+
+knitr::kable(simplr_model_statistics, 
+                caption = &quot;Simple Linear Regression Model Statistics&quot;,
+                digits = 3) </code></pre>
+<table>
+<caption>Simple Linear Regression Model Statistics</caption>
+<thead>
+<tr class="header">
+<th align="left">Statistic</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Slope Std.Error</td>
+<td align="right">0.340</td>
+</tr>
+<tr class="even">
+<td align="left">Slope t-value</td>
+<td align="right">5.779</td>
+</tr>
+<tr class="odd">
+<td align="left">Slope p-value</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">R-squared</td>
+<td align="right">0.421</td>
+</tr>
+<tr class="odd">
+<td align="left">Adjusted R-squared</td>
+<td align="right">0.408</td>
+</tr>
+<tr class="even">
+<td align="left">F-statistic</td>
+<td align="right">33.395</td>
+</tr>
+<tr class="odd">
+<td align="left">F-statistic p-value</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">Residual Std. Error</td>
+<td align="right">5.456</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="statistical-results-and-interpretation" class="section level4">
+<h4><strong>Statistical Results and Interpretation</strong>:</h4>
+<ul>
+<li><p><strong>Statistical Significance</strong>: The model shows a
+statistically significant relationship between sidewalk area percentage
+and walking commuter rates (p &lt; 0.001, F-statistic = 33.395). The
+slope coefficient (β₁ = 1.962) is significantly different from zero (p
+&lt; 0.001), indicating a reliable positive relationship.</p></li>
+<li><p><strong>Effect Size</strong>: For every 1% increase in sidewalk
+area, the model predicts an increase of approximately 1.96 percentage
+points in walking commuters (95% CI: 1.297 to 2.628). This suggests a
+substantial practical impact of sidewalk infrastructure on commuting
+behavior.</p></li>
+<li><p><strong>Model Fit</strong>: The R-squared value of 0.421
+(adjusted R-squared = 0.408) indicates that approximately 42.1% of the
+variance in walking commuter rates can be explained by sidewalk area
+percentage. While this shows a moderate predictive power, it also
+suggests that other factors not included in this simple model may
+influence walking commuter rates.</p></li>
+<li><p><strong>Intercept Interpretation</strong>: The intercept of
+-5.307 (p = 0.055) suggests that the model predicts negative walking
+rates at very low sidewalk percentages, indicating that the linear
+relationship might not hold at extreme lower values and should be
+interpreted cautiously below the observed data range.</p></li>
+</ul>
+<hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
+</div>
+</div>
+<div id="multiple-linear-regression" class="section level1">
+<h1><strong>Multiple Linear Regression</strong></h1>
+<div
+id="we-expand-our-analysis-by-examining-how-both-sidewalk-area-percentage-and-walking-commuter-rates-jointly-influence-obesity-rates-in-urban-areas.-a-multiple-linear-regression-model-was-built-to-quantify-how-these-two-aspects-of-urban-infrastructure-and-commuting-behavior-together-might-affect-obesity-levels.-this-analysis-helps-understand-the-complex-relationships-between-urban-design-transportation-choices-and-public-health-outcomes."
+class="section level4">
+<h4>We expand our analysis by examining how both sidewalk area
+percentage and walking commuter rates jointly influence obesity rates in
+urban areas. A <strong>multiple linear regression model</strong> was
+built to quantify how these two aspects of urban infrastructure and
+commuting behavior together might affect obesity levels. This analysis
+helps understand the complex relationships between urban design,
+transportation choices, and public health outcomes.</h4>
+<p><span class="math display">\[Y_{Obesity Percentage}=\beta_0 +
+\beta_1X_{Sidewalk Area Percentage} + \beta_2X_{Walking Commuters
+Percentage} + \epsilon\]</span></p>
+<pre class="r"><code>sw_obs_data = overweight_overall_df |&gt; 
+  filter(time_period %in% c(2014, 2022)) |&gt; 
+  mutate(obs_percent = as.numeric(gsub(&quot;\\*|\\(|\\)&quot;, &quot;&quot;, obs_percent))) |&gt; 
+  dplyr::select(geo_id, geography, obs_percent) |&gt; 
+  inner_join(commuting_sidewalk_df, by = c(&quot;geo_id&quot;, &quot;geography&quot;)) |&gt; 
+  dplyr::select(geography, percent_of_land_area, walked_percent, obs_percent) |&gt; 
+  mutate(
+    walked_percent = as.numeric(walked_percent),
+    percent_of_land_area = as.numeric(percent_of_land_area),
+    obs_percent = as.numeric(obs_percent)
+  ) |&gt; 
+  filter(!is.na(walked_percent) &amp; !is.na(percent_of_land_area) &amp; !is.na(obs_percent)) 
+
+lm_model_obesity = lm(obs_percent ~ percent_of_land_area + walked_percent, data = sw_obs_data)
+lm_summary_obesity = summary(lm_model_obesity)
+
+# Create the mean dataset for the Walking Commuters Percentage
+mean_walked_data &lt;- sw_obs_data %&gt;%
+  mutate(walked_percent = mean(walked_percent))
+
+sw_obs_data_plot = 
+  ggplot(sw_obs_data, aes(x = percent_of_land_area, y = obs_percent, color = walked_percent)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = &quot;lm&quot;,
+             formula = y ~ x,
+             color = &quot;gold&quot;,
+             linetype = &quot;solid&quot;,
+             size = 1) +
+  geom_smooth(data = mean_walked_data,
+             aes(x = percent_of_land_area, y = obs_percent),
+             method = &quot;lm&quot;,
+             formula = y ~ x,
+             color = &quot;skyblue&quot;,
+             linetype = &quot;dashed&quot;,
+             size = 1.2,
+             inherit.aes = FALSE) + 
+  labs(
+    title = &quot;Influence of Sidewalk Areas and Walking Commuters on Obesity Rates&quot;,
+    x = &quot;Sidewalk Area Percentage&quot;,
+    y = &quot;Obesity Percentage&quot;,
+    color = &quot;Walking Commuters Percentage&quot;
+  ) +
+  theme_minimal()
+
+sw_obs_data_plot</code></pre>
+<p><img src="model_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code># Create the coefficient results table for multiple regression
+multr_coefficient_results = data.frame(
+  Effect = c(&quot;Intercept&quot;, &quot;Sidewalk Area Slope&quot;, &quot;Walking Commuters Slope&quot;),
+  Estimate = c(lm_summary_obesity$coefficients[1, &quot;Estimate&quot;],
+               lm_summary_obesity$coefficients[2, &quot;Estimate&quot;],
+               lm_summary_obesity$coefficients[3, &quot;Estimate&quot;]),
+  CI.Lower = c(
+    lm_summary_obesity$coefficients[1, &quot;Estimate&quot;] - 1.96 * lm_summary_obesity$coefficients[1, &quot;Std. Error&quot;],
+    lm_summary_obesity$coefficients[2, &quot;Estimate&quot;] - 1.96 * lm_summary_obesity$coefficients[2, &quot;Std. Error&quot;],
+    lm_summary_obesity$coefficients[3, &quot;Estimate&quot;] - 1.96 * lm_summary_obesity$coefficients[3, &quot;Std. Error&quot;]
+  ),
+  CI.Upper = c(
+    lm_summary_obesity$coefficients[1, &quot;Estimate&quot;] + 1.96 * lm_summary_obesity$coefficients[1, &quot;Std. Error&quot;],
+    lm_summary_obesity$coefficients[2, &quot;Estimate&quot;] + 1.96 * lm_summary_obesity$coefficients[2, &quot;Std. Error&quot;],
+    lm_summary_obesity$coefficients[3, &quot;Estimate&quot;] + 1.96 * lm_summary_obesity$coefficients[3, &quot;Std. Error&quot;]
+  ),
+  p.value = c(lm_summary_obesity$coefficients[1, &quot;Pr(&gt;|t|)&quot;],
+              lm_summary_obesity$coefficients[2, &quot;Pr(&gt;|t|)&quot;],
+              lm_summary_obesity$coefficients[3, &quot;Pr(&gt;|t|)&quot;])
+)
+
+knitr::kable(multr_coefficient_results,
+             caption = &quot;Multiple Linear Regression Coefficients&quot;,
+             digits = 3)</code></pre>
+<table>
+<caption>Multiple Linear Regression Coefficients</caption>
+<thead>
+<tr class="header">
+<th align="left">Effect</th>
+<th align="right">Estimate</th>
+<th align="right">CI.Lower</th>
+<th align="right">CI.Upper</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Intercept</td>
+<td align="right">72.377</td>
+<td align="right">66.198</td>
+<td align="right">78.556</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">Sidewalk Area Slope</td>
+<td align="right">-0.631</td>
+<td align="right">-1.507</td>
+<td align="right">0.244</td>
+<td align="right">0.163</td>
+</tr>
+<tr class="odd">
+<td align="left">Walking Commuters Slope</td>
+<td align="right">-1.097</td>
+<td align="right">-1.558</td>
+<td align="right">-0.636</td>
+<td align="right">0.000</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># Create the model statistics table for multiple regression
+multr_model_statistics = data.frame(
+  Statistic = c(
+    &quot;Slope Std.Error&quot;, 
+    &quot;Slope t-value&quot;,
+    &quot;Slope p-value&quot;,
+    &quot;R-squared&quot;,
+    &quot;Adjusted R-squared&quot;,
+    &quot;F-statistic&quot;,
+    &quot;F-statistic p-value&quot;,
+    &quot;Residual Std. Error&quot;
+  ),
+  Value = c(
+    lm_summary_obesity$coefficients[2, &quot;Std. Error&quot;],
+    lm_summary_obesity$coefficients[2, &quot;t value&quot;],
+    lm_summary_obesity$coefficients[2, &quot;Pr(&gt;|t|)&quot;],
+    lm_summary_obesity$r.squared,
+    lm_summary_obesity$adj.r.squared,
+    lm_summary_obesity$fstatistic[1],
+    pf(lm_summary_obesity$fstatistic[1], 
+       lm_summary_obesity$fstatistic[2], 
+       lm_summary_obesity$fstatistic[3], 
+       lower.tail = FALSE),
+    lm_summary_obesity$sigma
+  )
+)
+
+knitr::kable(multr_model_statistics,
+             caption = &quot;Multiple Linear Regression Model Statistics&quot;,
+             digits = 3)</code></pre>
+<table>
+<caption>Multiple Linear Regression Model Statistics</caption>
+<thead>
+<tr class="header">
+<th align="left">Statistic</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Slope Std.Error</td>
+<td align="right">0.447</td>
+</tr>
+<tr class="even">
+<td align="left">Slope t-value</td>
+<td align="right">-1.413</td>
+</tr>
+<tr class="odd">
+<td align="left">Slope p-value</td>
+<td align="right">0.163</td>
+</tr>
+<tr class="even">
+<td align="left">R-squared</td>
+<td align="right">0.367</td>
+</tr>
+<tr class="odd">
+<td align="left">Adjusted R-squared</td>
+<td align="right">0.347</td>
+</tr>
+<tr class="even">
+<td align="left">F-statistic</td>
+<td align="right">18.234</td>
+</tr>
+<tr class="odd">
+<td align="left">F-statistic p-value</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">Residual Std. Error</td>
+<td align="right">6.425</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="statistical-results-and-interpretation-1"
+class="section level4">
+<h4><strong>Statistical Results and Interpretation</strong>:</h4>
+<ul>
+<li><strong>Model Significance and Fit</strong>:
+<ul>
+<li>The multiple regression model is statistically significant (F =
+18.234, p &lt; 0.001)</li>
+<li>The model explains 36.7% of the variance in obesity rates (Adjusted
+R² = 0.367), indicating a moderate level of predictive power</li>
+</ul></li>
+<li><strong>Predictor Effects</strong>:
+<ul>
+<li>Sidewalk Area (β₁ = -0.631, p = 0.163): For each percentage point
+increase in sidewalk area, obesity rates decrease by 0.631 percentage
+points, holding walking commuters constant. However, this effect is not
+statistically significant at the conventional 0.05 level.</li>
+<li>Walking Commuters (β₂ = -1.097, p &lt; 0.001): For each percentage
+point increase in walking commuters, obesity rates decrease by 1.097
+percentage points, holding sidewalk area constant. This effect is
+statistically significant.</li>
+</ul></li>
+<li><strong>Model Parameters</strong>:
+<ul>
+<li>Intercept (β₀ = 72.377, p &lt; 0.001): The predicted obesity rate
+when both predictors are zero, though this should be interpreted
+cautiously as it’s outside the observed data range</li>
+<li>The confidence intervals for both slopes indicate some uncertainty
+in the precise effects, particularly for sidewalk area (CI: -3.507 to
+0.244) compared to walking commuters (CI: -1.558 to -0.636)</li>
+</ul></li>
+<li><strong>Model Diagnostics</strong>:
+<ul>
+<li>Residual Standard Error: 6.425 indicates the average deviation of
+observed values from the model’s predictions</li>
+<li>The F-statistic of 18.234 with a very small p-value (&lt; 0.001)
+suggests that the model as a whole is significantly better than a model
+with no predictors</li>
+</ul></li>
+</ul>
+<p>These results suggest that while both sidewalk availability and
+walking commuter rates are negatively associated with obesity rates, the
+walking commuter percentage has a stronger and more statistically
+reliable relationship with obesity rates in this dataset. The model
+provides evidence that active transportation patterns may be more
+directly linked to obesity outcomes than physical infrastructure
+alone.</p>
+<hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
+</div>
+</div>
+<div id="interaction-analysis" class="section level1">
+<h1><strong>Interaction Analysis</strong></h1>
+<div
+id="next-we-are-curious-whether-there-are-interaction-effects-between-sidewalk-area-percentage-and-walking-commuter-rates-on-obesity-rates.-to-test-this-an-interaction-model-was-built-to-explore-whether-the-effect-of-sidewalk-area-percentage-on-obesity-depends-on-walking-commuter-rates."
+class="section level4">
+<h4>Next, we are curious whether there are <strong>interaction
+effects</strong> between sidewalk area percentage and walking commuter
+rates on obesity rates. To test this, an interaction model was built to
+explore whether the effect of sidewalk area percentage on obesity
+depends on walking commuter rates.</h4>
+<p><span class="math display">\[Y_{Obesity Percentage} = \beta_0 +
+\beta_1X_{SidewalkArea} + \beta_2X_{WalkingPercent} +
+\beta_3(X_{SidewalkArea} \times X_{WalkingPercent}) +
+\epsilon\]</span></p>
+<pre class="r"><code># Run the interaction model
+lm_interaction &lt;- lm(obs_percent ~ percent_of_land_area * walked_percent, data = sw_obs_data)
+
+# Summarize the model
+interaction_summary &lt;- summary(lm_interaction)</code></pre>
+<p>The coefficients from the interaction model are summarized in the
+following table:</p>
+<pre class="r"><code># Extract interaction model parameters
+interaction_results &lt;- data.frame(
+  Estimate = interaction_summary$coefficients[, &quot;Estimate&quot;],
+  `Std.Error` = interaction_summary$coefficients[, &quot;Std. Error&quot;],
+  `t-value` = interaction_summary$coefficients[, &quot;t value&quot;],
+  `p-value` = interaction_summary$coefficients[, &quot;Pr(&gt;|t|)&quot;]
+)
+
+# Display the interaction model results
+knitr::kable(
+  interaction_results,
+  caption = &quot;Interaction Analysis Results&quot;,
+  digits = 3
+)</code></pre>
+<table>
+<caption>Interaction Analysis Results</caption>
+<colgroup>
+<col width="50%" />
+<col width="12%" />
+<col width="14%" />
+<col width="11%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Estimate</th>
+<th align="right">Std.Error</th>
+<th align="right">t.value</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">71.805</td>
+<td align="right">7.366</td>
+<td align="right">9.749</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">percent_of_land_area</td>
+<td align="right">-0.560</td>
+<td align="right">0.946</td>
+<td align="right">-0.592</td>
+<td align="right">0.556</td>
+</tr>
+<tr class="odd">
+<td align="left">walked_percent</td>
+<td align="right">-1.013</td>
+<td align="right">1.004</td>
+<td align="right">-1.009</td>
+<td align="right">0.317</td>
+</tr>
+<tr class="even">
+<td align="left">percent_of_land_area:walked_percent</td>
+<td align="right">-0.010</td>
+<td align="right">0.117</td>
+<td align="right">-0.086</td>
+<td align="right">0.932</td>
+</tr>
+</tbody>
+</table>
+<p>The results indicate that the interaction term
+(percent_of_land_area:walked_percent) is not statistically significant
+(p = 0.932), suggesting that the relationship between sidewalk area
+percentage and obesity rates does not depend on walking commuter rates.
+This implies that sidewalk area percentage and walking commuter rates
+<strong>operate independently</strong> in influencing obesity
+outcomes.</p>
+</div>
+<div id="visualizing-interaction-effects" class="section level2">
+<h2><strong>Visualizing Interaction Effects</strong></h2>
+<p>To better understand the potential interaction, we created a plot
+that categorizes walking commuter rates into four levels: Low, Moderate,
+High, and Very High. Each category is represented by a distinct color,
+with regression lines and shaded confidence intervals illustrating the
+relationship between sidewalk area percentage and obesity rates for each
+category.</p>
+<pre class="r"><code># Create categories for walking commuter rates
+sw_obs_data$walked_percent_category &lt;- cut(
+  sw_obs_data$walked_percent,
+  breaks = c(-Inf, 5, 10, 15, Inf), # Define categories
+  labels = c(&quot;Low&quot;, &quot;Moderate&quot;, &quot;High&quot;, &quot;Very High&quot;)
+)
+
+# Updated plot with categories, confidence intervals, and labels
+ggplot(sw_obs_data, aes(x = percent_of_land_area, y = obs_percent, color = walked_percent_category)) +
+  geom_point(size = 2, alpha = 0.8) + # Add points
+  geom_smooth(method = &quot;lm&quot;, aes(group = walked_percent_category), se = TRUE, linetype = &quot;solid&quot;) + # Add regression lines with confidence intervals
+  scale_color_manual(
+    values = c(&quot;Low&quot; = &quot;blue&quot;, &quot;Moderate&quot; = &quot;darkgreen&quot;, &quot;High&quot; = &quot;orange&quot;, &quot;Very High&quot; = &quot;red&quot;),
+    name = &quot;Walking Commuter Category&quot;
+  ) + # Custom colors for walking categories
+  labs(
+    title = &quot;Interaction Effect Between Sidewalk Area and Walking Commuter Rates on Obesity&quot;,
+    x = &quot;Sidewalk Area Percentage&quot;,
+    y = &quot;Obesity Rates (%)&quot;
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = &quot;right&quot;, # Place legend on the right
+    legend.title = element_text(size = 12, face = &quot;bold&quot;), # Style legend title
+    legend.text = element_text(size = 10) # Style legend text
+  )</code></pre>
+<p><img src="model_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div id="results-and-insights" class="section level4">
+<h4><strong>Results and Insights</strong></h4>
+<p>The plot illustrates the interaction between sidewalk area percentage
+and obesity rates across four categories of walking commuter rates.
+Regression lines for each category are relatively flat and similar in
+slope, indicating that the relationship between sidewalk area percentage
+and obesity rates does not vary meaningfully with walking commuter
+rates. The confidence intervals overlap substantially, reinforcing the
+statistical finding of a non-significant interaction effect.</p>
+<p>Together, the plot and the interaction analysis table confirm that
+there is no significant interaction between sidewalk area percentage and
+walking commuter rates on obesity rates. While walking commuter rates
+and sidewalk area percentage may independently contribute to obesity
+outcomes, their combined effect does not exhibit meaningful synergy.
+Future research could investigate other potential mediators or
+moderators, such as socioeconomic status or access to recreational
+infrastructure, to better understand the determinants of obesity in
+urban settings.</p>
+<hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
+</div>
+</div>
+</div>
+<div id="mediation-analysis" class="section level1">
+<h1><strong>Mediation Analysis</strong></h1>
+<p><strong>Testing for Mediation: Walking Commuter Rates as a
+Mediator</strong></p>
+<p>We now explore whether walking commuter rates
+<strong>mediate</strong> the relationship between sidewalk area
+percentage and obesity rates. Mediation analysis helps determine if the
+effect of sidewalk area percentage on obesity rates operates indirectly
+through walking commuter rates.</p>
+<p>Path a : Sidewalk Area → Walking Commuter Rates (Mediator) <span
+class="math display">\[M_{WalkingCommuters} = \alpha_0 +
+aX_{SidewalkArea} + \epsilon_1\]</span></p>
+<p>Path b and c’: Walking Commuter Rates and Sidewalk Area → Obesity
+(Outcome) <span class="math display">\[Y_{Obesity Percentage} = \beta_0
++ bM_{WalkingCommuters} + c&#39;X_{SidewalkArea} +
+\epsilon_2\]</span></p>
+<p>Total Effect (c) <span class="math display">\[c = c&#39; +
+ab\]</span></p>
+<pre class="r"><code># mediator model
+mediator_model &lt;- lm(walked_percent ~ percent_of_land_area, data = sw_obs_data)
+# outcome model
+outcome_model &lt;- lm(obs_percent ~ percent_of_land_area + walked_percent, data = sw_obs_data)
+
+mediation_result &lt;- mediate(
+  model.m = mediator_model,
+  model.y = outcome_model,
+  treat = &quot;percent_of_land_area&quot;,
+  mediator = &quot;walked_percent&quot;,
+  boot = TRUE, # Use bootstrapping for CI
+  sims = 1000  # Number of bootstrap simulations=1000
+)</code></pre>
+<pre class="r"><code>mediation_results &lt;- data.frame(
+  Effect = c(&quot;ACME (Indirect Effect)&quot;, &quot;ADE (Direct Effect)&quot;, &quot;Total Effect&quot;, &quot;Proportion Mediated&quot;),
+  Estimate = c(mediation_result$d0, mediation_result$z0, mediation_result$tau.coef, mediation_result$n0),
+  `CI Lower` = c(mediation_result$d0.ci[1], mediation_result$z0.ci[1], mediation_result$tau.ci[1], mediation_result$n0.ci[1]),
+  `CI Upper` = c(mediation_result$d0.ci[2], mediation_result$z0.ci[2], mediation_result$tau.ci[2], mediation_result$n0.ci[2]),
+  `p-value` = c(mediation_result$d0.p, mediation_result$z0.p, mediation_result$tau.p, mediation_result$n0.p)
+)
+
+knitr::kable(
+  mediation_results,
+  caption = &quot;Mediation Analysis Results&quot;,
+  digits = 3
+)</code></pre>
+<table>
+<caption>Mediation Analysis Results</caption>
+<thead>
+<tr class="header">
+<th align="left">Effect</th>
+<th align="right">Estimate</th>
+<th align="right">CI.Lower</th>
+<th align="right">CI.Upper</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ACME (Indirect Effect)</td>
+<td align="right">-0.910</td>
+<td align="right">-1.484</td>
+<td align="right">-0.424</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">ADE (Direct Effect)</td>
+<td align="right">-0.631</td>
+<td align="right">-1.426</td>
+<td align="right">0.219</td>
+<td align="right">0.15</td>
+</tr>
+<tr class="odd">
+<td align="left">Total Effect</td>
+<td align="right">-1.542</td>
+<td align="right">-2.394</td>
+<td align="right">-0.698</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Proportion Mediated</td>
+<td align="right">0.590</td>
+<td align="right">0.308</td>
+<td align="right">1.283</td>
+<td align="right">0.00</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Visualizing Mediation Effects</strong></p>
+<pre class="r"><code>effects_data &lt;- data.frame(
+  Effect = c(&quot;ACME (Indirect Effect)&quot;, &quot;ADE (Direct Effect)&quot;, &quot;Total Effect&quot;),
+  Estimate = c(mediation_result$d0, mediation_result$z0, mediation_result$tau.coef),
+  CI_Lower = c(mediation_result$d0.ci[1], mediation_result$z0.ci[1], mediation_result$tau.ci[1]),
+  CI_Upper = c(mediation_result$d0.ci[2], mediation_result$z0.ci[2], mediation_result$tau.ci[2])
+)
+
+ggplot(effects_data, aes(x = Effect, y = Estimate)) +
+  geom_bar(stat = &quot;identity&quot;, fill = &quot;skyblue&quot;, alpha = 0.8) +
+  geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.2, color = &quot;black&quot;) +
+  labs(
+    title = &quot;Decomposition of Total Effect: Mediation Analysis&quot;,
+    x = &quot;Effect Type&quot;,
+    y = &quot;Effect Estimate&quot;
+  ) +
+  theme_minimal()</code></pre>
+<p><img src="model_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>The mediation analysis demonstrates that walking commuter rates
+<strong>significantly mediate</strong> the relationship between sidewalk
+area percentage and obesity rates.</p>
+<p>The <strong>Average Causal Mediation Effect (ACME)</strong> is
+statistically significant (estimate: -0.910, 95% CI: [-1.476, -0.439], p
+&lt; 0.001), indicating that for every unit increase in sidewalk area
+percentage, obesity rates decrease by approximately 0.91 units through
+walking behavior. This highlights walking as a critical pathway through
+which sidewalk infrastructure reduces obesity.</p>
+<p>The <strong>Average Direct Effect (ADE)</strong> is not significant,
+suggesting that sidewalk area percentage does not independently impact
+obesity rates outside of its influence on walking. However, the
+<strong>Total Effect</strong> is significant, with a 1.54-unit decrease
+in obesity rates for every unit increase in sidewalk area percentage.
+Approximately 59% of this total effect is mediated by walking,
+emphasizing the role of walking commuter behavior in linking sidewalk
+coverage to public health outcomes.</p>
+<p>These findings highlight the potential of urban planning strategies,
+such as increasing sidewalk coverage, to promote walking and reduce
+obesity rates. While sidewalk area alone may not directly reduce
+obesity, its role in fostering environments that encourage active
+commuting is pivotal. Policymakers should prioritize pedestrian-friendly
+infrastructure alongside initiatives to promote walking, addressing
+public health challenges like obesity while supporting broader urban
+health goals.</p>
+<hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
+</div>
+<div id="clustering-analysis" class="section level1">
+<h1><strong>Clustering Analysis</strong></h1>
+<div id="interactive-visualization" class="section level3">
+<h3><strong>Interactive Visualization</strong></h3>
+<p>The interactive plot visualizes neighborhoods grouped into clusters
+based on three variables: <strong>sidewalk area percentage</strong>,
+<strong>walking commuter percentage</strong>, and <strong>obesity
+rates</strong>. The x-axis represents the <strong>sidewalk area
+percentage</strong>, while the y-axis shows the <strong>walking commuter
+percentage</strong>. Each point corresponds to a neighborhood,
+color-coded by its assigned cluster.</p>
+<p>Let’s explore the clusters interactively to identify specific
+neighborhoods and their characteristics!</p>
+<pre class="r"><code># Scale the data for clustering
+scaled_data &lt;- scale(sw_obs_data[, c(&quot;percent_of_land_area&quot;, &quot;walked_percent&quot;, &quot;obs_percent&quot;)])
+
+# Apply k-means clustering
+set.seed(123)
+kmeans_result &lt;- kmeans(scaled_data, centers = 3)
+
+# Add cluster labels to the original data
+sw_obs_data$cluster &lt;- as.factor(kmeans_result$cluster)
+
+# Create an interactive scatter plot with plotly
+interactive_plot &lt;- plot_ly(
+  data = sw_obs_data,
+  x = ~percent_of_land_area,
+  y = ~walked_percent,
+  type = &quot;scatter&quot;,
+  mode = &quot;markers&quot;,
+  color = ~cluster,
+  text = ~paste(
+    &quot;Geography:&quot;, geography,
+    &quot;&lt;br&gt;Sidewalk Area %:&quot;, percent_of_land_area,
+    &quot;&lt;br&gt;Walking Commuter %:&quot;, walked_percent,
+    &quot;&lt;br&gt;Obesity Rate %:&quot;, obs_percent
+  ),
+  marker = list(size = 10, opacity = 0.7)
+) %&gt;%
+  layout(
+    title = &quot;Clustering of Neighborhoods by Sidewalk Area, Walking Commuter Rates, and Obesity Rates&quot;,
+    xaxis = list(title = &quot;Sidewalk Area Percentage&quot;),
+    yaxis = list(title = &quot;Walking Commuter Percentage&quot;),
+    legend = list(title = list(text = &quot;Cluster&quot;))
+  )
+
+# Display the interactive plot
+interactive_plot</code></pre>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-c2a931752ae4f30d7598" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-c2a931752ae4f30d7598">{"x":{"visdat":{"101ce20de7ce0":["function () ","plotlyVisDat"]},"cur_data":"101ce20de7ce0","attrs":{"101ce20de7ce0":{"x":{},"y":{},"mode":"markers","text":{},"marker":{"size":10,"opacity":0.69999999999999996},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Clustering of Neighborhoods by Sidewalk Area, Walking Commuter Rates, and Obesity Rates","xaxis":{"domain":[0,1],"automargin":true,"title":"Sidewalk Area Percentage"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Walking Commuter Percentage"},"legend":{"title":{"text":"Cluster"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.1999999999999993,4.5999999999999996,7,6.5999999999999996,7.5999999999999996,3.7000000000000002,6.2000000000000002,3.5,3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.0999999999999996,4.5999999999999996,7.7000000000000002,3.7000000000000002,6.2000000000000002,3.5],"y":[7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,3.7000000000000002,3.2000000000000002,10.4,5.7000000000000002,1.8999999999999999,5.5999999999999996,7.2000000000000002,2.7000000000000002,7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,4.9000000000000004,3.2000000000000002,4.0999999999999996,5.5999999999999996,7.2000000000000002,2.7000000000000002],"mode":"markers","text":["Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 70.7","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 69.3","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 66.9","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 67.8","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 70.6","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 59.7","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 68.5","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 60.6","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 64.4","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 65.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 65.5","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 61.9","Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 60.9","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 67.6","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 69.8","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 69.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 70.2","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 64.4","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 69.6","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 62.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 67.9","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 65.1"],"marker":{"color":"rgba(102,194,165,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(102,194,165,1)"}},"type":"scatter","name":"1","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[10.5,8.0999999999999996,7.4000000000000004,7.4000000000000004,8.9000000000000004,11,9.0999999999999996,7.7999999999999998,8,7.7000000000000002,7.7999999999999998,7,6.5999999999999996,10.5,8.1999999999999993,7.4000000000000004,7.4000000000000004,10.800000000000001,8.9000000000000004,11,7,9.0999999999999996,7.7999999999999998,6.5999999999999996,8,7.5999999999999996,7.7999999999999998,7,6.5999999999999996],"y":[6,4.9000000000000004,7.7000000000000002,9.1999999999999993,10.1,11.1,5.5,8,4.2999999999999998,4.0999999999999996,8.5,5.7999999999999998,9.5,6,3.7000000000000002,7.7000000000000002,9.1999999999999993,8.1999999999999993,10.1,11.1,10.4,5.5,8,5.7000000000000002,4.2999999999999998,1.8999999999999999,8.5,5.7999999999999998,9.5],"mode":"markers","text":["Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 56.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 65.7","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 49.3","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 54.5","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.6","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 63.1","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 55.7","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 56.1","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 62.1","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 58.6","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 54.6","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 57.4","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 56.2","Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 63.1","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 60.6","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 60.6","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 62.1","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 66.7","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.5","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 61.2","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 62.7","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 57.6","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 64.3","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 53.3","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 63.7","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 53.4","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 58.7","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 59.6","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 58.5"],"marker":{"color":"rgba(252,141,98,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(252,141,98,1)"}},"type":"scatter","name":"2","textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.800000000000001,10.1,6.7999999999999998,9.9000000000000004,9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.1,6.7999999999999998,9.9000000000000004],"y":[11.1,11.199999999999999,13.699999999999999,14.9,8.1999999999999993,13.1,10.300000000000001,18.899999999999999,11.1,11.199999999999999,13.699999999999999,14.9,13.1,10.300000000000001,18.899999999999999],"mode":"markers","text":["Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 41.2","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 46.7","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 44.9","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 52","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 49.9","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 48.3","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 46.6","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 48.4","Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 36.7","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 47.2","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 53.4","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 50.3","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 49.8","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 51.1","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 47.5"],"marker":{"color":"rgba(141,160,203,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(141,160,203,1)"}},"type":"scatter","name":"3","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="cluster-characteristics" class="section level4">
+<h4><strong>Cluster Characteristics</strong></h4>
+<ul>
+<li><p><strong>Cluster 1 (Green)</strong>: Includes neighborhoods with
+<strong>low sidewalk area percentages</strong> and <strong>low walking
+commuter percentages</strong>. These neighborhoods may lack sufficient
+pedestrian infrastructure, which could contribute to higher obesity
+rates.</p></li>
+<li><p><strong>Cluster 2 (Orange)</strong>: Represents neighborhoods
+with <strong>moderate sidewalk area percentages</strong> and
+<strong>moderate walking commuter percentages</strong>. These areas show
+some support for walkability but may require additional investment in
+pedestrian-friendly infrastructure.</p></li>
+<li><p><strong>Cluster 3 (Blue)</strong>: Comprises neighborhoods with
+the <strong>highest sidewalk area percentages</strong> and
+<strong>walking commuter percentages</strong>. These neighborhoods are
+likely the most walkable and may experience lower obesity rates due to
+increased active commuting.</p></li>
+</ul>
+</div>
+<div id="insights-from-the-plot" class="section level4">
+<h4><strong>Insights from the Plot</strong></h4>
+<ol style="list-style-type: decimal">
+<li><p><strong>Positive Trend Between Sidewalk Area and Walking
+Rates</strong>: Neighborhoods with higher sidewalk area percentages tend
+to exhibit higher walking commuter percentages, as seen in Cluster
+3.</p></li>
+<li><p><strong>Cluster Overlap</strong>: Some points from different
+clusters overlap, suggesting that additional factors (e.g.,
+socioeconomic conditions, safety) may influence walkability and health
+outcomes.</p></li>
+<li><p><strong>Policy Implications</strong>: The clustering highlights
+the importance of investing in sidewalk infrastructure to promote
+walking, which could improve public health outcomes like obesity
+rates.</p></li>
+</ol>
+</div>
+<div id="conclusion" class="section level4">
+<h4><strong>Conclusion</strong></h4>
+<p>The clusters provide actionable insights into neighborhood
+characteristics. For example, neighborhoods in Cluster 1 would benefit
+most from improved pedestrian infrastructure to encourage walking and
+reduce obesity rates. Meanwhile, the characteristics of neighborhoods in
+Cluster 3 demonstrate the positive outcomes of well-designed urban
+spaces that support active commuting.</p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
