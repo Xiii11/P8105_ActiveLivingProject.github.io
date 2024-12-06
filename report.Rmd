@@ -39,17 +39,26 @@ The difference in obesity rates between the Bronx and Manhattan from 2003 to 202
 # **Model Building**
 
 ## Key Indicators
+
+
 ### **1. Association Between Sidewalk Areas and Walking Among Commuters**
+
 Linear regression revealed a significant positive relationship between sidewalk area percentage and walking commuter rates. For every 1% increase in sidewalk coverage, walking commuter rates increased by approximately 1.96 percentage points. This finding underscores the importance of pedestrian infrastructure in promoting walking as a mode of transportation.
 
 ### **2. Interaction Between Sidewalk Area and Walking on Obesity Rates**
+
 An interaction model was constructed to determine if the relationship between sidewalk area percentage and obesity rates depended on walking commuter rates. The results showed no significant interaction effect (p = 0.932), indicating that the effects of sidewalk area and walking commuter rates on obesity operate independently. Neither sidewalk area (p = 0.556) nor walking commuter rates (p = 0.317) had significant direct effects on obesity rates in this model.
 
 ### **3. Causal Mediation Analysis**
+
 Mediation analysis demonstrated that walking commuter rates significantly mediated the relationship between sidewalk area percentage and obesity rates. Our key results are:
+
 - **Indirect Effect (ACME):** A statistically significant reduction in obesity rates of 0.91 units for every 1% increase in sidewalk area, mediated by walking commuter rates (p < 0.001).
+
 - **Direct Effect (ADE):** No statistically significant direct effect of sidewalk area on obesity rates (-0.631, p = 0.124).
+
 - **Total Effect:** A significant total reduction of 1.54 units in obesity rates for every 1% increase in sidewalk area (p < 0.001).
+
 - **Proportion Mediated:** Approximately 59% of the total effect was mediated by walking behavior.
 
 
