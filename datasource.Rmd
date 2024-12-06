@@ -5,7 +5,21 @@ output:
     toc: true
     toc_float: true
     theme: lumen
+    code_folding: hide
 ---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(haven)
+library(sf)
+knitr::opts_chunk$set(
+  warning = FALSE, 
+  message = FALSE,
+  fig.align = 'center')
+
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+```
 
 ## **Data Sources**
 
@@ -16,14 +30,66 @@ The [Walking, driving, and cycling](https://a816-dohbesp.nyc.gov/IndicatorPublic
 The [Overweight](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary) provides insights into the prevalence of overweight or obesity among adults across New York City. The data spans from 2003 to 2022, with yearly updates available. It offers granular breakdowns by geographical boundaries including citywide, borough, and UHF34 regions. The dataset includes key metrics such as the number of individuals classified as overweight or obese and the percentage prevalence.
 
 ## **Data Import and Tidy**
-We loaded essential libraries from the tidyverse ecosystem along with other helpful packages like janitor for cleaning column names, ggplot2 for visualization, and plotly for interactive plots.
+### *Part 1: Commuting mode and Obesity*
+
+Firstly, we process borough-level commuting data, focusing on four commuting methods: bicycle, car/truck/van, public transportation, and walking. These methods are represented in terms of both absolute numbers and percentages. We clean the dataset by removing unnecessary columns, renaming variables for clarity (e.g., `geography` renamed to `borough`), and converting numeric data from character format to ensure proper analysis.
+
+Next, we pivot the data into a long format, enabling a flexible structure for analysis and visualization by method and borough. The dataset is sorted by `geo_id` for a consistent ordering of boroughs. This preparation provides a clean and organized dataset that supports further exploratory analysis of commuting patterns and their relationships to sidewalk and obesity factors.
+
+The final dataset `commuting_data` showed below.
+```{r}
+library(tidyverse)
+library(janitor)
+library(knitr)
+library(kableExtra)
+
+commuting_df = 
+  read.csv("data/commuting.csv", na = c("NA",".","")) |> 
+   janitor::clean_names()
+
+borough_df = 
+  commuting_df  |> 
+  filter(geo_type_desc == "Borough") |> 
+  select(-geo_type_desc) |>  
+  rename(borough = geography) |>  
+  mutate(across(
+    c(bicycle_number, 
+      car_truck_or_van_number, 
+      public_transportation_number, 
+      walked_number),
+                ~as.numeric(gsub(",", "", .))))
+
+commuting_data = borough_df |> 
+  pivot_longer(
+    cols = -c(time_period, geo_id, geo_rank, borough), 
+    names_to = c("method", ".value"),
+    names_pattern = "(.*)_(number|percent)$"
+  ) |> 
+  select(-geo_rank) |> 
+  arrange(geo_id)
+
+commuting_data |> 
+  knitr::kable(
+    digits = 3, 
+    caption = "Commuting Data by Borough", 
+    align = rep("l", ncol(commuting_data))  
+  ) |> 
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    font_size = 12
+  ) |> 
+  kableExtra::scroll_box(width = "100%", height = "300px")
+
+```
+
 We proceed to import our data using both read.csv() and read_csv() from the readr package, specifying NA values to accurately handle missing data right from the start. We then standardize column names to a uniform format with janitor::clean_names() function, which simplifies further coding and analysis.
 Moreover,we also transform the data by converting numeric fields from string format to actual numbers, removing commas for accurate calculations, and filtering the dataset to include only borough-level data
-### *Part 1: Commuting mode and Obesity*
-For commnuting mode, to find out the most popular commuting ways in different boroughs, we reformat the data into a long format, listing each mode of commuting per borough and then use this formatted data to create interactive bar charts with plotly, showing the count of commuters by method for each borough and providing detailed hover text. The plot_ly() function is used to construct these visualizations, providing dynamic insights with options like hover text for detailed data points, and layout() to enhance chart readability and aesthetics.
-We then repeat the process for percentages, showing what portion of the population uses each commuting method
+
  
 Similarly,for overweight&obesity dataset, we first create a bar chart using ggplot2 to display obesity rates and corresponding numbers for each NYC borough, enhancing clarity with direct textual annotations on the bars. To make the chart interactive and allow dynamic exploration, we employ plotly, transforming the static ggplot into an interactive visualization. Additionally, we develop a trend line plot to illustrate changes in obesity rates over the years across boroughs. This line plot, also made interactive with plotly, includes tooltips that provide detailed data insights when users hover over any point, thus enabling a deeper understanding of obesity trends within each borough.
 
-###*Part 2:*
+The final dataset `obesity_data` showed below.
+
+
+
 

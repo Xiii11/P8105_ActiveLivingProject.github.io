@@ -1,21 +1,15 @@
 ---
 title: "final data"
-author: "Anni Wang"
-date: "2024-12-05"
 output: html_document
 ---
 
 ```{r}
-# R code starts here
-library(tidyverse)
 library(tidyverse)
 library(janitor)
-library(ggplot2)
-library(dplyr)
-library(tidyr)
 library(knitr)
 library(gridExtra)
 library(reshape2)
+library(plotly)
 ```
 
 ```{r}
@@ -180,6 +174,17 @@ p2_plotly <- plot_ly(data = commute_percent_long, x = ~geography, y = ~Percent, 
 p2_plotly
 ```
 
-we can see from the bar chart, public transportation is the most popular commuting mode in most borough, except for the Staten Island, where the car/cruck/van is the most popular commuting mode.
+we can see from the bar chart, public transportation is the most popular commuting mode in most borough, except for the Staten Island, where the car/truck/van is the most popular commuting mode.
+
+```{r}
+commuting_data = borough_df  |> 
+  pivot_longer(
+    cols = -c(time_period, 
+              geo_type_desc, 
+              geo_id, geo_rank, geography), 
+    names_to = c("method", ".value"),
+    names_pattern = "(.*)_(number|percent)$"
+  )
+```
 
 
