@@ -5,7 +5,9 @@ date: "2024-12-04"
 output: github_document
 ---
 
-```{r}
+```{r setup, include=FALSE}
+# R code starts here
+library(tidyverse)
 library(tidyverse)
 library(janitor)
 library(ggplot2)
