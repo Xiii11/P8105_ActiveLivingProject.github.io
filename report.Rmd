@@ -470,7 +470,7 @@ overweight_df = read_csv("data/overweight2022.csv") |>
     number_clean = as.numeric(gsub(",", "", number))  
   ) |>  
   filter(geo_type_desc == "Borough") |> 
-  select(-percent_numeric)  
+  dplyr::select(-percent_numeric)  
 
 na_check = overweight_df |>  
   filter(is.na(obesity_rate))
