@@ -13,7 +13,7 @@
 
 <title>Data Source</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -232,11 +232,11 @@ $(document).ready(function () {
 
 <style type="text/css">
 
-#TOC {
+#section-TOC {
   margin: 25px 0px 20px 0px;
 }
 @media (max-width: 768px) {
-#TOC {
+#section-TOC {
   position: relative;
   width: 100%;
 }
@@ -305,7 +305,7 @@ div.tocify {
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
+<div id="section-TOC" class="tocify">
 </div>
 </div>
 
@@ -372,7 +372,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div id="header">
+<div id="section-header">
 
 <div class="btn-group pull-right float-right">
 <button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
@@ -389,9 +389,9 @@ div.tocify {
 </div>
 
 
-<div id="data-sources" class="section level2">
+<div id="section-data-sources" class="section level2">
 <h2><strong>Data Sources</strong></h2>
-<p>For part 1, we utilized <a
+<p>We utilized <a
 href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary">Walking,
 driving, and cycling</a> and <a
 href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary">Overweight</a>
@@ -399,32 +399,36 @@ from The Official Website of the City of New York.</p>
 <p>The <a
 href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary">Walking,
 driving, and cycling</a> dataset covers various commuting modes used by
-adults, focusing on public transit, biking, walking, and driving using
-private vehicles. This information provides insights into transportation
-availability and choices.The dataset provides aggregated data for
-overlapping four-year intervals, starting from 2007 and extending to
-2021. Each interval represents a rolling four-year period. We use the
-latest 2017-2021 dataset to do data analysis.</p>
+<code>adults</code>, focusing on public transit, biking, walking, and
+driving using private vehicles. This information provides insights into
+transportation availability and choices.The dataset provides aggregated
+data for overlapping four-year intervals, starting from 2007 and
+extending to 2021. Each interval represents a rolling four-year period.
+We use the latest 2017-2021 dataset to do data analysis.</p>
 <p>The <a
 href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary">Overweight</a>
-provides insights into the prevalence of overweight or obesity among
-adults across New York City. The data spans from 2003 to 2022, with
-yearly updates available. It offers granular breakdowns by geographical
-boundaries including citywide, borough, and UHF34 regions. The dataset
-includes key metrics such as the number of individuals classified as
-overweight or obese and the percentage prevalence.</p>
+provides insights into the prevalence of
+<code>overweight or obesity</code> among adults across New York City.
+The data spans from 2003 to 2022, with yearly updates available. It
+offers granular breakdowns by geographical boundaries including
+citywide, borough, and UHF34 regions. The dataset includes key metrics
+such as the number of individuals classified as overweight or obese and
+the percentage prevalence.</p>
 </div>
-<div id="data-import-and-tidy" class="section level2">
+<div id="section-data-import-and-tidy" class="section level2">
 <h2><strong>Data Import and Tidy</strong></h2>
-<div id="part-1-commuting-mode-and-obesity" class="section level3">
+<div id="section-part-1-commuting-mode-and-obesity"
+class="section level3">
 <h3><em>Part 1: Commuting mode and Obesity</em></h3>
-<p>Firstly, we process borough-level commuting data, focusing on four
-commuting methods: bicycle, car/truck/van, public transportation, and
-walking. These methods are represented in terms of both absolute numbers
-and percentages. We clean the dataset by removing unnecessary columns,
-renaming variables for clarity (e.g., <code>geography</code> renamed to
-<code>borough</code>), and converting numeric data from character format
-to ensure proper analysis.</p>
+<p>Firstly, we processed both
+<code>neighborhood- and borough-level</code> commuting data, focusing on
+four commuting methods: bicycle, car/truck/van, public transportation,
+and walking. These methods are represented in terms of both absolute
+numbers and percentages. We clean the dataset by removing unnecessary
+columns, renaming variables for clarity (e.g., <code>geography</code>
+renamed to <code>neighborhood</code> and <code>borough</code>
+accordingly based on analysis needs), and converting numeric data from
+character format to ensure proper analysis.</p>
 <p>Next, we pivot the data into a long format, enabling a flexible
 structure for analysis and visualization by method and borough. The
 dataset is sorted by <code>geo_id</code> for a consistent ordering of
@@ -905,6 +909,7 @@ walked
 </tbody>
 </table>
 </div>
+<p><br></p>
 <p>We proceed to import our data using both read.csv() and read_csv()
 from the readr package, specifying NA values to accurately handle
 missing data right from the start. We then standardize column names to a
@@ -913,7 +918,7 @@ further coding and analysis. Moreover,we also transform the data by
 converting numeric fields from string format to actual numbers, removing
 commas for accurate calculations, and filtering the dataset to include
 only borough-level data</p>
-<p>Similarly,for overweight&amp;obesity dataset, we first create a bar
+<p>Similarly, for overweight&amp;obesity dataset, we first create a bar
 chart using ggplot2 to display obesity rates and corresponding numbers
 for each NYC borough, enhancing clarity with direct textual annotations
 on the bars. To make the chart interactive and allow dynamic
@@ -973,7 +978,283 @@ server &lt;- function(input, output) {
 }
 
 shinyApp(ui = ui, server = server)</code></pre>
-<div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
+<iframe data-deferred-src="app20923334129e299271a61e0417d0652f/?w=&amp;__subapp__=1" width="100%" height="400" class="shiny-frame shiny-frame-deferred"></iframe>
+<p><br><br></p>
+</div>
+<div id="section-part-2-essential-variables-overview"
+class="section level3">
+<h3><em>Part 2: Essential Variables Overview</em></h3>
+<pre class="r"><code>library(tidyverse)
+
+commuting_df = read.csv(&quot;data/commuting.csv&quot;, na = c(&quot;NA&quot;,&quot;.&quot;,&quot;&quot;)) |&gt; 
+  janitor::clean_names() |&gt; 
+  rename(geo_type = geo_type_desc) |&gt; 
+  filter(
+    geo_type %in% c(&quot;UHF 42&quot;, &quot;Citywide&quot;, &quot;Borough&quot;))
+
+overweight_overall_df = read_csv(&quot;data/overweightoverall.csv&quot;, na = c(&quot;NA&quot;,&quot;.&quot;,&quot;&quot;)) |&gt; 
+  janitor::clean_names() |&gt; 
+  rename(
+    obs_number = number,
+    obs_percent = percent
+  ) |&gt; 
+  separate(
+    obs_percent, 
+    into = c(&quot;obs_percent&quot;, &quot;obs_percent_range&quot;), 
+    sep = &quot;\\s*\\(\\s*&quot;, 
+    convert = TRUE
+  ) |&gt;
+  mutate(obs_percent_range = str_remove(obs_percent_range, &quot;\\)$&quot;))
+
+sidewalk_df = read_csv(&quot;data/sidewalk.csv&quot;, na = c(&quot;NA&quot;,&quot;.&quot;,&quot;&quot;)) |&gt; 
+  janitor::clean_names() |&gt; 
+  mutate(neighborhood_geo_id = paste(geography, geo_id, sep = &quot;, &quot;)) 
+
+commuting_sidewalk_df = 
+  inner_join(commuting_df, sidewalk_df, by = c(&quot;geo_id&quot;, &quot;geo_rank&quot;, &quot;geography&quot;)) |&gt; 
+  dplyr::select(-time_period.x, -time_period.y, everything()) |&gt; 
+  mutate(
+    bicycle_info = paste0(bicycle_number, &quot; (&quot;, bicycle_percent, &quot;%)&quot;),
+    car_truck_van_info = paste0(car_truck_or_van_number, &quot; (&quot;, car_truck_or_van_percent, &quot;%)&quot;),
+    public_transport_info = paste0(public_transportation_number, &quot; (&quot;, public_transportation_percent, &quot;%)&quot;),
+    walked_info = paste0(walked_number, &quot; (&quot;, walked_percent, &quot;%)&quot;)
+  )</code></pre>
+<p>To understand the association between obesity rates in different
+areas, urban design (<code>Sidewalk Coverage</code>), and various
+commuting methods, we included the following key variables in our
+analysis:</p>
+<p><strong>Major Outcome Variable (Dependent Variable)</strong>:</p>
+<ul>
+<li><a
+href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary"><code>Obesity Rate</code></a>:
+Estimated proportion of adults classified as overweight or obese,
+calculated using self-reported weight and height.
+<ul>
+<li>Calculation (Number): Rounded to the nearest 1,000, adults with a
+BMI between 25 and 29.9 are classified as overweight, and those with a
+BMI of 30 or higher are classified as obese.</li>
+<li>Calculation (Percent): Expressed as a percentage of the population,
+using the same BMI thresholds.</li>
+</ul></li>
+</ul>
+<pre class="r"><code># Calculate summary statistics for obesity percentage
+obesity_table = overweight_overall_df |&gt; 
+  summarize(
+    overall_mean = mean(as.numeric(obs_percent), na.rm = TRUE),
+    overall_std = sd(as.numeric(obs_percent), na.rm = TRUE),
+    min_value = min(as.numeric(obs_percent), na.rm = TRUE),
+    max_value = max(as.numeric(obs_percent), na.rm = TRUE)
+  ) |&gt; 
+  rename(
+    &quot;Mean&quot; = overall_mean,
+    &quot;Std Dev&quot; = overall_std,
+    &quot;Min&quot; = min_value,
+    &quot;Max&quot; = max_value
+  )
+
+# Define the table structure
+obesity_table = tibble(
+  measure1 = c(&quot;Mean&quot;, &quot;Std Dev&quot;),
+  value1 = c(57.43, 9.47),
+  measure2 = c(&quot;Min&quot;, &quot;Max&quot;),
+  value2 = c(30.1, 78.7)
+)
+
+obesity_table |&gt; 
+  knitr::kable(
+    caption = &quot;Summary Statistics for Obesity Rate&quot;,
+    col.names = NULL,
+    align = &quot;c&quot;,
+    digits = 2
+  )</code></pre>
+<table>
+<caption>Summary Statistics for Obesity Rate</caption>
+<tbody>
+<tr class="odd">
+<td align="center">Mean</td>
+<td align="center">57.43</td>
+<td align="center">Min</td>
+<td align="center">30.1</td>
+</tr>
+<tr class="even">
+<td align="center">Std Dev</td>
+<td align="center">9.47</td>
+<td align="center">Max</td>
+<td align="center">78.7</td>
+</tr>
+</tbody>
+</table>
+<hr style="height: 5px; border: none; background: linear-gradient(to right, #FFDDC1, white);">
+<p><strong>Explanatory Variables (Independent Variables)</strong>:</p>
+<ul>
+<li><a
+href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/active-design/?id=2181#display=summary"><code>Sidewalk Area</code></a>:
+calculated as the total curb-to-building sidewalk area (in square
+kilometers) within the UHF neighborhood divided by the total land area
+(excluding inland water bodies), expressed as a
+<code>percentage</code>.</li>
+</ul>
+<pre class="r"><code># Calculate summary statistics for sidewalk area percentage
+sidewalk_table = sidewalk_df |&gt; 
+  summarize(
+    overall_mean = mean(percent_of_land_area, na.rm = TRUE),
+    overall_std = sd(percent_of_land_area, na.rm = TRUE),
+    min_value = min(percent_of_land_area, na.rm = TRUE),
+    max_value = max(percent_of_land_area, na.rm = TRUE)
+  ) |&gt; 
+  rename(
+    &quot;Mean&quot; = overall_mean,
+    &quot;Std Dev&quot; = overall_std,
+    &quot;Min&quot; = min_value,
+    &quot;Max&quot; = max_value
+  )
+
+
+# Define the table structure
+sidewalk_table = tibble(
+  measure1 = c(&quot;Mean&quot;, &quot;Std Dev&quot;),
+  value1 = c(7.59, 2.34),
+  measure2 = c(&quot;Min&quot;, &quot;Max&quot;),
+  value2 = c(2.7, 11.3)
+)
+
+sidewalk_table |&gt; 
+  knitr::kable(
+    caption = &quot;Summary Statistics for Sidewalk Area&quot;,
+    col.names = NULL,
+    align = &quot;c&quot;,
+    digits = 2
+  )</code></pre>
+<table>
+<caption>Summary Statistics for Sidewalk Area</caption>
+<tbody>
+<tr class="odd">
+<td align="center">Mean</td>
+<td align="center">7.59</td>
+<td align="center">Min</td>
+<td align="center">2.7</td>
+</tr>
+<tr class="even">
+<td align="center">Std Dev</td>
+<td align="center">2.34</td>
+<td align="center">Max</td>
+<td align="center">11.3</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a
+href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary"><code>Commuting Methods</code></a>:As
+part of our group project, we are analyzing how adults commute to work,
+categorized by mode—public transit, biking, walking, or private
+vehicles. These commuting patterns help us better understand
+transportation availability, individual choices, traffic conditions, and
+safety concerns. The dataset we are using includes information on the
+following commuting methods:
+<ul>
+<li><code>Bicycle</code>:
+<ul>
+<li>Number: Estimated workers (16+ years) who commute by bicycle.</li>
+<li>Percentage: Proportion of commuters using bicycles.</li>
+</ul></li>
+<li><code>Car, Truck, or Van</code>:
+<ul>
+<li>Number: Estimated workers (16+ years) commuting via car, truck, or
+van (driver or passenger).</li>
+<li>Percentage: Proportion of commuters using cars, trucks, or
+vans.</li>
+</ul></li>
+<li><code>Public Transportation</code>:
+<ul>
+<li>Number: Estimated workers (16+ years) using public transit.</li>
+<li>Percentage: Proportion of commuters using public transit.</li>
+</ul></li>
+<li><code>Walking</code>:
+<ul>
+<li>Number: Estimated workers (16+ years) walking to work.</li>
+<li>Percentage: Proportion of commuters walking to work.</li>
+</ul></li>
+</ul></li>
+</ul>
+<pre class="r"><code># Calculate summary statistics for commuting percentages
+commuting_table &lt;- commuting_df %&gt;%
+  summarize(
+    bike_mean = mean(bicycle_percent, na.rm = TRUE),
+    bike_std = sd(bicycle_percent, na.rm = TRUE),
+    bike_min = min(bicycle_percent, na.rm = TRUE),
+    bike_max = max(bicycle_percent, na.rm = TRUE),
+    car_mean = mean(car_truck_or_van_percent, na.rm = TRUE),
+    car_std = sd(car_truck_or_van_percent, na.rm = TRUE),
+    car_min = min(car_truck_or_van_percent, na.rm = TRUE),
+    car_max = max(car_truck_or_van_percent, na.rm = TRUE),
+    walk_mean = mean(walked_percent, na.rm = TRUE),
+    walk_std = sd(walked_percent, na.rm = TRUE),
+    walk_min = min(walked_percent, na.rm = TRUE),
+    walk_max = max(walked_percent, na.rm = TRUE),
+    public_mean = mean(public_transportation_percent, na.rm = TRUE),
+    public_std = sd(public_transportation_percent, na.rm = TRUE),
+    public_min = min(public_transportation_percent, na.rm = TRUE),
+    public_max = max(public_transportation_percent, na.rm = TRUE)
+  ) %&gt;%
+  pivot_longer(cols = everything(), names_to = &quot;Variable&quot;, values_to = &quot;Value&quot;) %&gt;%
+  separate(Variable, into = c(&quot;Method&quot;, &quot;Stat&quot;), sep = &quot;_&quot;) %&gt;%
+  pivot_wider(names_from = &quot;Stat&quot;, values_from = &quot;Value&quot;)
+
+commuting_table |&gt; 
+    knitr::kable(
+    caption = &quot;Summary Statistics for Commuting Methods&quot;,
+    digits = 2
+  )</code></pre>
+<table>
+<caption>Summary Statistics for Commuting Methods</caption>
+<thead>
+<tr class="header">
+<th align="left">Method</th>
+<th align="right">mean</th>
+<th align="right">std</th>
+<th align="right">min</th>
+<th align="right">max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">bike</td>
+<td align="right">1.28</td>
+<td align="right">1.23</td>
+<td align="right">0.1</td>
+<td align="right">5.1</td>
+</tr>
+<tr class="even">
+<td align="left">car</td>
+<td align="right">28.86</td>
+<td align="right">19.13</td>
+<td align="right">4.9</td>
+<td align="right">68.7</td>
+</tr>
+<tr class="odd">
+<td align="left">walk</td>
+<td align="right">9.58</td>
+<td align="right">7.09</td>
+<td align="right">1.4</td>
+<td align="right">35.0</td>
+</tr>
+<tr class="even">
+<td align="left">public</td>
+<td align="right">47.75</td>
+<td align="right">12.44</td>
+<td align="right">21.7</td>
+<td align="right">67.5</td>
+</tr>
+</tbody>
+</table>
+<hr style="height: 5px; border: none; background: linear-gradient(to right, #FFDDC1, white);">
+<p><strong>Geographical Variables (refer to Part 1)</strong>:</p>
+<ul>
+<li><p><code>Neighborhood-Level Data</code>: Data aggregated at a
+smaller, localized area.</p></li>
+<li><p><code>Borough-Level Data</code>: Data aggregated at a larger,
+regional area.</p></li>
+</ul>
 </div>
 </div>
 
@@ -1001,7 +1282,7 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function () {
-  window.buildTabsets("TOC");
+  window.buildTabsets("section-TOC");
 });
 
 $(document).ready(function () {
@@ -1044,7 +1325,7 @@ $(document).ready(function ()  {
     options.smoothScroll = true;
 
     // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
+    var toc = $("#section-TOC").tocify(options).data("toc-tocify");
 });
 </script>
 

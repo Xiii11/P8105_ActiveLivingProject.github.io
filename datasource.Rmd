@@ -24,16 +24,16 @@ theme_set(theme_minimal() + theme(legend.position = "bottom"))
 
 ## **Data Sources**
 
-For part 1, we utilized [Walking, driving, and cycling](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary) and [Overweight](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary) from The Official Website of the City of New York. 
+We utilized [Walking, driving, and cycling](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary) and [Overweight](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary) from The Official Website of the City of New York. 
 
-The [Walking, driving, and cycling](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary) dataset covers various commuting modes used by adults, focusing on public transit, biking, walking, and driving using private vehicles. This information provides insights into transportation availability and choices.The dataset provides aggregated data for overlapping four-year intervals, starting from 2007 and extending to 2021. Each interval represents a rolling four-year period. We use the latest 2017-2021 dataset to do data analysis.
+The [Walking, driving, and cycling](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary) dataset covers various commuting modes used by `adults`, focusing on public transit, biking, walking, and driving using private vehicles. This information provides insights into transportation availability and choices.The dataset provides aggregated data for overlapping four-year intervals, starting from 2007 and extending to 2021. Each interval represents a rolling four-year period. We use the latest 2017-2021 dataset to do data analysis.
 
-The [Overweight](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary) provides insights into the prevalence of overweight or obesity among adults across New York City. The data spans from 2003 to 2022, with yearly updates available. It offers granular breakdowns by geographical boundaries including citywide, borough, and UHF34 regions. The dataset includes key metrics such as the number of individuals classified as overweight or obese and the percentage prevalence.
+The [Overweight](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary) provides insights into the prevalence of `overweight or obesity` among adults across New York City. The data spans from 2003 to 2022, with yearly updates available. It offers granular breakdowns by geographical boundaries including citywide, borough, and UHF34 regions. The dataset includes key metrics such as the number of individuals classified as overweight or obese and the percentage prevalence.
 
 ## **Data Import and Tidy**
 ### *Part 1: Commuting mode and Obesity*
 
-Firstly, we process borough-level commuting data, focusing on four commuting methods: bicycle, car/truck/van, public transportation, and walking. These methods are represented in terms of both absolute numbers and percentages. We clean the dataset by removing unnecessary columns, renaming variables for clarity (e.g., `geography` renamed to `borough`), and converting numeric data from character format to ensure proper analysis.
+Firstly, we processed both `neighborhood- and borough-level` commuting data, focusing on four commuting methods: bicycle, car/truck/van, public transportation, and walking. These methods are represented in terms of both absolute numbers and percentages. We clean the dataset by removing unnecessary columns, renaming variables for clarity (e.g., `geography` renamed to `neighborhood` and `borough` accordingly based on analysis needs), and converting numeric data from character format to ensure proper analysis.
 
 Next, we pivot the data into a long format, enabling a flexible structure for analysis and visualization by method and borough. The dataset is sorted by `geo_id` for a consistent ordering of boroughs. This preparation provides a clean and organized dataset that supports further exploratory analysis of commuting patterns and their relationships to sidewalk and obesity factors.
 
@@ -83,11 +83,12 @@ commuting_data |>
 
 ```
 
+<br>
+
 We proceed to import our data using both read.csv() and read_csv() from the readr package, specifying NA values to accurately handle missing data right from the start. We then standardize column names to a uniform format with janitor::clean_names() function, which simplifies further coding and analysis.
 Moreover,we also transform the data by converting numeric fields from string format to actual numbers, removing commas for accurate calculations, and filtering the dataset to include only borough-level data
 
- 
-Similarly,for overweight&obesity dataset, we first create a bar chart using ggplot2 to display obesity rates and corresponding numbers for each NYC borough, enhancing clarity with direct textual annotations on the bars. To make the chart interactive and allow dynamic exploration, we employ plotly, transforming the static ggplot into an interactive visualization. Additionally, we develop a trend line plot to illustrate changes in obesity rates over the years across boroughs. This line plot, also made interactive with plotly, includes tooltips that provide detailed data insights when users hover over any point, thus enabling a deeper understanding of obesity trends within each borough.
+Similarly, for overweight&obesity dataset, we first create a bar chart using ggplot2 to display obesity rates and corresponding numbers for each NYC borough, enhancing clarity with direct textual annotations on the bars. To make the chart interactive and allow dynamic exploration, we employ plotly, transforming the static ggplot into an interactive visualization. Additionally, we develop a trend line plot to illustrate changes in obesity rates over the years across boroughs. This line plot, also made interactive with plotly, includes tooltips that provide detailed data insights when users hover over any point, thus enabling a deeper understanding of obesity trends within each borough.
 
 The final dataset `obesity_data` showed below.
 
@@ -143,6 +144,185 @@ shinyApp(ui = ui, server = server)
 
 ```
 
+<br><br>
+
+### *Part 2: Essential Variables Overview*
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+
+commuting_df = read.csv("data/commuting.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  rename(geo_type = geo_type_desc) |> 
+  filter(
+    geo_type %in% c("UHF 42", "Citywide", "Borough"))
+
+overweight_overall_df = read_csv("data/overweightoverall.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  rename(
+    obs_number = number,
+    obs_percent = percent
+  ) |> 
+  separate(
+    obs_percent, 
+    into = c("obs_percent", "obs_percent_range"), 
+    sep = "\\s*\\(\\s*", 
+    convert = TRUE
+  ) |>
+  mutate(obs_percent_range = str_remove(obs_percent_range, "\\)$"))
+
+sidewalk_df = read_csv("data/sidewalk.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  mutate(neighborhood_geo_id = paste(geography, geo_id, sep = ", ")) 
+
+commuting_sidewalk_df = 
+  inner_join(commuting_df, sidewalk_df, by = c("geo_id", "geo_rank", "geography")) |> 
+  dplyr::select(-time_period.x, -time_period.y, everything()) |> 
+  mutate(
+    bicycle_info = paste0(bicycle_number, " (", bicycle_percent, "%)"),
+    car_truck_van_info = paste0(car_truck_or_van_number, " (", car_truck_or_van_percent, "%)"),
+    public_transport_info = paste0(public_transportation_number, " (", public_transportation_percent, "%)"),
+    walked_info = paste0(walked_number, " (", walked_percent, "%)")
+  )
+```
+
+To understand the association between obesity rates in different areas, urban design (`Sidewalk Coverage`), and various commuting methods, we included the following key variables in our analysis:
+
+**Major Outcome Variable (Dependent Variable)**:
+
+- [`Obesity Rate`](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary): Estimated proportion of adults classified as overweight or obese, calculated using self-reported weight and height.
+  - Calculation (Number): Rounded to the nearest 1,000, adults with a BMI between 25 and 29.9 are classified as overweight, and those with a BMI of 30 or higher are classified as obese.
+  - Calculation (Percent): Expressed as a percentage of the population, using the same BMI thresholds.
+
+```{r, message = FALSE, warning = FALSE}
+# Calculate summary statistics for obesity percentage
+obesity_table = overweight_overall_df |> 
+  summarize(
+    overall_mean = mean(as.numeric(obs_percent), na.rm = TRUE),
+    overall_std = sd(as.numeric(obs_percent), na.rm = TRUE),
+    min_value = min(as.numeric(obs_percent), na.rm = TRUE),
+    max_value = max(as.numeric(obs_percent), na.rm = TRUE)
+  ) |> 
+  rename(
+    "Mean" = overall_mean,
+    "Std Dev" = overall_std,
+    "Min" = min_value,
+    "Max" = max_value
+  )
+
+# Define the table structure
+obesity_table = tibble(
+  measure1 = c("Mean", "Std Dev"),
+  value1 = c(57.43, 9.47),
+  measure2 = c("Min", "Max"),
+  value2 = c(30.1, 78.7)
+)
+
+obesity_table |> 
+  knitr::kable(
+    caption = "Summary Statistics for Obesity Rate",
+    col.names = NULL,
+    align = "c",
+    digits = 2
+  )
+```
+
+
+<hr style="height: 5px; border: none; background: linear-gradient(to right, #FFDDC1, white);">
+
+**Explanatory Variables (Independent Variables)**:
+
+- [`Sidewalk Area`](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/active-design/?id=2181#display=summary): calculated as the total curb-to-building sidewalk area (in square kilometers) within the UHF neighborhood divided by the total land area (excluding inland water bodies), expressed as a `percentage`.
+
+```{r, message = FALSE, warning = FALSE}
+# Calculate summary statistics for sidewalk area percentage
+sidewalk_table = sidewalk_df |> 
+  summarize(
+    overall_mean = mean(percent_of_land_area, na.rm = TRUE),
+    overall_std = sd(percent_of_land_area, na.rm = TRUE),
+    min_value = min(percent_of_land_area, na.rm = TRUE),
+    max_value = max(percent_of_land_area, na.rm = TRUE)
+  ) |> 
+  rename(
+    "Mean" = overall_mean,
+    "Std Dev" = overall_std,
+    "Min" = min_value,
+    "Max" = max_value
+  )
+
+
+# Define the table structure
+sidewalk_table = tibble(
+  measure1 = c("Mean", "Std Dev"),
+  value1 = c(7.59, 2.34),
+  measure2 = c("Min", "Max"),
+  value2 = c(2.7, 11.3)
+)
+
+sidewalk_table |> 
+  knitr::kable(
+    caption = "Summary Statistics for Sidewalk Area",
+    col.names = NULL,
+    align = "c",
+    digits = 2
+  )
+
+```
+
+
+- [`Commuting Methods`](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary):As part of our group project, we are analyzing how adults commute to work, categorized by mode—public transit, biking, walking, or private vehicles. These commuting patterns help us better understand transportation availability, individual choices, traffic conditions, and safety concerns. The dataset we are using includes information on the following commuting methods:
+  - `Bicycle`:
+    - Number: Estimated workers (16+ years) who commute by bicycle.
+    - Percentage: Proportion of commuters using bicycles.
+  - `Car, Truck, or Van`:
+    - Number: Estimated workers (16+ years) commuting via car, truck, or van (driver or passenger).
+    - Percentage: Proportion of commuters using cars, trucks, or vans.
+  - `Public Transportation`:
+    - Number: Estimated workers (16+ years) using public transit.
+    - Percentage: Proportion of commuters using public transit.
+  - `Walking`:
+    - Number: Estimated workers (16+ years) walking to work.
+    - Percentage: Proportion of commuters walking to work.
+
+
+```{r, message = FALSE, warning = FALSE}
+# Calculate summary statistics for commuting percentages
+commuting_table <- commuting_df %>%
+  summarize(
+    bike_mean = mean(bicycle_percent, na.rm = TRUE),
+    bike_std = sd(bicycle_percent, na.rm = TRUE),
+    bike_min = min(bicycle_percent, na.rm = TRUE),
+    bike_max = max(bicycle_percent, na.rm = TRUE),
+    car_mean = mean(car_truck_or_van_percent, na.rm = TRUE),
+    car_std = sd(car_truck_or_van_percent, na.rm = TRUE),
+    car_min = min(car_truck_or_van_percent, na.rm = TRUE),
+    car_max = max(car_truck_or_van_percent, na.rm = TRUE),
+    walk_mean = mean(walked_percent, na.rm = TRUE),
+    walk_std = sd(walked_percent, na.rm = TRUE),
+    walk_min = min(walked_percent, na.rm = TRUE),
+    walk_max = max(walked_percent, na.rm = TRUE),
+    public_mean = mean(public_transportation_percent, na.rm = TRUE),
+    public_std = sd(public_transportation_percent, na.rm = TRUE),
+    public_min = min(public_transportation_percent, na.rm = TRUE),
+    public_max = max(public_transportation_percent, na.rm = TRUE)
+  ) %>%
+  pivot_longer(cols = everything(), names_to = "Variable", values_to = "Value") %>%
+  separate(Variable, into = c("Method", "Stat"), sep = "_") %>%
+  pivot_wider(names_from = "Stat", values_from = "Value")
+
+commuting_table |> 
+    knitr::kable(
+    caption = "Summary Statistics for Commuting Methods",
+    digits = 2
+  )
+```
+
+<hr style="height: 5px; border: none; background: linear-gradient(to right, #FFDDC1, white);">
+
+**Geographical Variables (refer to Part 1)**:
+
+- `Neighborhood-Level Data`: Data aggregated at a smaller, localized area.
+
+- `Borough-Level Data`: Data aggregated at a larger, regional area.
 
 
 
