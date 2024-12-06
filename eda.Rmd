@@ -31,6 +31,7 @@ sidewalk_df = read_csv("data/sidewalk.csv", na = c("NA",".","")) |>
 
 commuting_sidewalk_df = 
   inner_join(commuting_df, sidewalk_df, by = c("geo_id", "geo_rank", "geography")) |> 
+  select(-time_period.x, - time_period.y, everything()) |> 
   mutate(
     bicycle_info = paste0(bicycle_number, " (", bicycle_percent, "%)"),
     car_truck_van_info = paste0(car_truck_or_van_number, " (", car_truck_or_van_percent, "%)"),

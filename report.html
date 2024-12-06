@@ -324,7 +324,7 @@ div.tocify {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="datasource.html">Data Source</a>
+  <a href="final.html">Data Source</a>
 </li>
 <li>
   <a href="eda.html">EDA</a>
@@ -360,9 +360,37 @@ div.tocify {
 
 <div id="motivation" class="section level1">
 <h1><strong>Motivation</strong></h1>
+<p>According to the <a
+href="https://www.health.ny.gov/press/releases/2023/2023-06-20_obesity.htm">New
+York State Department of Health</a>, approximately two-thirds of adult
+New Yorkers have a Body Mass Index (BMI) classified as either obese
+(29.1%) or overweight (34.5%), impacting over 8.4 million adults across
+New York State. Additionally, the <a
+href="https://climate.cityofnewyork.us/initiatives/nyc-greenhouse-gas-inventories/?utm_source=chatgpt.com">NYC
+Mayor’s Office of Climate and Environmental Justice</a> reports that
+transportation accounts for approximately 30% of the city’s greenhouse
+gas emissions. By examining the impact of active design on physical
+activity and transportation, this project aims to provide insights that
+can inform policies to improve public health and reduce environmental
+impact in New York City.</p>
 </div>
 <div id="related-work" class="section level1">
 <h1><strong>Related Work</strong></h1>
+<p>One of our group members is doing her internship on a street safety
+program in Brooklyn. When she was doing literature review she found out
+that research shows well-designed urban areas with pedestrian-friendly
+streets and mixed-use spaces encourage people to walk more and drive
+less, which can help reduce obesity rates. This active design also
+lowers city pollution by cutting down on car use, aiding environmental
+efforts against climate change. Cities like New York are incorporating
+these principles into their urban planning policies to promote healthier
+lifestyles and environmental sustainability. Studies support the idea
+that features such as accessible stairs, attractive walking paths, and
+bike lanes not only make physical activity more appealing but are
+effective in transforming urban areas into healthier, greener spaces. We
+were inspired from those findings and would like to know more in the
+relationship between sidewalk areas and people’s choice on commuting
+ways.</p>
 </div>
 <div id="initial-questions" class="section level1">
 <h1><strong>Initial Questions</strong></h1>
@@ -394,9 +422,15 @@ analysis part.</p>
 </div>
 <div id="part-2." class="section level2">
 <h2>Part 2.</h2>
-</div>
-<div id="part-3." class="section level2">
-<h2>Part 3.</h2>
+<p>The difference in obesity rates between the Bronx and Manhattan from
+2003 to 2022 might relate to the presence of sidewalks. Manhattan, with
+its abundance of well-maintained sidewalks, encourages walking and
+active lifestyles, likely contributing to its lower obesity rates. In
+contrast, fewer and poorly maintained sidewalks in the Bronx may limit
+physical activity opportunities for residents, possibly leading to
+higher obesity rates. Enhancing sidewalk infrastructure in the Bronx
+could promote more physical activity and help reduce these rates. ##
+Part 3.</p>
 </div>
 </div>
 <div id="eda" class="section level1">
@@ -406,19 +440,72 @@ analysis part.</p>
 <h1><strong>Model Building</strong></h1>
 <div id="key-indicators" class="section level2">
 <h2>Key Indicators</h2>
+<div id="association-between-sidewalk-areas-and-walking-among-commuters"
+class="section level3">
+<h3><strong>1. Association Between Sidewalk Areas and Walking Among
+Commuters</strong></h3>
+<p>Linear regression revealed a significant positive relationship
+between sidewalk area percentage and walking commuter rates. For every
+1% increase in sidewalk coverage, walking commuter rates increased by
+approximately 1.96 percentage points. This finding underscores the
+importance of pedestrian infrastructure in promoting walking as a mode
+of transportation.</p>
 </div>
-<div id="linear-model-interaction-model" class="section level2">
-<h2>Linear model (interaction model)</h2>
+<div id="interaction-between-sidewalk-area-and-walking-on-obesity-rates"
+class="section level3">
+<h3><strong>2. Interaction Between Sidewalk Area and Walking on Obesity
+Rates</strong></h3>
+<p>An interaction model was constructed to determine if the relationship
+between sidewalk area percentage and obesity rates depended on walking
+commuter rates. The results showed no significant interaction effect (p
+= 0.932), indicating that the effects of sidewalk area and walking
+commuter rates on obesity operate independently. Neither sidewalk area
+(p = 0.556) nor walking commuter rates (p = 0.317) had significant
+direct effects on obesity rates in this model.</p>
 </div>
-<div id="causal-mediation-analysis" class="section level2">
-<h2>Causal mediation analysis</h2>
+<div id="causal-mediation-analysis" class="section level3">
+<h3><strong>3. Causal Mediation Analysis</strong></h3>
+<p>Mediation analysis demonstrated that walking commuter rates
+significantly mediated the relationship between sidewalk area percentage
+and obesity rates. Our key results are: - <strong>Indirect Effect
+(ACME):</strong> A statistically significant reduction in obesity rates
+of 0.91 units for every 1% increase in sidewalk area, mediated by
+walking commuter rates (p &lt; 0.001). - <strong>Direct Effect
+(ADE):</strong> No statistically significant direct effect of sidewalk
+area on obesity rates (-0.631, p = 0.124). - <strong>Total
+Effect:</strong> A significant total reduction of 1.54 units in obesity
+rates for every 1% increase in sidewalk area (p &lt; 0.001). -
+<strong>Proportion Mediated:</strong> Approximately 59% of the total
+effect was mediated by walking behavior.</p>
+</div>
 </div>
 </div>
 <div id="conclusion" class="section level1">
 <h1><strong>Conclusion</strong></h1>
+<p>This project highlights the importance of urban active design, such
+as the sidewalk infrastructure in promoting walking and improving public
+health outcomes. Walking commuter rates are a critical pathway linking
+sidewalk availability to reduced obesity rates, as shown by the
+significant mediation effects. While sidewalk area alone does not
+directly influence obesity rates, its ability to foster walking behavior
+plays a pivotal role in reducing obesity.</p>
 </div>
 <div id="discussion" class="section level1">
 <h1><strong>Discussion</strong></h1>
+<p>The findings emphasize the need for integrated urban planning
+strategies that combine pedestrian-friendly infrastructure with
+initiatives to encourage active commuting behaviors. Policymakers should
+prioritize investments in sidewalk improvements, particularly in areas
+with high obesity rates, such as the Bronx, to promote healthier
+lifestyles. Future research could explore additional mediators, such as
+access to recreational spaces or socioeconomic factors, to gain a deeper
+understanding of how urban infrastructure influences health
+outcomes.</p>
+<p>This project provides actionable insights for urban planners and
+policymakers aiming to reduce obesity rates through infrastructure and
+behavior change interventions. By promoting walking as a commuting mode,
+cities can achieve both public health and environmental sustainability
+goals.</p>
 </div>
 
 
