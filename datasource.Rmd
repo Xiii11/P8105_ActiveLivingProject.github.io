@@ -16,6 +16,14 @@ The [Walking, driving, and cycling](https://a816-dohbesp.nyc.gov/IndicatorPublic
 The [Overweight](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary) provides insights into the prevalence of overweight or obesity among adults across New York City. The data spans from 2003 to 2022, with yearly updates available. It offers granular breakdowns by geographical boundaries including citywide, borough, and UHF34 regions. The dataset includes key metrics such as the number of individuals classified as overweight or obese and the percentage prevalence.
 
 ## **Data Import and Tidy**
+We loaded essential libraries from the tidyverse ecosystem along with other helpful packages like janitor for cleaning column names, ggplot2 for visualization, and plotly for interactive plots.
+We proceed to import our data using both read.csv() and read_csv() from the readr package, specifying NA values to accurately handle missing data right from the start. We then standardize column names to a uniform format with janitor::clean_names() function, which simplifies further coding and analysis.
+Moreover,we also transform the data by converting numeric fields from string format to actual numbers, removing commas for accurate calculations, and filtering the dataset to include only borough-level data
 ### *Part 1: Commuting mode and Obesity*
+For commnuting mode, to find out the most popular commuting ways in different boroughs, we reformat the data into a long format, listing each mode of commuting per borough and then use this formatted data to create interactive bar charts with plotly, showing the count of commuters by method for each borough and providing detailed hover text. The plot_ly() function is used to construct these visualizations, providing dynamic insights with options like hover text for detailed data points, and layout() to enhance chart readability and aesthetics.
+We then repeat the process for percentages, showing what portion of the population uses each commuting method
+ 
+Similarly,for overweight&obesity dataset, we first create a bar chart using ggplot2 to display obesity rates and corresponding numbers for each NYC borough, enhancing clarity with direct textual annotations on the bars. To make the chart interactive and allow dynamic exploration, we employ plotly, transforming the static ggplot into an interactive visualization. Additionally, we develop a trend line plot to illustrate changes in obesity rates over the years across boroughs. This line plot, also made interactive with plotly, includes tooltips that provide detailed data insights when users hover over any point, thus enabling a deeper understanding of obesity trends within each borough.
 
+###*Part 2:*
 
