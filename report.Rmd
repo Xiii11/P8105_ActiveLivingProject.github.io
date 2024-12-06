@@ -196,8 +196,188 @@ These findings suggest that targeted investments in improving sidewalk infrastru
 
 ## *Borough Level*:
 
+Firstly, we gain an initial understanding of the commuting patterns across New York City's boroughs by analyzing the distribution of various commuting methods.A bar chart provides a clear visual representation of the total amount of transportation modes used in each borough. A percentage distribution bar chart is used to highlight the relative popularity of each mode of transport within the boroughs. 
+
+```{r, message = FALSE}
+library(tidyverse)
+library(janitor)
+library(knitr)
+library(gridExtra)
+library(reshape2)
+library(plotly)
+library(haven)
+library(sf)
+knitr::opts_chunk$set(
+  warning = FALSE, 
+  message = FALSE,
+  fig.align = 'center')
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+commuting_df = 
+  read.csv("data/commuting.csv", na = c("NA",".","")) |> 
+   janitor::clean_names()
+
+borough_df = 
+  commuting_df  |> 
+  filter(geo_type_desc == "Borough") |> 
+  mutate(
+    across(c(bicycle_number, car_truck_or_van_number, public_transportation_number, walked_number),
+                ~as.numeric(gsub(",", "", .))))
+
+commute_long =
+  pivot_longer(borough_df, 
+              cols = c(bicycle_number, 
+                       car_truck_or_van_number, 
+                       public_transportation_number, 
+                       walked_number), 
+                             names_to = "Method", 
+                             values_to = "Count",
+                             names_pattern = "(.*)_number") 
+```
+
+The presented dataset examines the distribution of `commuting methods` across different `boroughs`, epresented by the total number of each transportation mode utilized.
+
+```{r}
+custom_colors = c("Bronx" = "lightpink", "Brooklyn" = "darkolivegreen", "Manhattan" = "gold", "Queens" = "thistle", "Staten Island" = "#a6cee3")
+
+p1_plotly <- plot_ly(data = commute_long, 
+                     x = ~Method,  
+                     y = ~Count,  
+                     type = 'bar', 
+                     color = ~geography, 
+                     colors = custom_colors,  
+                     text = ~paste("Borough: ", geography, "<br>Method: ", Method, "<br>Count: ", Count),
+                     hoverinfo = 'text', 
+                     marker = list(line = list(color = 'black', width = 1))) |>  
+  layout(title = "Commuting Methods by Borough",
+         xaxis = list(title = 'Commuting Method', tickangle = 45),  
+         yaxis = list(title = 'Count of Commuters'), 
+         barmode = 'group', 
+         legend = list(title = list(text = "Borough")),
+         margin = list(t = 50, l = 50, r = 50, b = 100) 
+         )  
+
+ggplotly(p1_plotly, tooltip = "text")
+```
+
+Overall,  the most prominent mode is public transportation. In contrast, the use of bicycles is minimal across all boroughs, with Staten Island reporting the lowest numbers. Walking as a commuting mode demonstrates moderate levels, with Manhattan showing the highest prevalence compared to other boroughs.
+
+```{r}
+commute_percent_long = 
+  pivot_longer(borough_df, 
+               cols = c(bicycle_percent, 
+                        car_truck_or_van_percent,
+                        public_transportation_percent, 
+                        walked_percent), 
+                                     names_to = "Method", 
+                                     values_to = "Percent",
+                                     names_pattern = "(.*)_percent")
 
 
+custom_colors = c("bicycle" = "lightpink", "car_truck_or_van" = "darkolivegreen", "public_transportation" = "gold", "walked" = "thistle")
+
+p2_plotly <- plot_ly(data = commute_percent_long, 
+                     x = ~geography,  
+                     y = ~Percent, 
+                     type = 'bar', 
+                     color = ~Method, 
+                     colors = custom_colors,  
+                     text = ~paste("Borough: ", geography, "<br>Method: ", Method, "<br>Percentage: ", sprintf("%.1f%%", Percent)),
+                     hoverinfo = 'text',
+                     marker = list(line = list(color = 'black', width = 1))) |>  
+  layout(title = "Percentage Distribution of Commuting Methods by Borough",
+         xaxis = list(title = 'Borough', tickangle = 45),
+         yaxis = list(title = 'Percentage (%)', ticksuffix = "%"),
+         barmode = 'stack',  
+         legend = list(title = list(text = "Borough")),
+         margin = list(t = 50, l = 50, r = 50, b = 100)
+         ) 
+
+ggplotly(p2_plotly, tooltip = "text")
+```
+
+The presented dataset examines the percentage distribution of commuting modes across New York City's boroughs. The bar chart highlights that public transportation is the most widely used commuting mode in most boroughs, with over 50% of commuters relying on it in areas like Manhattan, Queens, and the Bronx. In contrast, Staten Island deviates from this trend, where cars, trucks, and vans dominate as the primary commuting mode, accounting for the majority of transportation. Walking also contributes notably in Manhattan, reflecting its dense urban environment.
+
+```{r, message = FALSE}
+overweight2022_df = 
+  read.csv("data/overweight2022.csv", na = c("NA",".","")) |> 
+   janitor::clean_names()
+
+overweight_df = read_csv("data/overweight2022.csv") |> 
+  clean_names()  |> 
+  mutate(
+    obesity_rate_raw = percent,  
+    percent_numeric = sub("\\s*\\(.*$", "", percent),  
+    obesity_rate = as.numeric(percent_numeric),  
+    number_clean = as.numeric(gsub(",", "", number))  
+  ) |>  
+  filter(geo_type_desc == "Borough") |> 
+  select(-percent_numeric)  
+
+na_check = overweight_df |>  
+  filter(is.na(obesity_rate))
+
+overweight_overall_df = read_csv("data/overweightoverall.csv") |> 
+  clean_names() |> 
+  mutate(
+    obesity_rate = as.numeric(sub("\\s*\\(.*$", "", percent)),  
+    geo_type = tolower(geo_type)  
+  ) |> 
+  filter(geo_type == "borough")  
+
+overweight2022_df = overweight2022_df  |> 
+  mutate(obesity_rate = as.numeric(sub("\\s*\\(.*\\)$", "", percent))) 
+
+borough_data = overweight2022_df  |> 
+  filter(geo_type_desc == "Borough")
+
+borough_with_highest_obesity = borough_data  |> 
+  filter(obesity_rate == max(obesity_rate))
+
+custom_colors = c("lightpink", "darkolivegreen", "gold", "thistle", "#a6cee3")
+
+obesity_plotly <- plot_ly(data = overweight_df, 
+                          x = ~geography, 
+                          y = ~obesity_rate, 
+                          type = 'bar', 
+                          color = ~geography, 
+                          colors = custom_colors,
+                          text = ~paste("Obesity Rate: ", obesity_rate, "%<br>Number: ", number_clean),  
+                          hoverinfo = 'text',
+                           marker = list(line = list(color = 'black', width = 1))) |>  
+  layout(title = "Obesity Rates and Numbers by Borough in NYC, 2022",
+         xaxis = list(title = "Borough", tickangle = 45),
+         yaxis = list(title = "Obesity Rate (%)"),
+         legend = list(title = "Borough"))
+ggplotly(obesity_plotly, tooltip = "text")
+```
+
+The above graph showcases the obesity rates and corresponding numbers across various boroughs in NYC for the year 2022. The data is represented by a bar chart, where each color-coded bar corresponds to a different borough. The Bronx stands out with the highest obesity rate, significantly surpassing the other boroughs, whereas Manhattan reports the lowest rate, indicating a stark contrast in obesity prevalence within the city. Queens, Brooklyn, and Staten Island exhibit moderate obesity rates, illustrating varied health profiles across these regions. 
+
+```{r}
+custom_colors = c("lightpink", "darkolivegreen", "gold", "thistle", "#a6cee3")
+
+obesity_trend_plotly <- plot_ly(data = overweight_overall_df, 
+                                x = ~time_period, 
+                                y = ~obesity_rate, 
+                                type = 'scatter', 
+                                mode = 'lines+markers', 
+                                color = ~geography, 
+                                colors = custom_colors,
+                                text = ~paste("Borough: ", geography, 
+                                              "<br>Year: ", time_period, 
+                                              "<br>Rate: ", sprintf("%.1f%%", obesity_rate)),  # Dynamic text evaluation for hover
+                                hoverinfo = 'text') |> 
+  layout(title = "Trend of Obesity Rates by Year and Borough",
+         xaxis = list(title = "Year", tickangle = 45),
+         yaxis = list(title = "Obesity Rate (%)"),
+         legend = list(title = "Borough")) 
+
+ggplotly(obesity_trend_plotly, tooltip = "text")
+```
+
+This graph shows the changes in obesity rates across New York City's boroughs from the early 2000s to 2022. Matching with what we had in last graph, the Bronx has consistently high obesity rates, suggesting ongoing health challenges there. Manhattan generally has the lowest rates, possibly due to different lifestyle factors. Brooklyn, Queens, and Staten Island show varied rates over the years, with ups and downs. We will explore more on the relationship between obesity and other factors in the model building part.
 
 <br><br>
 
