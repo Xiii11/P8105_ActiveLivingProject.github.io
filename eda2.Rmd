@@ -170,7 +170,7 @@ obesity_plotly <- plot_ly(data = overweight_df,
          legend = list(title = "Borough"))
 ggplotly(obesity_plotly, tooltip = "text")
 ```
-Bronx has the highest overweight rate in 2022.
+The above graph showcases the obesity rates and corresponding numbers across various boroughs in NYC for the year 2022. The data is represented by a bar chart, where each color-coded bar corresponds to a different borough. The Bronx stands out with the highest obesity rate, significantly surpassing the other boroughs, whereas Manhattan reports the lowest rate, indicating a stark contrast in obesity prevalence within the city. Queens, Brooklyn, and Staten Island exhibit moderate obesity rates, illustrating varied health profiles across these regions. 
 
 ## **Trend of Obesity Rate by Year**
 ```{r}
@@ -194,6 +194,7 @@ obesity_trend_plotly <- plot_ly(data = overweight_overall_df,
 
 ggplotly(obesity_trend_plotly, tooltip = "text")
 ```
+This graph shows the changes in obesity rates across New York City's boroughs from the early 2000s to 2022. Matching with what we had in last graph, the Bronx has consistently high obesity rates, suggesting ongoing health challenges there. Manhattan generally has the lowest rates, possibly due to different lifestyle factors. Brooklyn, Queens, and Staten Island show varied rates over the years, with ups and downs. We will explore more on the relationship between obesity and other factors in the model page.
 
 
 
