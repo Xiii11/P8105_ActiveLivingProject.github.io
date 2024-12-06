@@ -90,6 +90,58 @@ Similarly,for overweight&obesity dataset, we first create a bar chart using ggpl
 
 The final dataset `obesity_data` showed below.
 
+```{r}
+library(shiny)
+library(tidyverse)
+library(DT)
+library(readr)
+library(janitor)
+
+ui <- fluidPage(
+  titlePanel("Interactive Obesity Data Overview"),
+  
+  DTOutput("data_table")
+)
+
+server <- function(input, output) {
+  
+  data <- reactive({
+    read_csv("data/overweightoverall.csv") %>%
+      clean_names() %>%
+      mutate(
+        obesity_rate = as.numeric(sub("\\s*\\(.*$", "", percent)),  
+        geo_type = tolower(geo_type)  
+      ) %>%
+      rename(year = time_period)  
+  })
+  
+  output$data_table <- renderDT({
+    datatable(
+      data() %>%
+        select(year, geography, number, percent),  
+      options = list(
+        pageLength = 10,
+        autoWidth = TRUE,
+        searchHighlight = TRUE,
+        searchPanes = list(columns = c(1)),  
+        dom = 'Bfrtip',
+        buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+      ),
+      extensions = 'Buttons',
+      class = 'cell-border stripe'
+    ) %>%
+    formatStyle(
+      columns = c('number', 'percent'),
+      valueColumns = 'number',
+      backgroundColor = styleInterval(cuts = c(500000), values = c('white', '#FFDDC1'))
+    )
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
 
 
 
