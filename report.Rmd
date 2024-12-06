@@ -30,10 +30,167 @@ The purposes of this project is to answer the following questions:
 Due to the limitations of the variables and information within the dataset, the data cleaning process was conducted independently for each analysis part.
 
 ## Part 1.
-
-## Part 2.
 The difference in obesity rates between the Bronx and Manhattan from 2003 to 2022 might relate to the presence of sidewalks. Manhattan, with its abundance of well-maintained sidewalks, encourages walking and active lifestyles, likely contributing to its lower obesity rates. In contrast, fewer and poorly maintained sidewalks in the Bronx may limit physical activity opportunities for residents, possibly leading to higher obesity rates. Enhancing sidewalk infrastructure in the Bronx could promote more physical activity and help reduce these rates.
-## Part 3.
+
+<br>
+
+## Part 2. Essential Variables Overview
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+
+commuting_df = read.csv("data/commuting.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  rename(geo_type = geo_type_desc) |> 
+  filter(
+    geo_type %in% c("UHF 42", "Citywide", "Borough"))
+
+overweight_overall_df = read_csv("data/overweightoverall.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  rename(
+    obs_number = number,
+    obs_percent = percent
+  ) |> 
+  separate(
+    obs_percent, 
+    into = c("obs_percent", "obs_percent_range"), 
+    sep = "\\s*\\(\\s*", 
+    convert = TRUE
+  ) |>
+  mutate(obs_percent_range = str_remove(obs_percent_range, "\\)$"))
+
+sidewalk_df = read_csv("data/sidewalk.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  mutate(neighborhood_geo_id = paste(geography, geo_id, sep = ", ")) 
+
+commuting_sidewalk_df = 
+  inner_join(commuting_df, sidewalk_df, by = c("geo_id", "geo_rank", "geography")) |> 
+  dplyr::select(-time_period.x, -time_period.y, everything()) |> 
+  mutate(
+    bicycle_info = paste0(bicycle_number, " (", bicycle_percent, "%)"),
+    car_truck_van_info = paste0(car_truck_or_van_number, " (", car_truck_or_van_percent, "%)"),
+    public_transport_info = paste0(public_transportation_number, " (", public_transportation_percent, "%)"),
+    walked_info = paste0(walked_number, " (", walked_percent, "%)")
+  )
+```
+
+To understand the association between obesity rates in different areas, urban design (Sidewalk Coverage), and various commuting methods, we included the following key variables in our analysis:
+
+The major outcome variable in this analysis is obesity rate, which represents the estimated proportion of adults classified as overweight or obese. It is calculated using two metrics: first, the absolute number of individuals, rounded to the nearest 1,000, who fall into specific [BMI categories](https://www.worldobesity.org/about/about-obesity/obesity-classification#:~:text=BMI%20is%20calculated%20as%20weight,30%20kg%2Fm%C2%B2%20defines%20obesity.) (overweight: BMI 25–29.9; obese: BMI ≥30); second, the percentage of the total population meeting these BMI thresholds.
+
+The obesity rate demonstrates variability across regions. Below is a summary of key descriptive statistics:
+```{r, message = FALSE, warning = FALSE}
+# Calculate summary statistics for obesity percentage
+obesity_table = overweight_overall_df |> 
+  summarize(
+    overall_mean = mean(as.numeric(obs_percent), na.rm = TRUE),
+    overall_std = sd(as.numeric(obs_percent), na.rm = TRUE),
+    min_value = min(as.numeric(obs_percent), na.rm = TRUE),
+    max_value = max(as.numeric(obs_percent), na.rm = TRUE)
+  ) |> 
+  rename(
+    "Mean" = overall_mean,
+    "Std Dev" = overall_std,
+    "Min" = min_value,
+    "Max" = max_value
+  )
+
+# Define the table structure
+obesity_table = tibble(
+  measure1 = c("Mean", "Std Dev"),
+  value1 = c(57.43, 9.47),
+  measure2 = c("Min", "Max"),
+  value2 = c(30.1, 78.7)
+)
+
+obesity_table |> 
+  knitr::kable(
+    caption = "Summary Statistics for Obesity Rate",
+    col.names = NULL,
+    align = "c",
+    digits = 2
+  )
+```
+The mean obesity rate across regions is 57.43%, with a standard deviation of 9.47%, indicating moderate variability. The minimum observed obesity rate is 30.1%, while the maximum is 78.7%. This variation suggests disparities between regions, potentially influenced by factors such as urban design, socioeconomic conditions, and access to health resources. Areas with lower rates may benefit from better infrastructure or healthier lifestyles, while regions with higher rates may require targeted interventions to address obesity-related challenges.
+
+
+Our first explanatory variable, sidewalk area, is calculated as the total curb-to-building sidewalk area (in square kilometers) within the UHF neighborhood and borough, divided by the total land area (excluding inland water bodies), and expressed as a percentage.
+
+To explore how urban design affects health outcomes, we summarize sidewalk area coverage percentages as follows:
+```{r, message = FALSE, warning = FALSE}
+# Calculate summary statistics for sidewalk area percentage
+sidewalk_table = sidewalk_df |> 
+  summarize(
+    overall_mean = mean(percent_of_land_area, na.rm = TRUE),
+    overall_std = sd(percent_of_land_area, na.rm = TRUE),
+    min_value = min(percent_of_land_area, na.rm = TRUE),
+    max_value = max(percent_of_land_area, na.rm = TRUE)
+  ) |> 
+  rename(
+    "Mean" = overall_mean,
+    "Std Dev" = overall_std,
+    "Min" = min_value,
+    "Max" = max_value
+  )
+
+
+# Define the table structure
+sidewalk_table = tibble(
+  measure1 = c("Mean", "Std Dev"),
+  value1 = c(7.59, 2.34),
+  measure2 = c("Min", "Max"),
+  value2 = c(2.7, 11.3)
+)
+
+sidewalk_table |> 
+  knitr::kable(
+    caption = "Summary Statistics for Sidewalk Area",
+    col.names = NULL,
+    align = "c",
+    digits = 2
+  )
+
+```
+
+
+Next, the second explanatory variable is commuting methods, which provide insights into how adults travel to work, categorized by modes such as public transit, biking, walking, or private vehicles. These patterns help us understand transportation availability, individual choices, traffic conditions, and safety concerns. The dataset includes information on the estimated number and proportion of workers aged 16 and above using each commuting mode, including bicycling, driving (car, truck, or van), public transportation, and walking.
+
+Below are the summarized statistics for commuting methods:
+```{r, message = FALSE, warning = FALSE}
+# Calculate summary statistics for commuting percentages
+commuting_table <- commuting_df %>%
+  summarize(
+    bike_mean = mean(bicycle_percent, na.rm = TRUE),
+    bike_std = sd(bicycle_percent, na.rm = TRUE),
+    bike_min = min(bicycle_percent, na.rm = TRUE),
+    bike_max = max(bicycle_percent, na.rm = TRUE),
+    car_mean = mean(car_truck_or_van_percent, na.rm = TRUE),
+    car_std = sd(car_truck_or_van_percent, na.rm = TRUE),
+    car_min = min(car_truck_or_van_percent, na.rm = TRUE),
+    car_max = max(car_truck_or_van_percent, na.rm = TRUE),
+    walk_mean = mean(walked_percent, na.rm = TRUE),
+    walk_std = sd(walked_percent, na.rm = TRUE),
+    walk_min = min(walked_percent, na.rm = TRUE),
+    walk_max = max(walked_percent, na.rm = TRUE),
+    public_mean = mean(public_transportation_percent, na.rm = TRUE),
+    public_std = sd(public_transportation_percent, na.rm = TRUE),
+    public_min = min(public_transportation_percent, na.rm = TRUE),
+    public_max = max(public_transportation_percent, na.rm = TRUE)
+  ) %>%
+  pivot_longer(cols = everything(), names_to = "Variable", values_to = "Value") %>%
+  separate(Variable, into = c("Method", "Stat"), sep = "_") %>%
+  pivot_wider(names_from = "Stat", values_from = "Value")
+
+commuting_table |> 
+    knitr::kable(
+    caption = "Summary Statistics for Commuting Methods",
+    digits = 2
+  )
+```
+The summary statistics for commuting methods reveal distinct trends in how people travel to work. Public transportation emerges as the most commonly used mode, with an average usage rate of 47.75%, followed by cars at 28.86%. Walking and biking, though less frequent, still play significant roles in some areas, with averages of 9.58% and 1.28%, respectively. The observed variability across methods, particularly in car and public transit usage, highlights differences in regional infrastructure, accessibility, and commuting preferences. These insights into commuting behaviors provide critical context for understanding urban mobility and its potential impact on health outcomes. Transitioning to the final explanatory variable, geographical data allows us to examine these variables at both neighborhood and borough levels, offering a nuanced understanding of how urban design and commuting patterns intersect with health outcomes.
+
+Finally, the geographical variables in our analysis involve data aggregated at both the neighborhood and borough levels. Neighborhood-level data provides detailed insights into smaller, localized areas, allowing us to examine specific community characteristics. Borough-level data offers a broader regional perspective, enabling comparisons across larger urban sections. This dual-scale approach enhances our understanding of how urban design and commuting patterns intersect with health outcomes like obesity rates, offering a nuanced perspective on spatial variations within the city.
+
+Having outlined the essential variables, we delve deeper into exploring the relationships between these variables. In the following section, we perform Explanatory Data Analysis (EDA) to uncover patterns and associations, such as how sidewalk coverage and commuting patterns influence obesity rates and how these variables differ across geographical levels.
 
 <br><br>
 
