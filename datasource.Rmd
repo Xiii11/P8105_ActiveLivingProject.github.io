@@ -1,5 +1,6 @@
 ---
 title: "Data Source"
+runtime: shiny
 output: 
   html_document:
     toc: true
@@ -89,6 +90,58 @@ Moreover,we also transform the data by converting numeric fields from string for
 Similarly,for overweight&obesity dataset, we first create a bar chart using ggplot2 to display obesity rates and corresponding numbers for each NYC borough, enhancing clarity with direct textual annotations on the bars. To make the chart interactive and allow dynamic exploration, we employ plotly, transforming the static ggplot into an interactive visualization. Additionally, we develop a trend line plot to illustrate changes in obesity rates over the years across boroughs. This line plot, also made interactive with plotly, includes tooltips that provide detailed data insights when users hover over any point, thus enabling a deeper understanding of obesity trends within each borough.
 
 The final dataset `obesity_data` showed below.
+
+```{r}
+library(shiny)
+library(tidyverse)
+library(DT)
+library(readr)
+library(janitor)
+
+ui <- fluidPage(
+  titlePanel("Interactive Obesity Data Overview"),
+  
+  DTOutput("data_table")
+)
+
+server <- function(input, output) {
+  
+  data <- reactive({
+    read_csv("data/overweightoverall.csv") %>%
+      clean_names() %>%
+      mutate(
+        obesity_rate = as.numeric(sub("\\s*\\(.*$", "", percent)),  
+        geo_type = tolower(geo_type)  
+      ) %>%
+      rename(year = time_period)  
+  })
+  
+  output$data_table <- renderDT({
+    datatable(
+      data() %>%
+        select(year, geography, number, percent),  
+      options = list(
+        pageLength = 10,
+        autoWidth = TRUE,
+        searchHighlight = TRUE,
+        searchPanes = list(columns = c(1)),  
+        dom = 'Bfrtip',
+        buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+      ),
+      extensions = 'Buttons',
+      class = 'cell-border stripe'
+    ) %>%
+    formatStyle(
+      columns = c('number', 'percent'),
+      valueColumns = 'number',
+      backgroundColor = styleInterval(cuts = c(500000), values = c('white', '#FFDDC1'))
+    )
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+```
 
 
 

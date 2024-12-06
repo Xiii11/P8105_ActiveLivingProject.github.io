@@ -10,11 +10,19 @@ output:
 ----------------
 
 ## **Anni Wang**
-Introduction Place holder<br>
-Learn more about [Anni](website link place holder)
+MPH-Epidemiology-Applied Biostatistics and Public HealthData Science Track
+
+Columbia University Mailman School of Public Health
+
+Fun fact: Anni decided to become a registered yoga teacher because of lululemon trainer discount.
+
+Learn more about [Anni](https://aw2468.github.io/)
 
 ## **Qi Cai**
-Introduction Place holder<br>
+MPH-Epidemiology-Applied Biostatistics and Public HealthData Science Track
+
+Columbia University Mailman School of Public Health
+
 Learn more about [Qi](website link place holder)
 
 ## **Xi Peng**
