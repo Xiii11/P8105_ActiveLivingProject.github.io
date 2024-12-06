@@ -4,15 +4,6 @@ Anni Wang
 2024-12-04
 
 ``` r
-library(tidyverse)
-library(janitor)
-library(ggplot2)
-library(dplyr)
-library(tidyr)
-library(knitr)
-```
-
-``` r
 #import and clean data
 overweight2022_df = 
   read.csv("data/overweight2022.csv", na = c("NA",".","")) |> 
@@ -31,11 +22,7 @@ overweight_df <- read_csv("data/overweight2022.csv") %>%
 ```
 
     ## Rows: 40 Columns: 7
-<<<<<<< HEAD
-    ## ── Column specification ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-=======
-    ## ── Column specification ──────────────────────────────────────────────────────────
->>>>>>> bd3a6f628603fc7c5670fb9df5495445fb184c79
+    ## ── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
     ## Delimiter: ","
     ## chr (4): GeoTypeDesc, Geography, Number, Percent
     ## dbl (3): TimePeriod, GeoID, GeoRank
@@ -56,14 +43,9 @@ print(na_check)
 ```
 
     ## # A tibble: 0 × 10
-<<<<<<< HEAD
-    ## # ℹ 10 variables: time_period <dbl>, geo_type_desc <chr>, geo_id <dbl>, geo_rank <dbl>, geography <chr>, number <chr>, percent <chr>, obesity_rate_raw <chr>,
-    ## #   obesity_rate <dbl>, number_clean <dbl>
-=======
     ## # ℹ 10 variables: time_period <dbl>, geo_type_desc <chr>, geo_id <dbl>,
     ## #   geo_rank <dbl>, geography <chr>, number <chr>, percent <chr>,
     ## #   obesity_rate_raw <chr>, obesity_rate <dbl>, number_clean <dbl>
->>>>>>> bd3a6f628603fc7c5670fb9df5495445fb184c79
 
 ``` r
 overweight_overall_df <- read_csv("data/overweightoverall.csv") %>%
@@ -76,11 +58,7 @@ overweight_overall_df <- read_csv("data/overweightoverall.csv") %>%
 ```
 
     ## Rows: 800 Columns: 7
-<<<<<<< HEAD
-    ## ── Column specification ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-=======
-    ## ── Column specification ──────────────────────────────────────────────────────────
->>>>>>> bd3a6f628603fc7c5670fb9df5495445fb184c79
+    ## ── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
     ## Delimiter: ","
     ## chr (4): GeoType, Geography, Number, Percent
     ## dbl (3): TimePeriod, GeoID, GeoRank
@@ -113,20 +91,18 @@ borough_with_highest_obesity <- borough_data %>%
 print(borough_with_highest_obesity)
 ```
 
-<<<<<<< HEAD
-    ##   time_period geo_type_desc geo_id geo_rank geography  number           percent obesity_rate
-    ## 1        2022       Borough      1        1     Bronx 693,000 65.5 (61.7, 69.0)         65.5
-=======
     ##   time_period geo_type_desc geo_id geo_rank geography  number           percent
     ## 1        2022       Borough      1        1     Bronx 693,000 65.5 (61.7, 69.0)
     ##   obesity_rate
     ## 1         65.5
->>>>>>> bd3a6f628603fc7c5670fb9df5495445fb184c79
 
 Bronx has the highest overweight rate in 2022.
 
 ``` r
-#Obesity Rates by Borough in NYC, 2022
+#interactive plot for Obesity Rates and Numbers by Borough in NYC, 2022
+library(ggplot2)
+library(plotly)
+
 obesity_plot <- ggplot(overweight_df, aes(x = geography, y = obesity_rate, fill = geography)) +
   geom_bar(stat = "identity", color = "black") +
   geom_text(aes(label = number_clean),  
@@ -138,17 +114,29 @@ obesity_plot <- ggplot(overweight_df, aes(x = geography, y = obesity_rate, fill 
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-# Print the plot
-print(obesity_plot)
+interactive_plot <- ggplotly(obesity_plot)
+interactive_plot
 ```
 
-![](final-data-obesity_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](final-data-obesity_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
 # Create a line plot to show the trend of obesity rates by year for each borough
-obesity_trend_plot <- ggplot(overweight_overall_df, aes(x = time_period, y = obesity_rate, group = geography, color = geography)) +
+obesity_trend_plot <- ggplot(overweight_overall_df, aes(
+  x = time_period,
+  y = obesity_rate,
+  group = geography,
+  color = geography
+)) +
   geom_line() +
-  geom_point() +  
+  geom_point(aes(
+    text = paste(
+      "Borough:", geography,
+      "<br>GeoID:", geo_id,
+      "<br>Year:", time_period,
+      "<br>Rate:", obesity_rate
+    )
+  )) +  
   labs(
     title = "Trend of Obesity Rates by Year and Borough",
     x = "Year",
@@ -157,9 +145,17 @@ obesity_trend_plot <- ggplot(overweight_overall_df, aes(x = time_period, y = obe
   ) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-# Print the plot
-print(obesity_trend_plot)
 ```
 
-![](final-data-obesity_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+    ## Warning in geom_point(aes(text = paste("Borough:", geography, "<br>GeoID:", :
+    ## Ignoring unknown aesthetics: text
+
+``` r
+# Convert ggplot to interactive plotly plot and enable custom tooltip
+interactive_trend_plot <- ggplotly(obesity_trend_plot, tooltip = "text")
+
+# Print the interactive plot
+interactive_trend_plot
+```
+
+![](final-data-obesity_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->

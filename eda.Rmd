@@ -42,14 +42,16 @@ commuting_sidewalk_df =
 
 ## **Distribution of Sidewalk Coverage**
 ```{r, message = FALSE, warning = FALSE}
-Sidewalk_distri = ggplot(sidewalk_df, aes(x = neighborhood_geo_id , y = percent_of_land_area)) +
-  geom_col(fill = "skyblue1", color = "black", alpha = 0.8) +
-  labs(x = "Neighborhood (Geo ID)", y = "Percent of Sidewalk Coverage (%)",
-       title = "Distribution of Sidewalk Area by Neighborhood (Geo ID)") +
-  theme_minimal() +
-  theme(axis.text.x = element_blank()) 
+Sidewalk_distr1 = ggplot(sidewalk_df, aes(x = neighborhood_geo_id, y = percent_of_land_area,
+   text = paste("Neighborhood:", neighborhood_geo_id, "\nSidewalk Coverage:", sprintf("%.1f", percent_of_land_area), "%"))) +
+    geom_col(fill = "skyblue", color = "black", alpha = 0.8) +
+    labs(x = "Neighborhood (Geo ID)", 
+         y = "Percent of Sidewalk Coverage (%)",
+         title = "Distribution of Sidewalk Area by Neighborhood (Geo ID)") +
+    theme_minimal() +
+    theme(axis.text.x = element_blank())
 
-ggplotly(Sidewalk_distri)
+ggplotly(Sidewalk_distr1, tooltip = "text")
 ```
 
 The presented dataset examines the distribution of `Sidewalk Area` across different `Neighborhoods`, represented as a percentage of the total land area. The data ranges from a minimum of approximately `r min(pull(sidewalk_df,percent_of_land_area),na.rm = TRUE)`%  to a maximum of over `r max(pull(sidewalk_df,percent_of_land_area),na.rm = TRUE)`% . The interquartile range, which captures the middle 50% of the data, lies between approximately `r quantile(pull(sidewalk_df,percent_of_land_area),0.25,na.rm = TRUE)`% and `r quantile(pull(sidewalk_df,percent_of_land_area),0.75,na.rm = TRUE)`%, with the median percentage at `r median(pull(sidewalk_df,percent_of_land_area),na.rm = TRUE)`%. 
@@ -61,23 +63,24 @@ The distribution shows considerable variation in sidewalk coverage, which could 
 ## **Commute Mode and Sidewalk Coverage**
 ```{r, message = FALSE, warning = FALSE}
 stacked_data = commuting_sidewalk_df |> 
-  select(neighborhood_geo_id, bicycle_percent, car_truck_or_van_percent, 
-         public_transportation_percent, walked_percent) |> 
-  melt(id.vars = "neighborhood_geo_id", 
+  filter(geo_type.x == "UHF 42") |> 
+  dplyr::select(bicycle_percent, car_truck_or_van_percent, 
+         public_transportation_percent, walked_percent, geography) |> 
+  melt(id.vars = "geography",  
        variable.name = "Commute_Mode", 
        value.name = "Percent")
 
-csassocci_chart <- ggplot(stacked_data, aes(y = neighborhood_geo_id, x = Percent, fill = Commute_Mode)) +
+csassocci_chart = ggplot(stacked_data, aes(y = geography, x = Percent, fill = Commute_Mode)) +
   geom_bar(stat = "identity", position = "stack") +
-  labs(title = "Commute Mode and Sidewalk Coverage",
-       y = "Neighborhood (Geo ID)",
+  labs(title = "Distribution of Commute Modes and Sidewalk Coverage Across Neighborhoods",
+       y = NULL,
        x = "Percent of Sidewalk Coverage (%)",
        fill = "Commute Mode") +
   theme_minimal() +
-  theme(axis.text.y = element_blank(),legend.position = "none") +
+  theme(axis.text.y = element_text(size = 7),legend.position = "none", plot.title = element_text(size = 9)) +
   scale_fill_manual(values = c("lightpink", "darkolivegreen", "gold","thistle"))
 
-ggplotly(csassocci_chart)
+ggplotly(csassocci_chart, tooltip = c("Percent", "Commute_Mode"))
 ```
 
 This chart provides an overview of commuting patterns across neighborhoods, categorized by `Commute Mode`—bicycle, car/truck/van, public transportation, and walking—and represented by their `Neighborhood (Geo ID)`. Public transportation (**<span style="color:darkolivegreen;">darkolivegreen</span>**) is the predominant mode in most neighborhoods, while walking (**<span style="color:thistle;">thistle</span>**) varies widely, likely reflecting differences in walkability and urban infrastructure. Bicycle commuting (**<span style="color:lightpink;">lightpink</span>**) is minimal across all areas, and reliance on car/truck/van (**<span style="color:gold;">gold</span>**) shows variability, potentially indicating disparities in access to alternative modes of transit like public transportation. The chart effectively highlights commuting behaviors, though adding specific indicators or overlays to visualize sidewalk coverage would strengthen the analysis of its influence on transportation choices.
@@ -97,7 +100,7 @@ obs_dictri = filtered_obs_data |>
     color = ~geography,
     type = 'scatter',
     mode = 'lines+markers',
-    text = ~paste("neighborhood:", geography, "<br>Year:", time_period, "<br>Percentage:", percent),
+    text = ~paste("Neighborhood:", geography, "<br>Year:", time_period, "<br>Percentage:", percent, "%"),
     hoverinfo = 'text'
   ) |> 
   layout(
@@ -129,7 +132,7 @@ osassoci_df = overweight_overall_df |>
   filter(time_period %in% c(2014, 2022)) |> 
   mutate(year = as.factor(time_period)) |> 
   inner_join(sidewalk_df, by = c("geo_id","geography")) |> 
-  select(geography, number, percent, percent_of_land_area, year) |> 
+  dplyr::select(geography, number, percent, percent_of_land_area, year) |> 
   rename(
     obs_number = number,
     obs_percent = percent
@@ -140,9 +143,11 @@ osassoci_df = overweight_overall_df |>
     sep = "\\s*\\(\\s*", 
     convert = TRUE
   ) |>
-  mutate(obs_percent_range = str_remove(obs_percent_range, "\\)$"))
+  mutate(
+    obs_percent_range = str_remove(obs_percent_range, "\\)$"),
+    obs_percent = as.numeric(obs_percent))
 
-osassoci_plot = ggplot(osassoci_df, aes(x = percent_of_land_area, y = as.numeric(obs_percent), color = year)) +
+osassoci_plot = ggplot(osassoci_df, aes(x = percent_of_land_area, y = obs_percent, color = year,)) +
   geom_point(size = 3, alpha = 0.7) +
   geom_smooth(se = FALSE, color = "gold", linetype = "solid") +
   labs(

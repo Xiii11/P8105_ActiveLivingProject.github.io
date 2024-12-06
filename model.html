@@ -13,11 +13,7 @@
 
 <title>Model Analysis</title>
 
-<<<<<<< HEAD
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
-=======
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -33,12 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<<<<<<< HEAD
 <script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
-=======
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
@@ -51,13 +44,8 @@
 <script src="site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
-<<<<<<< HEAD
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
-=======
-<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -248,7 +236,6 @@ $(document).ready(function () {
 
 
 
-<<<<<<< HEAD
 <style type="text/css">
 
 #TOC {
@@ -312,8 +299,6 @@ div.tocify {
 </style>
 
 
-=======
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 
 </head>
 
@@ -323,7 +308,6 @@ div.tocify {
 <div class="container-fluid main-container">
 
 
-<<<<<<< HEAD
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
@@ -334,8 +318,6 @@ div.tocify {
 <div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
-=======
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -364,17 +346,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-<<<<<<< HEAD
       <a href="eda.html">Neighborhood Level</a>
     </li>
     <li>
       <a href="final.html">Borough Level</a>
-=======
-      <a href="final.html">Borough Level</a>
-    </li>
-    <li>
-      <a href="eda.html">Neighborhood Level</a>
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
     </li>
   </ul>
 </li>
@@ -452,10 +427,7 @@ healthier communities. Through statistical modeling, interaction
 testing, mediation analysis, and clustering, we uncover both direct and
 indirect pathways linking sidewalk infrastructure to health
 outcomes.</p>
-<<<<<<< HEAD
 <hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
-=======
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 <pre class="r"><code>library(ggridges)
 library(tidyverse)
 library(plotly)
@@ -498,7 +470,6 @@ commuting_sidewalk_df =
     walked_info = paste0(walked_number, &quot; (&quot;, walked_percent, &quot;%)&quot;)
   )</code></pre>
 </div>
-<<<<<<< HEAD
 <div id="simple-linear-regression" class="section level1">
 <h1><strong>Simple Linear Regression</strong></h1>
 <div
@@ -514,18 +485,6 @@ exploring more complex relationships.</h4>
 <p><span class="math display">\[Y_{Walking Commuters Percentage}=\beta_0
 + \beta_1X_{Sidewalk Area Percentage} + \epsilon\]</span></p>
 <pre class="r"><code>side_walking_data = commuting_sidewalk_df |&gt; 
-=======
-<div id="analysis-of-sidewalk-areas-and-walking-commuters"
-class="section level1">
-<h1><strong>Analysis of Sidewalk Areas and Walking
-Commuters</strong></h1>
-<div
-id="association-between-sidewalk-areas-and-the-percentage-of-walking-among-commuters"
-class="section level2">
-<h2><strong>Association between sidewalk areas and the percentage of
-walking among commuters </strong></h2>
-<pre class="r"><code>side_walking_data &lt;- commuting_sidewalk_df |&gt; 
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
   dplyr::select(geography, percent_of_land_area, walked_percent) |&gt; 
   mutate(
     walked_percent = as.numeric(walked_percent),
@@ -536,37 +495,6 @@ walking among commuters </strong></h2>
 lm_model = lm(walked_percent ~ percent_of_land_area, data = side_walking_data)
 lm_summary = summary(lm_model)
 
-<<<<<<< HEAD
-=======
-detailed_model_table = data.frame(
-  Statistic = c(
-    &quot;Intercept Estimate&quot;, &quot;Intercept Std. Error&quot;, &quot;Intercept t-value&quot;, &quot;Intercept p-value&quot;,
-    &quot;Slope Estimate (percent_of_land_area)&quot;, &quot;Slope Std. Error&quot;, &quot;Slope t-value&quot;, &quot;Slope p-value&quot;,
-    &quot;Residual Std. Error&quot;, &quot;R-squared&quot;, &quot;Adjusted R-squared&quot;, &quot;F-statistic&quot;, &quot;F-statistic p-value&quot;
-  ),
-  Value = c(
-    lm_summary$coefficients[1, &quot;Estimate&quot;],
-    lm_summary$coefficients[1, &quot;Std. Error&quot;],
-    lm_summary$coefficients[1, &quot;t value&quot;],
-    lm_summary$coefficients[1, &quot;Pr(&gt;|t|)&quot;],
-    lm_summary$coefficients[2, &quot;Estimate&quot;],
-    lm_summary$coefficients[2, &quot;Std. Error&quot;],
-    lm_summary$coefficients[2, &quot;t value&quot;],
-    lm_summary$coefficients[2, &quot;Pr(&gt;|t|)&quot;],
-    lm_summary$sigma,
-    lm_summary$r.squared,
-    lm_summary$adj.r.squared,
-    lm_summary$fstatistic[1],
-    pf(
-      lm_summary$fstatistic[1],
-      lm_summary$fstatistic[2],
-      lm_summary$fstatistic[3],
-      lower.tail = FALSE
-    )
-  )
-)
-
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 library(ggplot2)
 ggplot(commuting_sidewalk_df, aes(x = percent_of_land_area, y = walked_percent)) +
   geom_point() +
@@ -576,7 +504,6 @@ ggplot(commuting_sidewalk_df, aes(x = percent_of_land_area, y = walked_percent))
        y = &quot;Walking Commuters Percentage&quot;) +
   theme_minimal()</code></pre>
 <p><img src="model_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<<<<<<< HEAD
 <pre class="r"><code># Create the coefficient results table
 simplr_coefficient_results = data.frame(
   Effect = c(&quot;Intercept&quot;, &quot;Slope&quot;),
@@ -642,19 +569,6 @@ knitr::kable(simplr_model_statistics,
                 digits = 3) </code></pre>
 <table>
 <caption>Simple Linear Regression Model Statistics</caption>
-=======
-<pre class="r"><code>coefficients_q3 &lt;- coef(lm_model)
-equation_q3 &lt;- paste0(
-  &quot;$$ \\text{Walking Commuters Percentage} = \\beta_0 + \\beta_1 \\cdot \\text{Sidewalk Area Percentage} \\\\&quot;,
-  &quot;\\beta_0 = &quot;, round(coefficients_q3[1], 3), &quot;, \\beta_1 = &quot;, round(coefficients_q3[2], 3), &quot; $$&quot;
-)
-
-cat(equation_q3)</code></pre>
-<pre><code>## $$ \text{Walking Commuters Percentage} = \beta_0 + \beta_1 \cdot \text{Sidewalk Area Percentage} \\\beta_0 = -5.307, \beta_1 = 1.962 $$</code></pre>
-<pre class="r"><code>knitr::kable(detailed_model_table,caption = &quot;Detailed Linear Model Summary&quot;)</code></pre>
-<table>
-<caption>Detailed Linear Model Summary</caption>
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 <thead>
 <tr class="header">
 <th align="left">Statistic</th>
@@ -663,7 +577,6 @@ cat(equation_q3)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<<<<<<< HEAD
 <td align="left">Slope Std.Error</td>
 <td align="right">0.340</td>
 </tr>
@@ -741,83 +654,6 @@ transportation choices, and public health outcomes.</h4>
 <p><span class="math display">\[Y_{Obesity Percentage}=\beta_0 +
 \beta_1X_{Sidewalk Area Percentage} + \beta_2X_{Walking Commuters
 Percentage} + \epsilon\]</span></p>
-=======
-<td align="left">Intercept Estimate</td>
-<td align="right">-5.3066715</td>
-</tr>
-<tr class="even">
-<td align="left">Intercept Std. Error</td>
-<td align="right">2.6943101</td>
-</tr>
-<tr class="odd">
-<td align="left">Intercept t-value</td>
-<td align="right">-1.9695845</td>
-</tr>
-<tr class="even">
-<td align="left">Intercept p-value</td>
-<td align="right">0.0549252</td>
-</tr>
-<tr class="odd">
-<td align="left">Slope Estimate (percent_of_land_area)</td>
-<td align="right">1.9624389</td>
-</tr>
-<tr class="even">
-<td align="left">Slope Std. Error</td>
-<td align="right">0.3395927</td>
-</tr>
-<tr class="odd">
-<td align="left">Slope t-value</td>
-<td align="right">5.7788018</td>
-</tr>
-<tr class="even">
-<td align="left">Slope p-value</td>
-<td align="right">0.0000006</td>
-</tr>
-<tr class="odd">
-<td align="left">Residual Std. Error</td>
-<td align="right">5.4558555</td>
-</tr>
-<tr class="even">
-<td align="left">R-squared</td>
-<td align="right">0.4206151</td>
-</tr>
-<tr class="odd">
-<td align="left">Adjusted R-squared</td>
-<td align="right">0.4080198</td>
-</tr>
-<tr class="even">
-<td align="left">F-statistic</td>
-<td align="right">33.3945498</td>
-</tr>
-<tr class="odd">
-<td align="left">F-statistic p-value</td>
-<td align="right">0.0000006</td>
-</tr>
-</tbody>
-</table>
-<div id="key-findings" class="section level3">
-<h3><strong>Key Findings</strong></h3>
-<div
-id="the-linear-model-indicates-a-significant-positive-relationship-between-the-percentage-of-land-area-allocated-to-sidewalks-and-the-percentage-of-commuters-who-walk.-the-slope-coefficient-of-1.9624-suggests-that-for-every-1-increase-in-sidewalk-area-the-proportion-of-walking-commuters-increases-by-approximately-1.96-percentage-points.-the-adjusted-r-squared-value-0.408-demonstrates-that-the-model-explains-about-40.8-of-the-variability-in-walking-commuter-rates."
-class="section level4">
-<h4>The linear model indicates a significant positive relationship
-between the percentage of land area allocated to sidewalks and the
-percentage of commuters who walk. The slope coefficient of <b>1.9624</b>
-suggests that for every 1% increase in sidewalk area, the proportion of
-walking commuters increases by approximately 1.96 percentage points. The
-adjusted R-squared value (<b>0.408</b>) demonstrates that the model
-explains about 40.8% of the variability in walking commuter rates.</h4>
-<hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
-</div>
-</div>
-</div>
-</div>
-<div
-id="influence-of-sidewalk-areas-and-walking-commuters-on-obesity-rates"
-class="section level1">
-<h1><strong>Influence of Sidewalk Areas and Walking Commuters on Obesity
-Rates</strong></h1>
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 <pre class="r"><code>sw_obs_data = overweight_overall_df |&gt; 
   filter(time_period %in% c(2014, 2022)) |&gt; 
   mutate(obs_percent = as.numeric(gsub(&quot;\\*|\\(|\\)&quot;, &quot;&quot;, obs_percent))) |&gt; 
@@ -834,61 +670,13 @@ Rates</strong></h1>
 lm_model_obesity = lm(obs_percent ~ percent_of_land_area + walked_percent, data = sw_obs_data)
 lm_summary_obesity = summary(lm_model_obesity)
 
-<<<<<<< HEAD
 # Create the mean dataset for the Walking Commuters Percentage
 mean_walked_data &lt;- sw_obs_data %&gt;%
   mutate(walked_percent = mean(walked_percent))
-=======
-detailed_model_table_obesity &lt;- data.frame(
-  Statistic = c(
-    &quot;Intercept Estimate&quot;,
-    &quot;Intercept Std. Error&quot;,
-    &quot;Intercept t-value&quot;,
-    &quot;Intercept p-value&quot;,
-    &quot;Sidewalk Area Slope Estimate&quot;,
-    &quot;Sidewalk Area Slope Std. Error&quot;,
-    &quot;Sidewalk Area Slope t-value&quot;,
-    &quot;Sidewalk Area Slope p-value&quot;,
-    &quot;Walking Commuters Slope Estimate&quot;,
-    &quot;Walking Commuters Slope Std. Error&quot;,
-    &quot;Walking Commuters Slope t-value&quot;,
-    &quot;Walking Commuters Slope p-value&quot;,
-    &quot;Residual Std. Error&quot;,
-    &quot;R-squared&quot;,
-    &quot;Adjusted R-squared&quot;,
-    &quot;F-statistic&quot;,
-    &quot;F-statistic p-value&quot;
-  ),
-  Value = c(
-    lm_summary_obesity$coefficients[1, &quot;Estimate&quot;],
-    lm_summary_obesity$coefficients[1, &quot;Std. Error&quot;],
-    lm_summary_obesity$coefficients[1, &quot;t value&quot;],
-    lm_summary_obesity$coefficients[1, &quot;Pr(&gt;|t|)&quot;],
-    lm_summary_obesity$coefficients[2, &quot;Estimate&quot;],
-    lm_summary_obesity$coefficients[2, &quot;Std. Error&quot;],
-    lm_summary_obesity$coefficients[2, &quot;t value&quot;],
-    lm_summary_obesity$coefficients[2, &quot;Pr(&gt;|t|)&quot;],
-    lm_summary_obesity$coefficients[3, &quot;Estimate&quot;],
-    lm_summary_obesity$coefficients[3, &quot;Std. Error&quot;],
-    lm_summary_obesity$coefficients[3, &quot;t value&quot;],
-    lm_summary_obesity$coefficients[3, &quot;Pr(&gt;|t|)&quot;],
-    lm_summary_obesity$sigma,
-    lm_summary_obesity$r.squared,
-    lm_summary_obesity$adj.r.squared,
-    lm_summary_obesity$fstatistic[1],
-    pf(
-      lm_summary_obesity$fstatistic[1],
-      lm_summary_obesity$fstatistic[2],
-      lm_summary_obesity$fstatistic[3],
-    )
-  )
-)
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 
 sw_obs_data_plot = 
   ggplot(sw_obs_data, aes(x = percent_of_land_area, y = obs_percent, color = walked_percent)) +
   geom_point(size = 3, alpha = 0.7) +
-<<<<<<< HEAD
   geom_smooth(method = &quot;lm&quot;,
              formula = y ~ x,
              color = &quot;gold&quot;,
@@ -902,10 +690,6 @@ sw_obs_data_plot =
              linetype = &quot;dashed&quot;,
              size = 1.2,
              inherit.aes = FALSE) + 
-=======
-  geom_smooth(method = &quot;lm&quot;, formula = y ~ x + walked_percent, 
-              color = &quot;skyblue1&quot;, linetype = &quot;solid&quot;, size = 1) + 
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
   labs(
     title = &quot;Influence of Sidewalk Areas and Walking Commuters on Obesity Rates&quot;,
     x = &quot;Sidewalk Area Percentage&quot;,
@@ -914,7 +698,6 @@ sw_obs_data_plot =
   ) +
   theme_minimal()
 
-<<<<<<< HEAD
 sw_obs_data_plot</code></pre>
 <p><img src="model_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre class="r"><code># Create the coefficient results table for multiple regression
@@ -1008,25 +791,6 @@ knitr::kable(multr_model_statistics,
              digits = 3)</code></pre>
 <table>
 <caption>Multiple Linear Regression Model Statistics</caption>
-=======
-ggplotly(sw_obs_data_plot)</code></pre>
-<div class="plotly html-widget html-fill-item" id="htmlwidget-20c16b0e564a9fe600c1" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-20c16b0e564a9fe600c1">{"x":{"data":[{"x":[3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,9.3000000000000007,8.8000000000000007,10.5,8.1999999999999993,6.0999999999999996,9.5,8.0999999999999996,4.5999999999999996,7.4000000000000004,7.4000000000000004,10.800000000000001,8.9000000000000004,11,7,10.1,9.0999999999999996,7.7999999999999998,6.7999999999999998,6.5999999999999996,8,7.7000000000000002,7.5999999999999996,3.7000000000000002,6.2000000000000002,7.7999999999999998,9.9000000000000004,7,3.5,6.5999999999999996,3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,9.3000000000000007,8.8000000000000007,10.5,8.1999999999999993,6.0999999999999996,9.5,8.0999999999999996,4.5999999999999996,7.4000000000000004,7.4000000000000004,10.800000000000001,8.9000000000000004,11,7,10.1,9.0999999999999996,7.7999999999999998,6.7999999999999998,6.5999999999999996,8,7.7000000000000002,7.5999999999999996,3.7000000000000002,6.2000000000000002,7.7999999999999998,9.9000000000000004,7,3.5,6.5999999999999996],"y":[70.700000000000003,69.299999999999997,66.900000000000006,67.799999999999997,41.200000000000003,46.700000000000003,56.5,70.599999999999994,44.899999999999999,52,65.700000000000003,59.700000000000003,49.299999999999997,54.5,49.899999999999999,58.600000000000001,63.100000000000001,68.5,48.299999999999997,55.700000000000003,56.100000000000001,46.600000000000001,60.600000000000001,62.100000000000001,58.600000000000001,64.400000000000006,65.700000000000003,65.5,54.600000000000001,48.399999999999999,57.399999999999999,61.899999999999999,56.200000000000003,60.899999999999999,67.599999999999994,69.799999999999997,69.5,36.700000000000003,47.200000000000003,63.100000000000001,60.600000000000001,53.399999999999999,50.299999999999997,70.200000000000003,64.400000000000006,60.600000000000001,62.100000000000001,66.700000000000003,58.5,61.200000000000003,62.700000000000003,49.799999999999997,57.600000000000001,64.299999999999997,51.100000000000001,53.299999999999997,63.700000000000003,69.599999999999994,53.399999999999999,62.700000000000003,67.900000000000006,58.700000000000003,47.5,59.600000000000001,65.099999999999994,58.5],"text":["percent_of_land_area:  3.5<br />obs_percent: 70.7<br />walked_percent:  7.2","percent_of_land_area:  6.9<br />obs_percent: 69.3<br />walked_percent:  4.9","percent_of_land_area:  7.1<br />obs_percent: 66.9<br />walked_percent:  8.4","percent_of_land_area:  4.9<br />obs_percent: 67.8<br />walked_percent:  5.9","percent_of_land_area:  9.3<br />obs_percent: 41.2<br />walked_percent: 11.1","percent_of_land_area:  8.8<br />obs_percent: 46.7<br />walked_percent: 11.2","percent_of_land_area: 10.5<br />obs_percent: 56.5<br />walked_percent:  6.0","percent_of_land_area:  8.2<br />obs_percent: 70.6<br />walked_percent:  3.7","percent_of_land_area:  6.1<br />obs_percent: 44.9<br />walked_percent: 13.7","percent_of_land_area:  9.5<br />obs_percent: 52.0<br />walked_percent: 14.9","percent_of_land_area:  8.1<br />obs_percent: 65.7<br />walked_percent:  4.9","percent_of_land_area:  4.6<br />obs_percent: 59.7<br />walked_percent:  3.2","percent_of_land_area:  7.4<br />obs_percent: 49.3<br />walked_percent:  7.7","percent_of_land_area:  7.4<br />obs_percent: 54.5<br />walked_percent:  9.2","percent_of_land_area: 10.8<br />obs_percent: 49.9<br />walked_percent:  8.2","percent_of_land_area:  8.9<br />obs_percent: 58.6<br />walked_percent: 10.1","percent_of_land_area: 11.0<br />obs_percent: 63.1<br />walked_percent: 11.1","percent_of_land_area:  7.0<br />obs_percent: 68.5<br />walked_percent: 10.4","percent_of_land_area: 10.1<br />obs_percent: 48.3<br />walked_percent: 13.1","percent_of_land_area:  9.1<br />obs_percent: 55.7<br />walked_percent:  5.5","percent_of_land_area:  7.8<br />obs_percent: 56.1<br />walked_percent:  8.0","percent_of_land_area:  6.8<br />obs_percent: 46.6<br />walked_percent: 10.3","percent_of_land_area:  6.6<br />obs_percent: 60.6<br />walked_percent:  5.7","percent_of_land_area:  8.0<br />obs_percent: 62.1<br />walked_percent:  4.3","percent_of_land_area:  7.7<br />obs_percent: 58.6<br />walked_percent:  4.1","percent_of_land_area:  7.6<br />obs_percent: 64.4<br />walked_percent:  1.9","percent_of_land_area:  3.7<br />obs_percent: 65.7<br />walked_percent:  5.6","percent_of_land_area:  6.2<br />obs_percent: 65.5<br />walked_percent:  7.2","percent_of_land_area:  7.8<br />obs_percent: 54.6<br />walked_percent:  8.5","percent_of_land_area:  9.9<br />obs_percent: 48.4<br />walked_percent: 18.9","percent_of_land_area:  7.0<br />obs_percent: 57.4<br />walked_percent:  5.8","percent_of_land_area:  3.5<br />obs_percent: 61.9<br />walked_percent:  2.7","percent_of_land_area:  6.6<br />obs_percent: 56.2<br />walked_percent:  9.5","percent_of_land_area:  3.5<br />obs_percent: 60.9<br />walked_percent:  7.2","percent_of_land_area:  6.9<br />obs_percent: 67.6<br />walked_percent:  4.9","percent_of_land_area:  7.1<br />obs_percent: 69.8<br />walked_percent:  8.4","percent_of_land_area:  4.9<br />obs_percent: 69.5<br />walked_percent:  5.9","percent_of_land_area:  9.3<br />obs_percent: 36.7<br />walked_percent: 11.1","percent_of_land_area:  8.8<br />obs_percent: 47.2<br />walked_percent: 11.2","percent_of_land_area: 10.5<br />obs_percent: 63.1<br />walked_percent:  6.0","percent_of_land_area:  8.2<br />obs_percent: 60.6<br />walked_percent:  3.7","percent_of_land_area:  6.1<br />obs_percent: 53.4<br />walked_percent: 13.7","percent_of_land_area:  9.5<br />obs_percent: 50.3<br />walked_percent: 14.9","percent_of_land_area:  8.1<br />obs_percent: 70.2<br />walked_percent:  4.9","percent_of_land_area:  4.6<br />obs_percent: 64.4<br />walked_percent:  3.2","percent_of_land_area:  7.4<br />obs_percent: 60.6<br />walked_percent:  7.7","percent_of_land_area:  7.4<br />obs_percent: 62.1<br />walked_percent:  9.2","percent_of_land_area: 10.8<br />obs_percent: 66.7<br />walked_percent:  8.2","percent_of_land_area:  8.9<br />obs_percent: 58.5<br />walked_percent: 10.1","percent_of_land_area: 11.0<br />obs_percent: 61.2<br />walked_percent: 11.1","percent_of_land_area:  7.0<br />obs_percent: 62.7<br />walked_percent: 10.4","percent_of_land_area: 10.1<br />obs_percent: 49.8<br />walked_percent: 13.1","percent_of_land_area:  9.1<br />obs_percent: 57.6<br />walked_percent:  5.5","percent_of_land_area:  7.8<br />obs_percent: 64.3<br />walked_percent:  8.0","percent_of_land_area:  6.8<br />obs_percent: 51.1<br />walked_percent: 10.3","percent_of_land_area:  6.6<br />obs_percent: 53.3<br />walked_percent:  5.7","percent_of_land_area:  8.0<br />obs_percent: 63.7<br />walked_percent:  4.3","percent_of_land_area:  7.7<br />obs_percent: 69.6<br />walked_percent:  4.1","percent_of_land_area:  7.6<br />obs_percent: 53.4<br />walked_percent:  1.9","percent_of_land_area:  3.7<br />obs_percent: 62.7<br />walked_percent:  5.6","percent_of_land_area:  6.2<br />obs_percent: 67.9<br />walked_percent:  7.2","percent_of_land_area:  7.8<br />obs_percent: 58.7<br />walked_percent:  8.5","percent_of_land_area:  9.9<br />obs_percent: 47.5<br />walked_percent: 18.9","percent_of_land_area:  7.0<br />obs_percent: 59.6<br />walked_percent:  5.8","percent_of_land_area:  3.5<br />obs_percent: 65.1<br />walked_percent:  2.7","percent_of_land_area:  6.6<br />obs_percent: 58.5<br />walked_percent:  9.5"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":["rgba(38,81,119,1)","rgba(30,64,96,1)","rgba(43,90,131,1)","rgba(33,72,105,1)","rgba(54,112,159,1)","rgba(54,113,161,1)","rgba(34,72,106,1)","rgba(25,56,84,1)","rgba(64,133,188,1)","rgba(69,143,201,1)","rgba(30,64,96,1)","rgba(24,52,79,1)","rgba(40,85,124,1)","rgba(46,97,139,1)","rgba(42,89,129,1)","rgba(50,104,149,1)","rgba(54,112,159,1)","rgba(51,106,152,1)","rgba(62,128,181,1)","rgba(32,69,101,1)","rgba(41,87,127,1)","rgba(50,105,151,1)","rgba(33,70,103,1)","rgba(28,60,90,1)","rgba(27,58,88,1)","rgba(19,43,67,1)","rgba(32,69,102,1)","rgba(38,81,119,1)","rgba(43,91,132,1)","rgba(86,177,247,1)","rgba(33,71,104,1)","rgba(22,49,74,1)","rgba(47,99,142,1)","rgba(38,81,119,1)","rgba(30,64,96,1)","rgba(43,90,131,1)","rgba(33,72,105,1)","rgba(54,112,159,1)","rgba(54,113,161,1)","rgba(34,72,106,1)","rgba(25,56,84,1)","rgba(64,133,188,1)","rgba(69,143,201,1)","rgba(30,64,96,1)","rgba(24,52,79,1)","rgba(40,85,124,1)","rgba(46,97,139,1)","rgba(42,89,129,1)","rgba(50,104,149,1)","rgba(54,112,159,1)","rgba(51,106,152,1)","rgba(62,128,181,1)","rgba(32,69,101,1)","rgba(41,87,127,1)","rgba(50,105,151,1)","rgba(33,70,103,1)","rgba(28,60,90,1)","rgba(27,58,88,1)","rgba(19,43,67,1)","rgba(32,69,102,1)","rgba(38,81,119,1)","rgba(43,91,132,1)","rgba(86,177,247,1)","rgba(33,71,104,1)","rgba(22,49,74,1)","rgba(47,99,142,1)"],"opacity":0.69999999999999996,"size":11.338582677165356,"symbol":"circle","line":{"width":1.8897637795275593,"color":["rgba(38,81,119,1)","rgba(30,64,96,1)","rgba(43,90,131,1)","rgba(33,72,105,1)","rgba(54,112,159,1)","rgba(54,113,161,1)","rgba(34,72,106,1)","rgba(25,56,84,1)","rgba(64,133,188,1)","rgba(69,143,201,1)","rgba(30,64,96,1)","rgba(24,52,79,1)","rgba(40,85,124,1)","rgba(46,97,139,1)","rgba(42,89,129,1)","rgba(50,104,149,1)","rgba(54,112,159,1)","rgba(51,106,152,1)","rgba(62,128,181,1)","rgba(32,69,101,1)","rgba(41,87,127,1)","rgba(50,105,151,1)","rgba(33,70,103,1)","rgba(28,60,90,1)","rgba(27,58,88,1)","rgba(19,43,67,1)","rgba(32,69,102,1)","rgba(38,81,119,1)","rgba(43,91,132,1)","rgba(86,177,247,1)","rgba(33,71,104,1)","rgba(22,49,74,1)","rgba(47,99,142,1)","rgba(38,81,119,1)","rgba(30,64,96,1)","rgba(43,90,131,1)","rgba(33,72,105,1)","rgba(54,112,159,1)","rgba(54,113,161,1)","rgba(34,72,106,1)","rgba(25,56,84,1)","rgba(64,133,188,1)","rgba(69,143,201,1)","rgba(30,64,96,1)","rgba(24,52,79,1)","rgba(40,85,124,1)","rgba(46,97,139,1)","rgba(42,89,129,1)","rgba(50,104,149,1)","rgba(54,112,159,1)","rgba(51,106,152,1)","rgba(62,128,181,1)","rgba(32,69,101,1)","rgba(41,87,127,1)","rgba(50,105,151,1)","rgba(33,70,103,1)","rgba(28,60,90,1)","rgba(27,58,88,1)","rgba(19,43,67,1)","rgba(32,69,102,1)","rgba(38,81,119,1)","rgba(43,91,132,1)","rgba(86,177,247,1)","rgba(33,71,104,1)","rgba(22,49,74,1)","rgba(47,99,142,1)"]}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"visible":false,"showlegend":false,"xaxis":null,"yaxis":null,"hoverinfo":"text","frame":null},{"x":[5],"y":[40],"name":"e84fd30602c84200628c9fd0b53c45de","type":"scatter","mode":"markers","opacity":0,"hoverinfo":"skip","showlegend":false,"marker":{"color":[0,1],"colorscale":[[0,"#132B43"],[0.0033444816053511683,"#132B44"],[0.0066889632107023367,"#132C44"],[0.010033444816053519,"#142C45"],[0.013377926421404673,"#142D45"],[0.016722408026755856,"#142D46"],[0.02006688963210701,"#142D46"],[0.023411371237458192,"#142E47"],[0.026755852842809374,"#152E47"],[0.030100334448160529,"#152F48"],[0.033444816053511711,"#152F48"],[0.036789297658862866,"#152F49"],[0.040133779264214048,"#153049"],[0.04347826086956523,"#16304A"],[0.046822742474916385,"#16304A"],[0.050167224080267567,"#16314B"],[0.053511705685618721,"#16314B"],[0.056856187290969903,"#16324C"],[0.060200668896321086,"#17324D"],[0.06354515050167224,"#17324D"],[0.066889632107023395,"#17334E"],[0.070234113712374577,"#17334E"],[0.073578595317725759,"#17344F"],[0.076923076923076941,"#18344F"],[0.080267558528428096,"#183450"],[0.08361204013377925,"#183550"],[0.086956521739130432,"#183551"],[0.090301003344481615,"#183651"],[0.093645484949832769,"#193652"],[0.096989966555183951,"#193652"],[0.10033444816053511,"#193753"],[0.10367892976588629,"#193754"],[0.10702341137123747,"#193854"],[0.11036789297658862,"#1A3855"],[0.11371237458193978,"#1A3955"],[0.11705685618729096,"#1A3956"],[0.12040133779264214,"#1A3956"],[0.12374581939799333,"#1A3A57"],[0.12709030100334451,"#1B3A57"],[0.13043478260869568,"#1B3B58"],[0.13377926421404682,"#1B3B59"],[0.13712374581939799,"#1B3B59"],[0.14046822742474913,"#1C3C5A"],[0.14381270903010029,"#1C3C5A"],[0.14715719063545149,"#1C3D5B"],[0.15050167224080266,"#1C3D5B"],[0.15384615384615385,"#1C3D5C"],[0.15719063545150502,"#1D3E5C"],[0.16053511705685622,"#1D3E5D"],[0.16387959866220733,"#1D3F5D"],[0.16722408026755853,"#1D3F5E"],[0.17056856187290964,"#1D3F5F"],[0.17391304347826084,"#1E405F"],[0.17725752508361201,"#1E4060"],[0.1806020066889632,"#1E4160"],[0.18394648829431437,"#1E4161"],[0.18729096989966557,"#1E4261"],[0.19063545150501673,"#1F4262"],[0.19397993311036793,"#1F4263"],[0.19732441471571904,"#1F4363"],[0.20066889632107024,"#1F4364"],[0.20401337792642135,"#1F4464"],[0.20735785953177255,"#204465"],[0.21070234113712372,"#204465"],[0.21404682274247491,"#204566"],[0.21739130434782608,"#204566"],[0.22073578595317728,"#214667"],[0.22408026755852845,"#214668"],[0.22742474916387959,"#214768"],[0.23076923076923075,"#214769"],[0.23411371237458189,"#214769"],[0.23745819397993304,"#22486A"],[0.24080267558528423,"#22486A"],[0.2441471571906354,"#22496B"],[0.2474916387959866,"#22496C"],[0.25083612040133779,"#224A6C"],[0.25418060200668896,"#234A6D"],[0.25752508361204013,"#234A6D"],[0.2608695652173913,"#234B6E"],[0.26421404682274241,"#234B6E"],[0.26755852842809358,"#244C6F"],[0.27090301003344475,"#244C70"],[0.27424749163879591,"#244C70"],[0.27759197324414714,"#244D71"],[0.28093645484949831,"#244D71"],[0.28428093645484948,"#254E72"],[0.28762541806020064,"#254E72"],[0.29096989966555187,"#254F73"],[0.29431438127090293,"#254F74"],[0.29765886287625409,"#254F74"],[0.30100334448160526,"#265075"],[0.30434782608695649,"#265075"],[0.30769230769230765,"#265176"],[0.31103678929765882,"#265176"],[0.31438127090300999,"#275277"],[0.31772575250836121,"#275278"],[0.32107023411371238,"#275278"],[0.32441471571906355,"#275379"],[0.32775919732441461,"#275379"],[0.33110367892976583,"#28547A"],[0.334448160535117,"#28547B"],[0.33779264214046817,"#28557B"],[0.34113712374581934,"#28557C"],[0.34448160535117056,"#28567C"],[0.34782608695652173,"#29567D"],[0.3511705685618729,"#29567D"],[0.35451505016722407,"#29577E"],[0.35785953177257518,"#29577F"],[0.36120401337792635,"#2A587F"],[0.36454849498327752,"#2A5880"],[0.36789297658862868,"#2A5980"],[0.37123745819397991,"#2A5981"],[0.37458193979933108,"#2A5982"],[0.37792642140468224,"#2B5A82"],[0.38127090301003341,"#2B5A83"],[0.38461538461538458,"#2B5B83"],[0.38795986622073581,"#2B5B84"],[0.39130434782608686,"#2C5C85"],[0.39464882943143803,"#2C5C85"],[0.39799331103678925,"#2C5D86"],[0.40133779264214042,"#2C5D86"],[0.40468227424749159,"#2C5D87"],[0.40802675585284276,"#2D5E87"],[0.41137123745819393,"#2D5E88"],[0.41471571906354515,"#2D5F89"],[0.41806020066889632,"#2D5F89"],[0.42140468227424738,"#2E608A"],[0.4247491638795986,"#2E608A"],[0.42809364548494977,"#2E618B"],[0.43143812709030094,"#2E618C"],[0.43478260869565211,"#2E618C"],[0.43812709030100327,"#2F628D"],[0.4414715719063545,"#2F628D"],[0.44481605351170567,"#2F638E"],[0.44816053511705684,"#2F638F"],[0.451505016722408,"#30648F"],[0.45484949832775912,"#306490"],[0.45819397993311028,"#306590"],[0.46153846153846145,"#306591"],[0.46488294314381262,"#306592"],[0.46822742474916385,"#316692"],[0.47157190635451501,"#316693"],[0.47491638795986618,"#316793"],[0.47826086956521735,"#316794"],[0.48160535117056857,"#326895"],[0.48494983277591974,"#326895"],[0.48829431438127091,"#326996"],[0.49163879598662197,"#326996"],[0.49498327759197319,"#326997"],[0.49832775919732436,"#336A98"],[0.50167224080267558,"#336A98"],[0.50501672240802675,"#336B99"],[0.50836120401337792,"#336B99"],[0.51170568561872909,"#346C9A"],[0.51505016722408026,"#346C9B"],[0.51839464882943143,"#346D9B"],[0.52173913043478259,"#346D9C"],[0.52508361204013365,"#346E9D"],[0.52842809364548493,"#356E9D"],[0.5317725752508361,"#356E9E"],[0.53511705685618727,"#356F9E"],[0.53846153846153844,"#356F9F"],[0.5418060200668896,"#3670A0"],[0.54515050167224077,"#3670A0"],[0.54849498327759194,"#3671A1"],[0.55183946488294311,"#3671A1"],[0.55518394648829428,"#3772A2"],[0.55852842809364545,"#3772A3"],[0.56187290969899661,"#3773A3"],[0.56521739130434778,"#3773A4"],[0.56856187290969895,"#3773A4"],[0.57190635451505012,"#3874A5"],[0.57525083612040129,"#3874A6"],[0.57859531772575246,"#3875A6"],[0.58193979933110374,"#3875A7"],[0.5852842809364549,"#3976A8"],[0.58862876254180596,"#3976A8"],[0.59197324414715713,"#3977A9"],[0.5953177257525083,"#3977A9"],[0.59866220735785947,"#3978AA"],[0.60200668896321063,"#3A78AB"],[0.6053511705685618,"#3A79AB"],[0.60869565217391308,"#3A79AC"],[0.61204013377926425,"#3A79AC"],[0.61538461538461542,"#3B7AAD"],[0.61872909698996648,"#3B7AAE"],[0.62207357859531764,"#3B7BAE"],[0.62541806020066881,"#3B7BAF"],[0.62876254180601998,"#3C7CB0"],[0.63210702341137115,"#3C7CB0"],[0.63545150501672243,"#3C7DB1"],[0.6387959866220736,"#3C7DB1"],[0.64214046822742477,"#3C7EB2"],[0.64548494983277593,"#3D7EB3"],[0.6488294314381271,"#3D7FB3"],[0.65217391304347816,"#3D7FB4"],[0.65551839464882933,"#3D7FB5"],[0.6588628762541805,"#3E80B5"],[0.66220735785953178,"#3E80B6"],[0.66555183946488294,"#3E81B6"],[0.66889632107023411,"#3E81B7"],[0.67224080267558528,"#3F82B8"],[0.67558528428093645,"#3F82B8"],[0.67892976588628762,"#3F83B9"],[0.68227424749163867,"#3F83BA"],[0.68561872909698984,"#4084BA"],[0.68896321070234112,"#4084BB"],[0.69230769230769229,"#4085BB"],[0.69565217391304346,"#4085BC"],[0.69899665551839463,"#4086BD"],[0.7023411371237458,"#4186BD"],[0.70568561872909696,"#4186BE"],[0.70903010033444813,"#4187BF"],[0.7123745819397993,"#4187BF"],[0.71571906354515047,"#4288C0"],[0.71906354515050164,"#4288C1"],[0.72240802675585281,"#4289C1"],[0.72575250836120397,"#4289C2"],[0.72909698996655514,"#438AC2"],[0.73244147157190631,"#438AC3"],[0.73578595317725748,"#438BC4"],[0.73913043478260865,"#438BC4"],[0.74247491638795982,"#438CC5"],[0.74581939799331098,"#448CC6"],[0.74916387959866215,"#448DC6"],[0.75250836120401332,"#448DC7"],[0.75585284280936449,"#448EC8"],[0.75919732441471566,"#458EC8"],[0.76254180602006683,"#458FC9"],[0.76588628762541799,"#458FC9"],[0.76923076923076916,"#458FCA"],[0.77257525083612044,"#4690CB"],[0.77591973244147161,"#4690CB"],[0.77926421404682267,"#4691CC"],[0.78260869565217384,"#4691CD"],[0.785953177257525,"#4792CD"],[0.78929765886287617,"#4792CE"],[0.79264214046822734,"#4793CF"],[0.79598662207357851,"#4793CF"],[0.79933110367892979,"#4894D0"],[0.80267558528428096,"#4894D0"],[0.80602006688963213,"#4895D1"],[0.80936454849498318,"#4895D2"],[0.81270903010033435,"#4896D2"],[0.81605351170568552,"#4996D3"],[0.81939799331103669,"#4997D4"],[0.82274247491638786,"#4997D4"],[0.82608695652173914,"#4998D5"],[0.82943143812709019,"#4A98D6"],[0.83277591973244147,"#4A99D6"],[0.83612040133779253,"#4A99D7"],[0.83946488294314381,"#4A9AD8"],[0.84280936454849487,"#4B9AD8"],[0.84615384615384592,"#4B9BD9"],[0.8494983277591972,"#4B9BDA"],[0.85284280936454837,"#4B9BDA"],[0.85618729096989965,"#4C9CDB"],[0.85953177257525071,"#4C9CDB"],[0.86287625418060199,"#4C9DDC"],[0.86622073578595304,"#4C9DDD"],[0.86956521739130432,"#4D9EDD"],[0.87290969899665538,"#4D9EDE"],[0.87625418060200655,"#4D9FDF"],[0.87959866220735783,"#4D9FDF"],[0.88294314381270889,"#4DA0E0"],[0.88628762541806017,"#4EA0E1"],[0.88963210702341122,"#4EA1E1"],[0.8929765886287625,"#4EA1E2"],[0.89632107023411356,"#4EA2E3"],[0.89966555183946484,"#4FA2E3"],[0.9030100334448159,"#4FA3E4"],[0.90635451505016706,"#4FA3E5"],[0.90969899665551834,"#4FA4E5"],[0.9130434782608694,"#50A4E6"],[0.91638795986622068,"#50A5E7"],[0.91973244147157174,"#50A5E7"],[0.92307692307692302,"#50A6E8"],[0.92642140468227407,"#51A6E8"],[0.92976588628762535,"#51A7E9"],[0.93311036789297652,"#51A7EA"],[0.93645484949832758,"#51A8EA"],[0.93979933110367886,"#52A8EB"],[0.94314381270903003,"#52A9EC"],[0.94648829431438131,"#52A9EC"],[0.94983277591973236,"#52AAED"],[0.95317725752508342,"#53AAEE"],[0.9565217391304347,"#53ABEE"],[0.95986622073578587,"#53ABEF"],[0.96321070234113715,"#53ACF0"],[0.96655518394648821,"#54ACF0"],[0.96989966555183948,"#54ADF1"],[0.97324414715719054,"#54ADF2"],[0.97658862876254182,"#54AEF2"],[0.97993311036789288,"#55AEF3"],[0.98327759197324394,"#55AFF4"],[0.98662207357859533,"#55AFF4"],[0.98996655518394638,"#55B0F5"],[0.99331103678929766,"#56B0F6"],[0.99665551839464872,"#56B1F6"],[1,"#56B1F7"]],"colorbar":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"thickness":23.039999999999996,"title":"Walking Commuters Percentage","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"tickmode":"array","ticktext":["5","10","15"],"tickvals":[0.18341176470588236,0.47654901960784307,0.76968627450980387],"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"ticklen":2,"len":0.5}},"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":43.762557077625573,"r":7.3059360730593621,"b":40.182648401826498,"l":37.260273972602747},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Influence of Sidewalk Areas and Walking Commuters on Obesity Rates","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[3.125,11.375],"tickmode":"array","ticktext":["5","7","9","11"],"tickvals":[5,7,9,11],"categoryorder":"array","categoryarray":["5","7","9","11"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Sidewalk Area Percentage","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[35,72.400000000000006],"tickmode":"array","ticktext":["40","50","60","70"],"tickvals":[40,50,60,70],"categoryorder":"array","categoryarray":["40","50","60","70"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Obesity Percentage","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Walking Commuters Percentage","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"22a27de6bfc3":{"x":{},"y":{},"colour":{},"type":"scatter"},"22a23837dbc8":{"x":{},"y":{},"colour":{}}},"cur_data":"22a27de6bfc3","visdat":{"22a27de6bfc3":["function (y) ","x"],"22a23837dbc8":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-<pre class="r"><code>coefficients_q4 &lt;- coef(lm_model_obesity)
-equation_q4 &lt;- paste0(
-  &quot;$$ \\text{Obesity Percentage} = \\beta_0 + \\beta_1 \\cdot \\text{Sidewalk Area Percentage} + \\beta_2 \\cdot \\text{Walking Commuters Percentage} \\\\&quot;,
-  &quot;\\beta_0 = &quot;, round(coefficients_q4[1], 3), &quot;, \\beta_1 = &quot;, round(coefficients_q4[2], 3), &quot;, \\beta_2 = &quot;, round(coefficients_q4[3], 3), &quot; $$&quot;
-)
-
-cat(equation_q4)</code></pre>
-<pre><code>## $$ \text{Obesity Percentage} = \beta_0 + \beta_1 \cdot \text{Sidewalk Area Percentage} + \beta_2 \cdot \text{Walking Commuters Percentage} \\\beta_0 = 72.377, \beta_1 = -0.631, \beta_2 = -1.097 $$</code></pre>
-<pre class="r"><code>knitr::kable(
-  detailed_model_table_obesity,
-  caption = &quot;Detailed Linear Model Summary for Obesity Rates&quot;
-)</code></pre>
-<table>
-<caption>Detailed Linear Model Summary for Obesity Rates</caption>
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 <thead>
 <tr class="header">
 <th align="left">Statistic</th>
@@ -1035,7 +799,6 @@ cat(equation_q4)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<<<<<<< HEAD
 <td align="left">Slope Std.Error</td>
 <td align="right">0.447</td>
 </tr>
@@ -1118,89 +881,6 @@ provides evidence that active transportation patterns may be more
 directly linked to obesity outcomes than physical infrastructure
 alone.</p>
 <hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
-=======
-<td align="left">Intercept Estimate</td>
-<td align="right">72.3769489</td>
-</tr>
-<tr class="even">
-<td align="left">Intercept Std. Error</td>
-<td align="right">3.1524298</td>
-</tr>
-<tr class="odd">
-<td align="left">Intercept t-value</td>
-<td align="right">22.9590996</td>
-</tr>
-<tr class="even">
-<td align="left">Intercept p-value</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="odd">
-<td align="left">Sidewalk Area Slope Estimate</td>
-<td align="right">-0.6313537</td>
-</tr>
-<tr class="even">
-<td align="left">Sidewalk Area Slope Std. Error</td>
-<td align="right">0.4467373</td>
-</tr>
-<tr class="odd">
-<td align="left">Sidewalk Area Slope t-value</td>
-<td align="right">-1.4132550</td>
-</tr>
-<tr class="even">
-<td align="left">Sidewalk Area Slope p-value</td>
-<td align="right">0.1625027</td>
-</tr>
-<tr class="odd">
-<td align="left">Walking Commuters Slope Estimate</td>
-<td align="right">-1.0972273</td>
-</tr>
-<tr class="even">
-<td align="left">Walking Commuters Slope Std. Error</td>
-<td align="right">0.2352872</td>
-</tr>
-<tr class="odd">
-<td align="left">Walking Commuters Slope t-value</td>
-<td align="right">-4.6633524</td>
-</tr>
-<tr class="even">
-<td align="left">Walking Commuters Slope p-value</td>
-<td align="right">0.0000167</td>
-</tr>
-<tr class="odd">
-<td align="left">Residual Std. Error</td>
-<td align="right">6.4247864</td>
-</tr>
-<tr class="even">
-<td align="left">R-squared</td>
-<td align="right">0.3666341</td>
-</tr>
-<tr class="odd">
-<td align="left">Adjusted R-squared</td>
-<td align="right">0.3465272</td>
-</tr>
-<tr class="even">
-<td align="left">F-statistic</td>
-<td align="right">18.2342841</td>
-</tr>
-<tr class="odd">
-<td align="left">F-statistic p-value</td>
-<td align="right">0.9999994</td>
-</tr>
-</tbody>
-</table>
-<div id="key-findings-1" class="section level3">
-<h3><strong>Key Findings</strong></h3>
-<div
-id="while-both-sidewalk-area-percentage-and-walking-commuter-rates-are-modeled-as-predictors-of-obesity-rates-only-walking-commuter-rates-show-a-statistically-significant-relationship.-this-highlights-the-importance-of-promoting-active-commuting-as-a-means-to-potentially-reduce-obesity-rates.-the-model-indicates-that-encouraging-walking-as-a-commute-mode-may-have-a-measurable-impact-on-public-health-outcomes."
-class="section level4">
-<h4>While both sidewalk area percentage and walking commuter rates are
-modeled as predictors of obesity rates, only walking commuter rates show
-a statistically significant relationship. This highlights the importance
-of promoting active commuting as a means to potentially reduce obesity
-rates. The model indicates that encouraging walking as a commute mode
-may have a measurable impact on public health outcomes.</h4>
-</div>
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 </div>
 </div>
 <div id="interaction-analysis" class="section level1">
@@ -1213,13 +893,10 @@ effects</strong> between sidewalk area percentage and walking commuter
 rates on obesity rates. To test this, an interaction model was built to
 explore whether the effect of sidewalk area percentage on obesity
 depends on walking commuter rates.</h4>
-<<<<<<< HEAD
 <p><span class="math display">\[Y_{Obesity Percentage} = \beta_0 +
 \beta_1X_{SidewalkArea} + \beta_2X_{WalkingPercent} +
 \beta_3(X_{SidewalkArea} \times X_{WalkingPercent}) +
 \epsilon\]</span></p>
-=======
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 <pre class="r"><code># Run the interaction model
 lm_interaction &lt;- lm(obs_percent ~ percent_of_land_area * walked_percent, data = sw_obs_data)
 
@@ -1230,11 +907,7 @@ following table:</p>
 <pre class="r"><code># Extract interaction model parameters
 interaction_results &lt;- data.frame(
   Estimate = interaction_summary$coefficients[, &quot;Estimate&quot;],
-<<<<<<< HEAD
   `Std.Error` = interaction_summary$coefficients[, &quot;Std. Error&quot;],
-=======
-  `Std. Error` = interaction_summary$coefficients[, &quot;Std. Error&quot;],
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
   `t-value` = interaction_summary$coefficients[, &quot;t value&quot;],
   `p-value` = interaction_summary$coefficients[, &quot;Pr(&gt;|t|)&quot;]
 )
@@ -1250,11 +923,7 @@ knitr::kable(
 <colgroup>
 <col width="50%" />
 <col width="12%" />
-<<<<<<< HEAD
 <col width="14%" />
-=======
-<col width="15%" />
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 <col width="11%" />
 <col width="11%" />
 </colgroup>
@@ -1262,11 +931,7 @@ knitr::kable(
 <tr class="header">
 <th align="left"></th>
 <th align="right">Estimate</th>
-<<<<<<< HEAD
 <th align="right">Std.Error</th>
-=======
-<th align="right">Std..Error</th>
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 <th align="right">t.value</th>
 <th align="right">p.value</th>
 </tr>
@@ -1345,14 +1010,8 @@ ggplot(sw_obs_data, aes(x = percent_of_land_area, y = obs_percent, color = walke
     legend.text = element_text(size = 10) # Style legend text
   )</code></pre>
 <p><img src="model_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<<<<<<< HEAD
 <div id="results-and-insights" class="section level4">
 <h4><strong>Results and Insights</strong></h4>
-=======
-</div>
-<div id="results-and-insights" class="section level2">
-<h2><strong>Results and Insights</strong></h2>
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 <p>The plot illustrates the interaction between sidewalk area percentage
 and obesity rates across four categories of walking commuter rates.
 Regression lines for each category are relatively flat and similar in
@@ -1369,11 +1028,8 @@ Future research could investigate other potential mediators or
 moderators, such as socioeconomic status or access to recreational
 infrastructure, to better understand the determinants of obesity in
 urban settings.</p>
-<<<<<<< HEAD
 <hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
 </div>
-=======
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 </div>
 </div>
 <div id="mediation-analysis" class="section level1">
@@ -1385,7 +1041,6 @@ Mediator</strong></p>
 percentage and obesity rates. Mediation analysis helps determine if the
 effect of sidewalk area percentage on obesity rates operates indirectly
 through walking commuter rates.</p>
-<<<<<<< HEAD
 <p>Path a : Sidewalk Area → Walking Commuter Rates (Mediator) <span
 class="math display">\[M_{WalkingCommuters} = \alpha_0 +
 aX_{SidewalkArea} + \epsilon_1\]</span></p>
@@ -1395,8 +1050,6 @@ aX_{SidewalkArea} + \epsilon_1\]</span></p>
 \epsilon_2\]</span></p>
 <p>Total Effect (c) <span class="math display">\[c = c&#39; +
 ab\]</span></p>
-=======
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 <pre class="r"><code># mediator model
 mediator_model &lt;- lm(walked_percent ~ percent_of_land_area, data = sw_obs_data)
 # outcome model
@@ -1438,51 +1091,30 @@ knitr::kable(
 <tr class="odd">
 <td align="left">ACME (Indirect Effect)</td>
 <td align="right">-0.910</td>
-<<<<<<< HEAD
-<td align="right">-1.484</td>
-<td align="right">-0.424</td>
-=======
 <td align="right">-1.434</td>
-<td align="right">-0.427</td>
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
-<td align="right">0.00</td>
+<td align="right">-0.458</td>
+<td align="right">0.000</td>
 </tr>
 <tr class="even">
 <td align="left">ADE (Direct Effect)</td>
 <td align="right">-0.631</td>
-<<<<<<< HEAD
-<td align="right">-1.426</td>
-<td align="right">0.219</td>
-<td align="right">0.15</td>
-=======
-<td align="right">-1.451</td>
-<td align="right">0.196</td>
-<td align="right">0.13</td>
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
+<td align="right">-1.488</td>
+<td align="right">0.165</td>
+<td align="right">0.128</td>
 </tr>
 <tr class="odd">
 <td align="left">Total Effect</td>
 <td align="right">-1.542</td>
-<<<<<<< HEAD
-<td align="right">-2.394</td>
-<td align="right">-0.698</td>
-=======
-<td align="right">-2.401</td>
-<td align="right">-0.750</td>
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
-<td align="right">0.00</td>
+<td align="right">-2.302</td>
+<td align="right">-0.726</td>
+<td align="right">0.000</td>
 </tr>
 <tr class="even">
 <td align="left">Proportion Mediated</td>
 <td align="right">0.590</td>
-<<<<<<< HEAD
-<td align="right">0.308</td>
-<td align="right">1.283</td>
-=======
-<td align="right">0.298</td>
-<td align="right">1.208</td>
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
-<td align="right">0.00</td>
+<td align="right">0.275</td>
+<td align="right">1.195</td>
+<td align="right">0.000</td>
 </tr>
 </tbody>
 </table>
@@ -1529,10 +1161,7 @@ commuting is pivotal. Policymakers should prioritize pedestrian-friendly
 infrastructure alongside initiatives to promote walking, addressing
 public health challenges like obesity while supporting broader urban
 health goals.</p>
-<<<<<<< HEAD
 <hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
-=======
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 </div>
 <div id="clustering-analysis" class="section level1">
 <h1><strong>Clustering Analysis</strong></h1>
@@ -1582,13 +1211,8 @@ interactive_plot &lt;- plot_ly(
 
 # Display the interactive plot
 interactive_plot</code></pre>
-<<<<<<< HEAD
-<div class="plotly html-widget html-fill-item" id="htmlwidget-c2a931752ae4f30d7598" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-c2a931752ae4f30d7598">{"x":{"visdat":{"101ce20de7ce0":["function () ","plotlyVisDat"]},"cur_data":"101ce20de7ce0","attrs":{"101ce20de7ce0":{"x":{},"y":{},"mode":"markers","text":{},"marker":{"size":10,"opacity":0.69999999999999996},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Clustering of Neighborhoods by Sidewalk Area, Walking Commuter Rates, and Obesity Rates","xaxis":{"domain":[0,1],"automargin":true,"title":"Sidewalk Area Percentage"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Walking Commuter Percentage"},"legend":{"title":{"text":"Cluster"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.1999999999999993,4.5999999999999996,7,6.5999999999999996,7.5999999999999996,3.7000000000000002,6.2000000000000002,3.5,3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.0999999999999996,4.5999999999999996,7.7000000000000002,3.7000000000000002,6.2000000000000002,3.5],"y":[7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,3.7000000000000002,3.2000000000000002,10.4,5.7000000000000002,1.8999999999999999,5.5999999999999996,7.2000000000000002,2.7000000000000002,7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,4.9000000000000004,3.2000000000000002,4.0999999999999996,5.5999999999999996,7.2000000000000002,2.7000000000000002],"mode":"markers","text":["Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 70.7","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 69.3","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 66.9","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 67.8","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 70.6","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 59.7","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 68.5","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 60.6","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 64.4","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 65.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 65.5","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 61.9","Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 60.9","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 67.6","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 69.8","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 69.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 70.2","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 64.4","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 69.6","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 62.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 67.9","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 65.1"],"marker":{"color":"rgba(102,194,165,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(102,194,165,1)"}},"type":"scatter","name":"1","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[10.5,8.0999999999999996,7.4000000000000004,7.4000000000000004,8.9000000000000004,11,9.0999999999999996,7.7999999999999998,8,7.7000000000000002,7.7999999999999998,7,6.5999999999999996,10.5,8.1999999999999993,7.4000000000000004,7.4000000000000004,10.800000000000001,8.9000000000000004,11,7,9.0999999999999996,7.7999999999999998,6.5999999999999996,8,7.5999999999999996,7.7999999999999998,7,6.5999999999999996],"y":[6,4.9000000000000004,7.7000000000000002,9.1999999999999993,10.1,11.1,5.5,8,4.2999999999999998,4.0999999999999996,8.5,5.7999999999999998,9.5,6,3.7000000000000002,7.7000000000000002,9.1999999999999993,8.1999999999999993,10.1,11.1,10.4,5.5,8,5.7000000000000002,4.2999999999999998,1.8999999999999999,8.5,5.7999999999999998,9.5],"mode":"markers","text":["Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 56.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 65.7","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 49.3","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 54.5","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.6","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 63.1","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 55.7","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 56.1","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 62.1","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 58.6","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 54.6","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 57.4","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 56.2","Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 63.1","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 60.6","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 60.6","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 62.1","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 66.7","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.5","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 61.2","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 62.7","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 57.6","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 64.3","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 53.3","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 63.7","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 53.4","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 58.7","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 59.6","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 58.5"],"marker":{"color":"rgba(252,141,98,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(252,141,98,1)"}},"type":"scatter","name":"2","textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.800000000000001,10.1,6.7999999999999998,9.9000000000000004,9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.1,6.7999999999999998,9.9000000000000004],"y":[11.1,11.199999999999999,13.699999999999999,14.9,8.1999999999999993,13.1,10.300000000000001,18.899999999999999,11.1,11.199999999999999,13.699999999999999,14.9,13.1,10.300000000000001,18.899999999999999],"mode":"markers","text":["Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 41.2","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 46.7","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 44.9","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 52","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 49.9","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 48.3","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 46.6","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 48.4","Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 36.7","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 47.2","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 53.4","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 50.3","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 49.8","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 51.1","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 47.5"],"marker":{"color":"rgba(141,160,203,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(141,160,203,1)"}},"type":"scatter","name":"3","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-=======
-<div class="plotly html-widget html-fill-item" id="htmlwidget-540164b644554ef5af69" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-540164b644554ef5af69">{"x":{"visdat":{"22a25909b663":["function () ","plotlyVisDat"]},"cur_data":"22a25909b663","attrs":{"22a25909b663":{"x":{},"y":{},"mode":"markers","text":{},"marker":{"size":10,"opacity":0.69999999999999996},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Clustering of Neighborhoods by Sidewalk Area, Walking Commuter Rates, and Obesity Rates","xaxis":{"domain":[0,1],"automargin":true,"title":"Sidewalk Area Percentage"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Walking Commuter Percentage"},"legend":{"title":{"text":"Cluster"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.1999999999999993,4.5999999999999996,7,6.5999999999999996,7.5999999999999996,3.7000000000000002,6.2000000000000002,3.5,3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.0999999999999996,4.5999999999999996,7.7000000000000002,3.7000000000000002,6.2000000000000002,3.5],"y":[7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,3.7000000000000002,3.2000000000000002,10.4,5.7000000000000002,1.8999999999999999,5.5999999999999996,7.2000000000000002,2.7000000000000002,7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,4.9000000000000004,3.2000000000000002,4.0999999999999996,5.5999999999999996,7.2000000000000002,2.7000000000000002],"mode":"markers","text":["Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 70.7","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 69.3","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 66.9","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 67.8","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 70.6","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 59.7","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 68.5","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 60.6","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 64.4","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 65.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 65.5","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 61.9","Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 60.9","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 67.6","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 69.8","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 69.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 70.2","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 64.4","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 69.6","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 62.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 67.9","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 65.1"],"marker":{"color":"rgba(102,194,165,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(102,194,165,1)"}},"type":"scatter","name":"1","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[10.5,8.0999999999999996,7.4000000000000004,7.4000000000000004,8.9000000000000004,11,9.0999999999999996,7.7999999999999998,8,7.7000000000000002,7.7999999999999998,7,6.5999999999999996,10.5,8.1999999999999993,7.4000000000000004,7.4000000000000004,10.800000000000001,8.9000000000000004,11,7,9.0999999999999996,7.7999999999999998,6.5999999999999996,8,7.5999999999999996,7.7999999999999998,7,6.5999999999999996],"y":[6,4.9000000000000004,7.7000000000000002,9.1999999999999993,10.1,11.1,5.5,8,4.2999999999999998,4.0999999999999996,8.5,5.7999999999999998,9.5,6,3.7000000000000002,7.7000000000000002,9.1999999999999993,8.1999999999999993,10.1,11.1,10.4,5.5,8,5.7000000000000002,4.2999999999999998,1.8999999999999999,8.5,5.7999999999999998,9.5],"mode":"markers","text":["Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 56.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 65.7","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 49.3","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 54.5","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.6","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 63.1","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 55.7","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 56.1","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 62.1","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 58.6","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 54.6","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 57.4","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 56.2","Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 63.1","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 60.6","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 60.6","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 62.1","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 66.7","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.5","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 61.2","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 62.7","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 57.6","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 64.3","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 53.3","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 63.7","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 53.4","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 58.7","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 59.6","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 58.5"],"marker":{"color":"rgba(252,141,98,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(252,141,98,1)"}},"type":"scatter","name":"2","textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.800000000000001,10.1,6.7999999999999998,9.9000000000000004,9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.1,6.7999999999999998,9.9000000000000004],"y":[11.1,11.199999999999999,13.699999999999999,14.9,8.1999999999999993,13.1,10.300000000000001,18.899999999999999,11.1,11.199999999999999,13.699999999999999,14.9,13.1,10.300000000000001,18.899999999999999],"mode":"markers","text":["Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 41.2","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 46.7","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 44.9","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 52","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 49.9","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 48.3","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 46.6","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 48.4","Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 36.7","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 47.2","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 53.4","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 50.3","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 49.8","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 51.1","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 47.5"],"marker":{"color":"rgba(141,160,203,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(141,160,203,1)"}},"type":"scatter","name":"3","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
+<div class="plotly html-widget html-fill-item" id="htmlwidget-f80c70358adbc99d9f8d" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-f80c70358adbc99d9f8d">{"x":{"visdat":{"137bd52975ee5":["function () ","plotlyVisDat"]},"cur_data":"137bd52975ee5","attrs":{"137bd52975ee5":{"x":{},"y":{},"mode":"markers","text":{},"marker":{"size":10,"opacity":0.69999999999999996},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Clustering of Neighborhoods by Sidewalk Area, Walking Commuter Rates, and Obesity Rates","xaxis":{"domain":[0,1],"automargin":true,"title":"Sidewalk Area Percentage"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Walking Commuter Percentage"},"legend":{"title":{"text":"Cluster"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.1999999999999993,4.5999999999999996,7,6.5999999999999996,7.5999999999999996,3.7000000000000002,6.2000000000000002,3.5,3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.0999999999999996,4.5999999999999996,7.7000000000000002,3.7000000000000002,6.2000000000000002,3.5],"y":[7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,3.7000000000000002,3.2000000000000002,10.4,5.7000000000000002,1.8999999999999999,5.5999999999999996,7.2000000000000002,2.7000000000000002,7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,4.9000000000000004,3.2000000000000002,4.0999999999999996,5.5999999999999996,7.2000000000000002,2.7000000000000002],"mode":"markers","text":["Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 70.7","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 69.3","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 66.9","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 67.8","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 70.6","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 59.7","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 68.5","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 60.6","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 64.4","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 65.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 65.5","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 61.9","Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 60.9","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 67.6","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 69.8","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 69.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 70.2","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 64.4","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 69.6","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 62.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 67.9","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 65.1"],"marker":{"color":"rgba(102,194,165,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(102,194,165,1)"}},"type":"scatter","name":"1","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[10.5,8.0999999999999996,7.4000000000000004,7.4000000000000004,8.9000000000000004,11,9.0999999999999996,7.7999999999999998,8,7.7000000000000002,7.7999999999999998,7,6.5999999999999996,10.5,8.1999999999999993,7.4000000000000004,7.4000000000000004,10.800000000000001,8.9000000000000004,11,7,9.0999999999999996,7.7999999999999998,6.5999999999999996,8,7.5999999999999996,7.7999999999999998,7,6.5999999999999996],"y":[6,4.9000000000000004,7.7000000000000002,9.1999999999999993,10.1,11.1,5.5,8,4.2999999999999998,4.0999999999999996,8.5,5.7999999999999998,9.5,6,3.7000000000000002,7.7000000000000002,9.1999999999999993,8.1999999999999993,10.1,11.1,10.4,5.5,8,5.7000000000000002,4.2999999999999998,1.8999999999999999,8.5,5.7999999999999998,9.5],"mode":"markers","text":["Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 56.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 65.7","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 49.3","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 54.5","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.6","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 63.1","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 55.7","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 56.1","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 62.1","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 58.6","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 54.6","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 57.4","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 56.2","Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 63.1","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 60.6","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 60.6","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 62.1","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 66.7","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.5","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 61.2","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 62.7","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 57.6","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 64.3","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 53.3","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 63.7","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 53.4","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 58.7","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 59.6","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 58.5"],"marker":{"color":"rgba(252,141,98,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(252,141,98,1)"}},"type":"scatter","name":"2","textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.800000000000001,10.1,6.7999999999999998,9.9000000000000004,9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.1,6.7999999999999998,9.9000000000000004],"y":[11.1,11.199999999999999,13.699999999999999,14.9,8.1999999999999993,13.1,10.300000000000001,18.899999999999999,11.1,11.199999999999999,13.699999999999999,14.9,13.1,10.300000000000001,18.899999999999999],"mode":"markers","text":["Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 41.2","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 46.7","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 44.9","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 52","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 49.9","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 48.3","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 46.6","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 48.4","Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 36.7","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 47.2","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 53.4","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 50.3","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 49.8","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 51.1","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 47.5"],"marker":{"color":"rgba(141,160,203,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(141,160,203,1)"}},"type":"scatter","name":"3","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <div id="cluster-characteristics" class="section level4">
 <h4><strong>Cluster Characteristics</strong></h4>
 <ul>
@@ -1640,11 +1264,8 @@ spaces that support active commuting.</p>
 
 
 
-<<<<<<< HEAD
 </div>
 </div>
-=======
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 
 </div>
 
@@ -1682,7 +1303,6 @@ $(document).ready(function () {
 });
 </script>
 
-<<<<<<< HEAD
 <script>
 $(document).ready(function ()  {
 
@@ -1712,8 +1332,6 @@ $(document).ready(function ()  {
     var toc = $("#TOC").tocify(options).data("toc-tocify");
 });
 </script>
-=======
->>>>>>> 7100cec336885ea89273d132314510e85f0ff50d
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

@@ -5,6 +5,7 @@ output:
     toc: true
     toc_float: true
     theme: lumen
+    code_folding: hide
 ---
 
 
@@ -23,6 +24,7 @@ The purposes of this project is to answer the following questions:
 - What is the association between sidewalk areas and the percentage of walking among commuters by boroughs?  
 - How does the availability of sidewalk areas and the percentage of walking among commuters influence obesity rates across different boroughs?  
 
+<br><br>
 
 # **Data Sources and Cleaning**
 Due to the limitations of the variables and information within the dataset, the data cleaning process was conducted independently for each analysis part.
@@ -33,12 +35,416 @@ Due to the limitations of the variables and information within the dataset, the 
 The difference in obesity rates between the Bronx and Manhattan from 2003 to 2022 might relate to the presence of sidewalks. Manhattan, with its abundance of well-maintained sidewalks, encourages walking and active lifestyles, likely contributing to its lower obesity rates. In contrast, fewer and poorly maintained sidewalks in the Bronx may limit physical activity opportunities for residents, possibly leading to higher obesity rates. Enhancing sidewalk infrastructure in the Bronx could promote more physical activity and help reduce these rates.
 ## Part 3.
 
+<br><br>
 
 # **EDA**
 
+## *Neighborhood Level*:
+We first explore the distribution of interested outcome variable, Sidewalk Coverage, then explore the distributions of two exposure variables and their relationship of Sidewalk Coverage.
+
+The analysis begins by examining the distribution of sidewalk coverage percentages across neighborhoods, as shown in the first bar chart. Sidewalk coverage ranges from approximately 2.7% to 11.3%, with the interquartile range (IQR) between 6.2% and 9.5%. The median value sits at 7.65%. These findings highlight the significant variability in sidewalk coverage across neighborhoods, which could have implications for urban mobility, public health, and commuting behaviors. Neighborhoods with higher sidewalk coverage may be better equipped to promote walkability and active modes of transport, while areas with lower coverage might rely more heavily on vehicular commuting.
+```{r, message = FALSE, warning = FALSE}
+library(ggridges)
+library(tidyverse)
+library(plotly)
+library(gridExtra)
+library(reshape2)
+
+commuting_df = read.csv("data/commuting.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  rename(geo_type = geo_type_desc) |> 
+  filter(
+    geo_type %in% c("UHF 42", "Citywide", "Borough"))
+
+overweight_overall_df = read_csv("data/overweightoverall.csv", na = c("NA",".","")) |> 
+  janitor::clean_names()
+
+sidewalk_df = read_csv("data/sidewalk.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  mutate(neighborhood_geo_id = paste(geography, geo_id, sep = ", ")) 
+
+commuting_sidewalk_df = 
+  inner_join(commuting_df, sidewalk_df, by = c("geo_id", "geo_rank", "geography")) |> 
+  dplyr::select(-time_period.x, - time_period.y, everything()) |> 
+  mutate(
+    bicycle_info = paste0(bicycle_number, " (", bicycle_percent, "%)"),
+    car_truck_van_info = paste0(car_truck_or_van_number, " (", car_truck_or_van_percent, "%)"),
+    public_transport_info = paste0(public_transportation_number, " (", public_transportation_percent, "%)"),
+    walked_info = paste0(walked_number, " (", walked_percent, "%)")
+  )
+
+Sidewalk_distri = ggplot(sidewalk_df, aes(x = neighborhood_geo_id , y = percent_of_land_area)) +
+  geom_col(fill = "skyblue1", color = "black", alpha = 0.8) +
+  labs(x = "Neighborhood (Geo ID)", y = "Percent of Sidewalk Coverage (%)",
+       title = "Distribution of Sidewalk Area by Neighborhood (Geo ID)") +
+  theme_minimal() +
+  theme(axis.text.x = element_blank()) 
+
+ggplotly(Sidewalk_distri)
+```
+
+The next step explores how commute modes—bicycle, walking, car/truck/van, and public transportation—are distributed across neighborhoods and how they relate to sidewalk coverage. The stacked bar chart reveals that public transportation (represented in dark green) is the predominant mode of commuting in most neighborhoods, while walking (in thistle purple) and bicycling (light pink) are less common. This disparity likely reflects the challenges of walkability and infrastructure limitations in certain areas. Additionally, neighborhoods with higher reliance on walking tend to have better sidewalk coverage, emphasizing the role of urban design in facilitating sustainable commuting practices.
+```{r, message = FALSE, warning = FALSE}
+stacked_data = commuting_sidewalk_df |> 
+  filter(geo_type.x == "UHF 42") |> 
+  dplyr::select(bicycle_percent, car_truck_or_van_percent, 
+         public_transportation_percent, walked_percent, geography) |> 
+  melt(id.vars = "geography",  
+       variable.name = "Commute_Mode", 
+       value.name = "Percent")
+
+csassocci_chart = ggplot(stacked_data, aes(y = geography, x = Percent, fill = Commute_Mode)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(title = "Distribution of Commute Modes and Sidewalk Coverage Across Neighborhoods",
+       y = NULL,
+       x = "Percent of Sidewalk Coverage (%)",
+       fill = "Commute Mode") +
+  theme_minimal() +
+  theme(axis.text.y = element_text(size = 7),legend.position = "none") +
+  scale_fill_manual(values = c("lightpink", "darkolivegreen", "gold","thistle"))
+
+ggplotly(csassocci_chart, tooltip = c("Percent", "Commute_Mode"))
+```
+
+The relationship between sidewalk coverage and public health, particularly obesity percentages, is further analyzed. The line graph tracks obesity trends from 2014 to 2022 across neighborhoods. While some neighborhoods show consistently high obesity percentages (e.g., parts of the Bronx and Staten Island), others like Manhattan demonstrate lower percentages, reflecting potential benefits of high walkability and robust transportation options. This trend underscores the potential of urban infrastructure to influence health outcomes.
+
+```{r, message = FALSE, warning = FALSE}
+filtered_obs_data <- overweight_overall_df |> 
+  filter(time_period >= 2014 & time_period <= 2022) |> 
+  mutate(percent = as.numeric(gsub("\\(.*?\\)", "", percent)))
+
+obs_dictri = filtered_obs_data |> 
+  plot_ly(
+    x = ~time_period,
+    y = ~percent,
+    color = ~geography,
+    type = 'scatter',
+    mode = 'lines+markers',
+    text = ~paste("Neighborhood:", geography, "<br>Year:", time_period, "<br>Percentage:", percent, "%"),
+    hoverinfo = 'text'
+  ) |> 
+  layout(
+    title = list(text = "Obesity Trend by Neighborhood (2014-2022)", x = 0.5),
+    xaxis = list(title = "Year"),
+    yaxis = list(title = "Obesity Percentage (%)"),
+    legend = list(
+      title = list(
+      x = 1.05,  
+      y = 0.5,
+      xanchor = "left",
+      yanchor = "middle",
+      orientation = "v",
+      font = list(size = 6)
+    ),
+    clickmode = 'event+select'
+  ))
+
+ggplotly(obs_dictri)
+```
+<p style="text-align:center; font-size:14px; font-style:italic; color:gray;">
+  Please click a neighborhood to explore in detail.
+</p>
+
+The scatterplot provides a more detailed view of the relationship between sidewalk coverage and obesity percentages, focusing on 2014 and 2022. In 2014, the data indicates a weak correlation between the two variables, as obesity percentages remain relatively uniform across different levels of sidewalk coverage. However, by 2022, a stronger negative trend emerges—neighborhoods with higher sidewalk coverage exhibit noticeably lower obesity percentages. This shift may reflect the growing impact of improved urban design, active commuting options, and public health initiatives over time.
+
+Outliers in both years highlight the complexity of these dynamics, suggesting that other contextual factors, such as socioeconomic status or access to healthy foods, may also play a role. The analysis reinforces the importance of investing in walkable infrastructure as a strategy to address public health disparities.
+
+```{r, message = FALSE, warning = FALSE}
+osassoci_df = overweight_overall_df |> 
+  filter(time_period %in% c(2014, 2022)) |> 
+  mutate(year = as.factor(time_period)) |> 
+  inner_join(sidewalk_df, by = c("geo_id","geography")) |> 
+  dplyr::select(geography, number, percent, percent_of_land_area, year) |> 
+  rename(
+    obs_number = number,
+    obs_percent = percent
+  ) |> 
+  separate(
+    obs_percent, 
+    into = c("obs_percent", "obs_percent_range"), 
+    sep = "\\s*\\(\\s*", 
+    convert = TRUE
+  ) |>
+  mutate(
+    obs_percent_range = str_remove(obs_percent_range, "\\)$"),
+    obs_percent = as.numeric(obs_percent))
+
+osassoci_plot = ggplot(osassoci_df, aes(x = percent_of_land_area, y = obs_percent, color = year,)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(se = FALSE, color = "gold", linetype = "solid") +
+  labs(
+    title = "Sidewalk Area vs. Obesity (2014 and 2022)",
+    x = "Percent of Sidewalk Coverage (%)",
+    y = "Obesity Percentage (%)"
+  ) +
+  facet_wrap(~year, ncol = 2) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    axis.title = element_text(size = 12),
+    legend.position = "none"
+  )
+
+ggplotly(osassoci_plot)
+```
+
+The neighborhood-level analysis underscores the critical influence of sidewalk coverage and urban infrastructure on commuting behaviors and health outcomes. Neighborhoods with higher sidewalk coverage demonstrate a greater reliance on walking and public transportation, which can contribute to more active lifestyles and reduced obesity rates. Conversely, areas with lower sidewalk coverage tend to depend more on car/truck commuting, possibly exacerbating sedentary behaviors and associated health risks.
+
+These findings suggest that targeted investments in improving sidewalk infrastructure, particularly in neighborhoods with low coverage, could promote walkability and encourage healthier commuting patterns. However, the observed disparities highlight the need to consider other contextual factors, such as socioeconomic status, urban density, and accessibility to recreational spaces, to create equitable and effective urban planning strategies. As we transition to a borough-level perspective, we explore how these patterns aggregate and vary across broader regions, providing additional insights into geographic disparities and their implications for urban policy.
+
+<br>
+
+## *Borough Level*:
+
+
+
+
+<br><br>
+
 # **Model Building**
 
-## Key Indicators
+## **Simple Linear Regression**
+
+To investigate the direct relationship between sidewalk area percentage and walking commuter rates, a simple linear regression model was constructed. This model quantifies how sidewalk infrastructure influences the proportion of residents who commute by walking. By establishing a foundational understanding of this relationship, the analysis sets the stage for exploring more complex interactions.
+
+The regression equation is defined as:
+$$Y_{Walking Commuters Percentage}=\beta_0 + \beta_1X_{Sidewalk Area Percentage} + \epsilon$$
+```{r, message = FALSE, warning = FALSE}
+
+commuting_df = read.csv("data/commuting.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  rename(geo_type = geo_type_desc) |> 
+  filter(
+    geo_type %in% c("UHF 42", "Citywide", "Borough"))
+
+overweight_overall_df = read_csv("data/overweightoverall.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  rename(
+    obs_number = number,
+    obs_percent = percent
+  ) |> 
+  separate(
+    obs_percent, 
+    into = c("obs_percent", "obs_percent_range"), 
+    sep = "\\s*\\(\\s*", 
+    convert = TRUE
+  ) |>
+  mutate(obs_percent_range = str_remove(obs_percent_range, "\\)$"))
+
+sidewalk_df = read_csv("data/sidewalk.csv", na = c("NA",".","")) |> 
+  janitor::clean_names() |> 
+  mutate(neighborhood_geo_id = paste(geography, geo_id, sep = ", ")) 
+
+commuting_sidewalk_df = 
+  inner_join(commuting_df, sidewalk_df, by = c("geo_id", "geo_rank", "geography")) |> 
+  dplyr::select(-time_period.x, -time_period.y, everything()) |> 
+  mutate(
+    bicycle_info = paste0(bicycle_number, " (", bicycle_percent, "%)"),
+    car_truck_van_info = paste0(car_truck_or_van_number, " (", car_truck_or_van_percent, "%)"),
+    public_transport_info = paste0(public_transportation_number, " (", public_transportation_percent, "%)"),
+    walked_info = paste0(walked_number, " (", walked_percent, "%)")
+  )
+
+side_walking_data = commuting_sidewalk_df |> 
+  dplyr::select(geography, percent_of_land_area, walked_percent) |> 
+  mutate(
+    walked_percent = as.numeric(walked_percent),
+    percent_of_land_area = as.numeric(percent_of_land_area)
+  ) |> 
+  filter(!is.na(walked_percent) & !is.na(percent_of_land_area))  
+
+lm_model = lm(walked_percent ~ percent_of_land_area, data = side_walking_data)
+lm_summary = summary(lm_model)
+
+library(ggplot2)
+ggplot(commuting_sidewalk_df, aes(x = percent_of_land_area, y = walked_percent)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "skyblue1") +
+  labs(title = "Relationship between Sidewalk Area and Walking Commuters", font = 7,
+       x = "Sidewalk Area Percentage",
+       y = "Walking Commuters Percentage") +
+  theme_minimal()
+
+
+# Create the coefficient results table
+simplr_coefficient_results = data.frame(
+  Effect = c("Intercept", "Slope"),
+  Estimate = c(lm_summary$coefficients[1,1], lm_summary$coefficients[2,1]),
+  'CI.Lower' = c(lm_summary$coefficients[1,1] - 1.96 * lm_summary$coefficients[1,2],
+                 lm_summary$coefficients[2,1] - 1.96 * lm_summary$coefficients[2,2]),
+  'CI.Upper' = c(lm_summary$coefficients[1,1] + 1.96 * lm_summary$coefficients[1,2],
+                 lm_summary$coefficients[2,1] + 1.96 * lm_summary$coefficients[2,2]),
+  'p.value' = c(lm_summary$coefficients[1,4], lm_summary$coefficients[2,4])
+)
+
+knitr::kable(simplr_coefficient_results, 
+                caption = "Simple Linear Regression Coefficients",
+                digits = 3) 
+
+# Create the model statistics table
+simplr_model_statistics = data.frame(
+  Statistic = c("Slope Std.Error", "Slope t-value", "Slope p-value", 
+                "R-squared", "Adjusted R-squared", "F-statistic", 
+                "F-statistic p-value", "Residual Std. Error"),
+  Value = c(lm_summary$coefficients[2,2],
+            lm_summary$coefficients[2,3],
+            lm_summary$coefficients[2,4],
+            lm_summary$r.squared,
+            lm_summary$adj.r.squared,
+            lm_summary$fstatistic[1],
+            pf(lm_summary$fstatistic[1], 
+               lm_summary$fstatistic[2], 
+               lm_summary$fstatistic[3], 
+               lower.tail = FALSE),
+            lm_summary$sigma)
+)
+
+knitr::kable(simplr_model_statistics, 
+                caption = "Simple Linear Regression Model Statistics",
+                digits = 3) 
+
+```
+
+Key Findings:
+
+- **Scatterplot Analysis**: The scatterplot reveals a positive relationship between sidewalk area percentage and walking commuter rates, with a linear trend suggesting that as sidewalk coverage increases, so does the percentage of walking commuters.
+
+- **Regression Results**:
+  - The slope coefficient (β₁ = 1.962) indicates that for every 1% increase in sidewalk area, walking commuter rates are predicted to increase by approximately 1.96 percentage points.
+  - The intercept of −5.307 suggests negative predicted walking rates at very low sidewalk percentages, indicating the model's limitations at extreme values.
+  - The model explains 42.1% of the variance in walking commuter rates, reflecting moderate predictive power.
+
+These results highlight the substantial impact of sidewalk infrastructure on walking behavior. Higher sidewalk area percentages are strongly associated with increased walking commuter rates. However, the unexplained variance suggests that other factors, such as neighborhood characteristics or availability of public transit, may also influence walking behavior.
+
+## **Multiple Linear Regression**
+
+Building on the simple regression analysis, a multiple linear regression model was developed to assess how sidewalk area percentage and walking commuter rates jointly influence obesity rates. This approach allows for a more comprehensive understanding of how urban design and active commuting behaviors interact to affect public health outcomes.
+
+The regression equation is defined as:
+$$Y_{Obesity Percentage}=\beta_0 + \beta_1X_{Sidewalk Area Percentage} + \beta_2X_{Walking Commuters Percentage} + \epsilon$$
+```{r, message = FALSE, warning = FALSE}
+sw_obs_data = overweight_overall_df |> 
+  filter(time_period %in% c(2014, 2022)) |> 
+  mutate(obs_percent = as.numeric(gsub("\\*|\\(|\\)", "", obs_percent))) |> 
+  dplyr::select(geo_id, geography, obs_percent) |> 
+  inner_join(commuting_sidewalk_df, by = c("geo_id", "geography")) |> 
+  dplyr::select(geography, percent_of_land_area, walked_percent, obs_percent) |> 
+  mutate(
+    walked_percent = as.numeric(walked_percent),
+    percent_of_land_area = as.numeric(percent_of_land_area),
+    obs_percent = as.numeric(obs_percent)
+  ) |> 
+  filter(!is.na(walked_percent) & !is.na(percent_of_land_area) & !is.na(obs_percent)) 
+
+lm_model_obesity = lm(obs_percent ~ percent_of_land_area + walked_percent, data = sw_obs_data)
+lm_summary_obesity = summary(lm_model_obesity)
+
+# Create the mean dataset for the Walking Commuters Percentage
+mean_walked_data <- sw_obs_data %>%
+  mutate(walked_percent = mean(walked_percent))
+
+sw_obs_data_plot = 
+  ggplot(sw_obs_data, aes(x = percent_of_land_area, y = obs_percent, color = walked_percent)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm",
+             formula = y ~ x,
+             color = "gold",
+             linetype = "solid",
+             size = 1) +
+  geom_smooth(data = mean_walked_data,
+             aes(x = percent_of_land_area, y = obs_percent),
+             method = "lm",
+             formula = y ~ x,
+             color = "skyblue",
+             linetype = "dashed",
+             size = 1.2,
+             inherit.aes = FALSE) + 
+  labs(
+    title = "Influence of Sidewalk Areas and Walking Commuters on Obesity Rates",
+    x = "Sidewalk Area Percentage",
+    y = "Obesity Percentage",
+    color = "Walking Commuters Percentage"
+  ) +
+  theme_minimal()
+
+sw_obs_data_plot
+
+
+# Create the coefficient results table for multiple regression
+multr_coefficient_results = data.frame(
+  Effect = c("Intercept", "Sidewalk Area Slope", "Walking Commuters Slope"),
+  Estimate = c(lm_summary_obesity$coefficients[1, "Estimate"],
+               lm_summary_obesity$coefficients[2, "Estimate"],
+               lm_summary_obesity$coefficients[3, "Estimate"]),
+  CI.Lower = c(
+    lm_summary_obesity$coefficients[1, "Estimate"] - 1.96 * lm_summary_obesity$coefficients[1, "Std. Error"],
+    lm_summary_obesity$coefficients[2, "Estimate"] - 1.96 * lm_summary_obesity$coefficients[2, "Std. Error"],
+    lm_summary_obesity$coefficients[3, "Estimate"] - 1.96 * lm_summary_obesity$coefficients[3, "Std. Error"]
+  ),
+  CI.Upper = c(
+    lm_summary_obesity$coefficients[1, "Estimate"] + 1.96 * lm_summary_obesity$coefficients[1, "Std. Error"],
+    lm_summary_obesity$coefficients[2, "Estimate"] + 1.96 * lm_summary_obesity$coefficients[2, "Std. Error"],
+    lm_summary_obesity$coefficients[3, "Estimate"] + 1.96 * lm_summary_obesity$coefficients[3, "Std. Error"]
+  ),
+  p.value = c(lm_summary_obesity$coefficients[1, "Pr(>|t|)"],
+              lm_summary_obesity$coefficients[2, "Pr(>|t|)"],
+              lm_summary_obesity$coefficients[3, "Pr(>|t|)"])
+)
+
+knitr::kable(multr_coefficient_results,
+             caption = "Multiple Linear Regression Coefficients",
+             digits = 3)
+
+
+# Create the model statistics table for multiple regression
+multr_model_statistics = data.frame(
+  Statistic = c(
+    "Slope Std.Error", 
+    "Slope t-value",
+    "Slope p-value",
+    "R-squared",
+    "Adjusted R-squared",
+    "F-statistic",
+    "F-statistic p-value",
+    "Residual Std. Error"
+  ),
+  Value = c(
+    lm_summary_obesity$coefficients[2, "Std. Error"],
+    lm_summary_obesity$coefficients[2, "t value"],
+    lm_summary_obesity$coefficients[2, "Pr(>|t|)"],
+    lm_summary_obesity$r.squared,
+    lm_summary_obesity$adj.r.squared,
+    lm_summary_obesity$fstatistic[1],
+    pf(lm_summary_obesity$fstatistic[1], 
+       lm_summary_obesity$fstatistic[2], 
+       lm_summary_obesity$fstatistic[3], 
+       lower.tail = FALSE),
+    lm_summary_obesity$sigma
+  )
+)
+
+knitr::kable(multr_model_statistics,
+             caption = "Multiple Linear Regression Model Statistics",
+             digits = 3)
+
+```
+
+Key Findings:
+
+- **Scatterplot Analysis**: The scatterplot highlights a negative association between obesity percentages and both predictors (sidewalk area percentage and walking commuters), with stronger relationships observed for walking commuters.
+
+- **Regression Results**:
+    - The sidewalk area slope suggests that for every 1% increase in sidewalk area, obesity rates decrease by 0.631 percentage points. However, this effect is not statistically significant at the conventional 0.05 level.
+    - The walking commuter slope indicates that for every 1% increase in walking commuter rates, obesity rates decrease by 1.097 percentage points. This effect is statistically significant.
+    - The model explains 36.7% of the variance in obesity rates, demonstrating moderate predictive power.
+
+While both sidewalk availability and walking commuter rates are negatively associated with obesity rates, the walking commuter percentage exhibits a stronger and statistically significant relationship. This finding suggests that encouraging walking as a mode of transport may directly impact obesity rates more effectively than sidewalk infrastructure alone. However, the insignificant effect of sidewalk coverage emphasizes the need to explore additional factors, such as dietary patterns, socioeconomic status, and access to recreational spaces, to better understand the determinants of obesity.
+
+The regression models highlight the critical relationships between urban infrastructure, commuting behaviors, and public health outcomes. Sidewalk area percentage was found to positively influence walking commuter rates, which, in turn, had a significant negative association with obesity percentages. These findings emphasize the importance of walkable infrastructure in promoting active commuting and reducing obesity rates, offering valuable insights for urban planning and public health initiatives.
+
+However, the analyses also revealed unexplained variance, suggesting that other factors, such as social, economic, and environmental influences, may play a role in shaping these outcomes. Building on these findings, further exploration is needed to capture the complexities of these relationships, including potential interactions and dynamic influences across neighborhoods.
+
+<br><br>
 
 
 ### **1. Association Between Sidewalk Areas and Walking Among Commuters**
@@ -61,12 +467,11 @@ Mediation analysis demonstrated that walking commuter rates significantly mediat
 
 - **Proportion Mediated:** Approximately 59% of the total effect was mediated by walking behavior.
 
+<br><br>
 
 # **Conclusion**
 
 This project highlights the importance of urban active design, such as the sidewalk infrastructure in promoting walking and improving public health outcomes. Walking commuter rates are a critical pathway linking sidewalk availability to reduced obesity rates, as shown by the significant mediation effects. While sidewalk area alone does not directly influence obesity rates, its ability to foster walking behavior plays a pivotal role in reducing obesity.
-
-
 
 # **Discussion**
 

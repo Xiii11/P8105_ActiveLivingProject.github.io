@@ -11,12 +11,12 @@
 
 
 
-<title>final-data-obesity</title>
+<title>Impact of Active Design on Physical Activity and Transportation in New York City</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -29,9 +29,14 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -219,6 +224,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -226,6 +294,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -287,143 +365,97 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">Impact of Active Design on Physical
+Activity and Transportation in New York City</h1>
 
 </div>
 
 
-<div id="final-data-for-overweight" class="section level1">
-<h1>final data for overweight</h1>
-<p>Anni Wang 2024-12-04</p>
-<pre class="r"><code>#import and clean data
-overweight2022_df = 
-  read.csv(&quot;data/overweight2022.csv&quot;, na = c(&quot;NA&quot;,&quot;.&quot;,&quot;&quot;)) |&gt; 
-   janitor::clean_names()
-
-overweight_df &lt;- read_csv(&quot;data/overweight2022.csv&quot;) %&gt;%
-  clean_names() %&gt;%
-  mutate(
-    obesity_rate_raw = percent,  
-    percent_numeric = sub(&quot;\\s*\\(.*$&quot;, &quot;&quot;, percent),  
-    obesity_rate = as.numeric(percent_numeric),  
-    number_clean = as.numeric(gsub(&quot;,&quot;, &quot;&quot;, number))  
-  ) %&gt;%
-  filter(geo_type_desc == &quot;Borough&quot;) %&gt;%
-  select(-percent_numeric)  </code></pre>
-<pre><code>## Rows: 40 Columns: 7
-## ── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (4): GeoTypeDesc, Geography, Number, Percent
-## dbl (3): TimePeriod, GeoID, GeoRank
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-## Warning: There were 2 warnings in `mutate()`.
-## The first warning was:
-## ℹ In argument: `obesity_rate = as.numeric(percent_numeric)`.
-## Caused by warning:
-## ! NAs introduced by coercion
-## ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
-<pre class="r"><code>na_check &lt;- overweight_df %&gt;% filter(is.na(obesity_rate))
-print(na_check)</code></pre>
-<pre><code>## # A tibble: 0 × 10
-## # ℹ 10 variables: time_period &lt;dbl&gt;, geo_type_desc &lt;chr&gt;, geo_id &lt;dbl&gt;,
-## #   geo_rank &lt;dbl&gt;, geography &lt;chr&gt;, number &lt;chr&gt;, percent &lt;chr&gt;,
-## #   obesity_rate_raw &lt;chr&gt;, obesity_rate &lt;dbl&gt;, number_clean &lt;dbl&gt;</code></pre>
-<pre class="r"><code>overweight_overall_df &lt;- read_csv(&quot;data/overweightoverall.csv&quot;) %&gt;%
-  clean_names() %&gt;%
-  mutate(
-    obesity_rate = as.numeric(sub(&quot;\\s*\\(.*$&quot;, &quot;&quot;, percent)),  
-    geo_type = tolower(geo_type)  
-  ) %&gt;%
-  filter(geo_type == &quot;borough&quot;)  </code></pre>
-<pre><code>## Rows: 800 Columns: 7
-## ── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (4): GeoType, Geography, Number, Percent
-## dbl (3): TimePeriod, GeoID, GeoRank
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-## Warning: There was 1 warning in `mutate()`.
-## ℹ In argument: `obesity_rate = as.numeric(sub(&quot;\\s*\\(.*$&quot;, &quot;&quot;, percent))`.
-## Caused by warning:
-## ! NAs introduced by coercion</code></pre>
-<pre class="r"><code>overweight2022_df &lt;- overweight2022_df %&gt;%
-  mutate(obesity_rate = as.numeric(sub(&quot;\\s*\\(.*\\)$&quot;, &quot;&quot;, percent))) </code></pre>
-<pre><code>## Warning: There was 1 warning in `mutate()`.
-## ℹ In argument: `obesity_rate = as.numeric(sub(&quot;\\s*\\(.*\\)$&quot;, &quot;&quot;, percent))`.
-## Caused by warning:
-## ! NAs introduced by coercion</code></pre>
-<pre class="r"><code>borough_data &lt;- overweight2022_df %&gt;%
-  filter(geo_type_desc == &quot;Borough&quot;)
-
-# Find the borough with the highest obesity rate
-borough_with_highest_obesity &lt;- borough_data %&gt;%
-  filter(obesity_rate == max(obesity_rate))
-print(borough_with_highest_obesity)</code></pre>
-<pre><code>##   time_period geo_type_desc geo_id geo_rank geography  number           percent
-## 1        2022       Borough      1        1     Bronx 693,000 65.5 (61.7, 69.0)
-##   obesity_rate
-## 1         65.5</code></pre>
-<p>Bronx has the highest overweight rate in 2022.</p>
-<pre class="r"><code>#interactive plot for Obesity Rates and Numbers by Borough in NYC, 2022
-library(ggplot2)
-library(plotly)
-
-obesity_plot &lt;- ggplot(overweight_df, aes(x = geography, y = obesity_rate, fill = geography)) +
-  geom_bar(stat = &quot;identity&quot;, color = &quot;black&quot;) +
-  geom_text(aes(label = number_clean),  
-            vjust = -0.5, size = 4) +  
-  labs(title = &quot;Obesity Rates and Numbers by Borough in NYC, 2022&quot;,
-       x = &quot;Borough&quot;,
-       y = &quot;Obesity Rate (%)&quot;,
-       fill = &quot;Borough&quot;) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-interactive_plot &lt;- ggplotly(obesity_plot)
-interactive_plot</code></pre>
-<p><img
-src="final-data-obesity_files/figure-gfm/unnamed-chunk-3-1.png" /><!-- --></p>
-<pre class="r"><code># Create a line plot to show the trend of obesity rates by year for each borough
-obesity_trend_plot &lt;- ggplot(overweight_overall_df, aes(
-  x = time_period,
-  y = obesity_rate,
-  group = geography,
-  color = geography
-)) +
-  geom_line() +
-  geom_point(aes(
-    text = paste(
-      &quot;Borough:&quot;, geography,
-      &quot;&lt;br&gt;GeoID:&quot;, geo_id,
-      &quot;&lt;br&gt;Year:&quot;, time_period,
-      &quot;&lt;br&gt;Rate:&quot;, obesity_rate
-    )
-  )) +  
-  labs(
-    title = &quot;Trend of Obesity Rates by Year and Borough&quot;,
-    x = &quot;Year&quot;,
-    y = &quot;Obesity Rate (%)&quot;,
-    color = &quot;Borough&quot;
-  ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
-<pre><code>## Warning in geom_point(aes(text = paste(&quot;Borough:&quot;, geography, &quot;&lt;br&gt;GeoID:&quot;, :
-## Ignoring unknown aesthetics: text</code></pre>
-<pre class="r"><code># Convert ggplot to interactive plotly plot and enable custom tooltip
-interactive_trend_plot &lt;- ggplotly(obesity_trend_plot, tooltip = &quot;text&quot;)
-
-# Print the interactive plot
-interactive_trend_plot</code></pre>
-<p><img
-src="final-data-obesity_files/figure-gfm/unnamed-chunk-4-1.png" /><!-- --></p>
+<div
+style="text-align:center; margin-top:20px; font-size:24px; color:#333;">
+<p>Welcome to Our Final Project for P8105!</p>
 </div>
+<style type="text/css">
+
+h1.title {
+  text-align: center; font-weight:bold;
+}
+
+</style>
+<p> </p>
+<div style="position:relative; text-align:center; color:white;">
+<p><img src="Pics/Active Design.jpg" alt="Active Design" style="width:100%; max-height:600px; object-fit:cover;"></p>
+</div>
+<p>According to the <a
+href="https://www.health.ny.gov/press/releases/2023/2023-06-20_obesity.htm">New
+York State Department of Health</a>, approximately two-thirds of adult
+New Yorkers have a Body Mass Index (BMI) classified as either obese
+(29.1%) or overweight (34.5%), impacting over 8.4 million adults across
+New York State. Additionally, the <a
+href="https://climate.cityofnewyork.us/initiatives/nyc-greenhouse-gas-inventories/?utm_source=chatgpt.com">NYC
+Mayor’s Office of Climate and Environmental Justice</a> reports that
+transportation accounts for approximately 30% of the city’s greenhouse
+gas emissions. By examining the impact of active design on physical
+activity and transportation, this project aims to provide insights that
+can inform policies to improve public health and reduce environmental
+impact in New York City.</p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD ###Related work One of our group
+members is doing her internship on a street safety program in Brooklyn.
+When she was doing literature review she found out that research shows
+well-designed urban areas with pedestrian-friendly streets and mixed-use
+spaces encourage people to walk more and drive less, which can help
+reduce obesity rates. This active design also lowers city pollution by
+cutting down on car use, aiding environmental efforts against climate
+change. Cities like New York are incorporating these principles into
+their urban planning policies to promote healthier lifestyles and
+environmental sustainability. Studies support the idea that features
+such as accessible stairs, attractive walking paths, and bike lanes not
+only make physical activity more appealing but are effective in
+transforming urban areas into healthier, greener spaces. We were
+inspired from those findings and would like to know more in the
+relationship between sidewalk areas and people’s choice on commuting
+ways.</p>
+###Initial questions: We were interested in exploring the availability
+of sidewalk areas and the percentage of walking among commuters
+influence obesity rates across different boroughs. ###Data: Commuting
+modes: <a
+href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary"
+class="uri">https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary</a>
+Overweight and Obesity:<a
+href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary"
+class="uri">https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary</a>
+Sidewalk area:<a
+href="https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/active-design/?id=2181#display=summary"
+class="uri">https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/active-design/?id=2181#display=summary</a>
+###Exploratory analysis ###Additional analysis ###Discussion =======
+<div style="position:relative; text-align:center; color:white;">
+<p><img src="Pics/giphy.gif" alt="Active Design" style="width:80%; max-height:400px; object-fit:cover;"></p>
+</div>
+<hr />
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>189d3a63eaf2261c6f13fa2250fd1fcedd6f9bf0 ### Screencast Click on the
+video below to explore the capabilities of this site and enjoy a summary
+of our key highlights.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<iframe width="560" height="315" src title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -456,6 +488,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

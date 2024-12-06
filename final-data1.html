@@ -11,7 +11,7 @@
 
 
 
-<title>final-data-obesity</title>
+<title>final-data1</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -291,135 +291,59 @@ $(document).ready(function () {
 </div>
 
 
-<div id="final-data-for-overweight" class="section level1">
-<h1>final data for overweight</h1>
-<p>Anni Wang 2024-12-04</p>
-<pre class="r"><code>#import and clean data
-overweight2022_df = 
-  read.csv(&quot;data/overweight2022.csv&quot;, na = c(&quot;NA&quot;,&quot;.&quot;,&quot;&quot;)) |&gt; 
-   janitor::clean_names()
-
-overweight_df &lt;- read_csv(&quot;data/overweight2022.csv&quot;) %&gt;%
-  clean_names() %&gt;%
+<div id="final" class="section level1">
+<h1>final</h1>
+<p>loading necessary package</p>
+<p>import commuting dataset</p>
+<pre class="r"><code>commuting_df = 
+  read.csv(&quot;data/commuting.csv&quot;, na = c(&quot;NA&quot;,&quot;.&quot;,&quot;&quot;)) |&gt; 
+   janitor::clean_names()</code></pre>
+<p>transfer datatype to numeric, filter by borough, using total number
+for each commuting mode</p>
+<pre class="r"><code>borough_df = 
+  commuting_df  |&gt; 
+  filter(geo_type_desc == &quot;Borough&quot;) |&gt; 
   mutate(
-    obesity_rate_raw = percent,  
-    percent_numeric = sub(&quot;\\s*\\(.*$&quot;, &quot;&quot;, percent),  
-    obesity_rate = as.numeric(percent_numeric),  
-    number_clean = as.numeric(gsub(&quot;,&quot;, &quot;&quot;, number))  
-  ) %&gt;%
-  filter(geo_type_desc == &quot;Borough&quot;) %&gt;%
-  select(-percent_numeric)  </code></pre>
-<pre><code>## Rows: 40 Columns: 7
-## ── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (4): GeoTypeDesc, Geography, Number, Percent
-## dbl (3): TimePeriod, GeoID, GeoRank
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    across(c(bicycle_number, car_truck_or_van_number, public_transportation_number, walked_number),
+                ~as.numeric(gsub(&quot;,&quot;, &quot;&quot;, .))))</code></pre>
+<p>using long table to list the commuting mode for each borough</p>
+<pre class="r"><code>commute_long &lt;- pivot_longer(borough_df, 
+                             cols = c(bicycle_number, car_truck_or_van_number, public_transportation_number, walked_number), 
+                             names_to = &quot;Method&quot;, 
+                             values_to = &quot;Count&quot;,
+                             names_pattern = &quot;(.*)_number&quot;)  </code></pre>
+<p>data explore for some graphs</p>
+<pre class="r"><code>p1_plotly &lt;- plot_ly(data = commute_long, x = ~geography, y = ~Count, type = &#39;bar&#39;, color = ~Method, colors = RColorBrewer::brewer.pal(8, &quot;Set2&quot;),
+                     hoverinfo = &#39;text&#39;, text = ~paste(&quot;Borough: &quot;, geography, &quot;&lt;br&gt;Geo ID: &quot;, geo_id, &quot;&lt;br&gt;Method: &quot;, Method, &quot;&lt;br&gt;Count: &quot;, Count),
+                     name = &#39;Count of Commuters&#39;) %&gt;%
+  layout(title = &#39;Commuting Methods by Borough&#39;,
+         xaxis = list(title = &#39;Borough&#39;),
+         yaxis = list(title = &#39;Count of Commuters&#39;),
+         barmode = &#39;group&#39;)
 
-## Warning: There were 2 warnings in `mutate()`.
-## The first warning was:
-## ℹ In argument: `obesity_rate = as.numeric(percent_numeric)`.
-## Caused by warning:
-## ! NAs introduced by coercion
-## ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
-<pre class="r"><code>na_check &lt;- overweight_df %&gt;% filter(is.na(obesity_rate))
-print(na_check)</code></pre>
-<pre><code>## # A tibble: 0 × 10
-## # ℹ 10 variables: time_period &lt;dbl&gt;, geo_type_desc &lt;chr&gt;, geo_id &lt;dbl&gt;,
-## #   geo_rank &lt;dbl&gt;, geography &lt;chr&gt;, number &lt;chr&gt;, percent &lt;chr&gt;,
-## #   obesity_rate_raw &lt;chr&gt;, obesity_rate &lt;dbl&gt;, number_clean &lt;dbl&gt;</code></pre>
-<pre class="r"><code>overweight_overall_df &lt;- read_csv(&quot;data/overweightoverall.csv&quot;) %&gt;%
-  clean_names() %&gt;%
-  mutate(
-    obesity_rate = as.numeric(sub(&quot;\\s*\\(.*$&quot;, &quot;&quot;, percent)),  
-    geo_type = tolower(geo_type)  
-  ) %&gt;%
-  filter(geo_type == &quot;borough&quot;)  </code></pre>
-<pre><code>## Rows: 800 Columns: 7
-## ── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (4): GeoType, Geography, Number, Percent
-## dbl (3): TimePeriod, GeoID, GeoRank
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-## Warning: There was 1 warning in `mutate()`.
-## ℹ In argument: `obesity_rate = as.numeric(sub(&quot;\\s*\\(.*$&quot;, &quot;&quot;, percent))`.
-## Caused by warning:
-## ! NAs introduced by coercion</code></pre>
-<pre class="r"><code>overweight2022_df &lt;- overweight2022_df %&gt;%
-  mutate(obesity_rate = as.numeric(sub(&quot;\\s*\\(.*\\)$&quot;, &quot;&quot;, percent))) </code></pre>
-<pre><code>## Warning: There was 1 warning in `mutate()`.
-## ℹ In argument: `obesity_rate = as.numeric(sub(&quot;\\s*\\(.*\\)$&quot;, &quot;&quot;, percent))`.
-## Caused by warning:
-## ! NAs introduced by coercion</code></pre>
-<pre class="r"><code>borough_data &lt;- overweight2022_df %&gt;%
-  filter(geo_type_desc == &quot;Borough&quot;)
-
-# Find the borough with the highest obesity rate
-borough_with_highest_obesity &lt;- borough_data %&gt;%
-  filter(obesity_rate == max(obesity_rate))
-print(borough_with_highest_obesity)</code></pre>
-<pre><code>##   time_period geo_type_desc geo_id geo_rank geography  number           percent
-## 1        2022       Borough      1        1     Bronx 693,000 65.5 (61.7, 69.0)
-##   obesity_rate
-## 1         65.5</code></pre>
-<p>Bronx has the highest overweight rate in 2022.</p>
-<pre class="r"><code>#interactive plot for Obesity Rates and Numbers by Borough in NYC, 2022
-library(ggplot2)
-library(plotly)
-
-obesity_plot &lt;- ggplot(overweight_df, aes(x = geography, y = obesity_rate, fill = geography)) +
-  geom_bar(stat = &quot;identity&quot;, color = &quot;black&quot;) +
-  geom_text(aes(label = number_clean),  
-            vjust = -0.5, size = 4) +  
-  labs(title = &quot;Obesity Rates and Numbers by Borough in NYC, 2022&quot;,
-       x = &quot;Borough&quot;,
-       y = &quot;Obesity Rate (%)&quot;,
-       fill = &quot;Borough&quot;) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-interactive_plot &lt;- ggplotly(obesity_plot)
-interactive_plot</code></pre>
+p1_plotly </code></pre>
 <p><img
-src="final-data-obesity_files/figure-gfm/unnamed-chunk-3-1.png" /><!-- --></p>
-<pre class="r"><code># Create a line plot to show the trend of obesity rates by year for each borough
-obesity_trend_plot &lt;- ggplot(overweight_overall_df, aes(
-  x = time_period,
-  y = obesity_rate,
-  group = geography,
-  color = geography
-)) +
-  geom_line() +
-  geom_point(aes(
-    text = paste(
-      &quot;Borough:&quot;, geography,
-      &quot;&lt;br&gt;GeoID:&quot;, geo_id,
-      &quot;&lt;br&gt;Year:&quot;, time_period,
-      &quot;&lt;br&gt;Rate:&quot;, obesity_rate
-    )
-  )) +  
-  labs(
-    title = &quot;Trend of Obesity Rates by Year and Borough&quot;,
-    x = &quot;Year&quot;,
-    y = &quot;Obesity Rate (%)&quot;,
-    color = &quot;Borough&quot;
-  ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
-<pre><code>## Warning in geom_point(aes(text = paste(&quot;Borough:&quot;, geography, &quot;&lt;br&gt;GeoID:&quot;, :
-## Ignoring unknown aesthetics: text</code></pre>
-<pre class="r"><code># Convert ggplot to interactive plotly plot and enable custom tooltip
-interactive_trend_plot &lt;- ggplotly(obesity_trend_plot, tooltip = &quot;text&quot;)
+src="final-data1_files/figure-gfm/unnamed-chunk-4-1.png" /><!-- --></p>
+<p>do the same for commuting modes percent</p>
+<pre class="r"><code>commute_percent_long &lt;- pivot_longer(borough_df, 
+                                     cols = c(bicycle_percent, car_truck_or_van_percent, public_transportation_percent, walked_percent), 
+                                     names_to = &quot;Method&quot;, 
+                                     values_to = &quot;Percent&quot;,
+                                     names_pattern = &quot;(.*)_percent&quot;)</code></pre>
+<pre class="r"><code>p2_plotly &lt;- plot_ly(data = commute_percent_long, x = ~geography, y = ~Percent, type = &#39;bar&#39;, color = ~Method, colors = RColorBrewer::brewer.pal(8, &quot;Set1&quot;),
+                     hoverinfo = &#39;text&#39;, text = ~paste(&quot;Borough: &quot;, geography, &quot;&lt;br&gt;Geo ID: &quot;, geo_id, &quot;&lt;br&gt;Method: &quot;, Method, &quot;&lt;br&gt;Percentage: &quot;, sprintf(&quot;%.1f%%&quot;, Percent)),
+                     name = &#39;Percentage of Commuters&#39;) %&gt;%
+  layout(title = &#39;Percentage Distribution of Commuting Methods by Borough&#39;,
+         xaxis = list(title = &#39;Borough&#39;),
+         yaxis = list(title = &#39;Percentage (%)&#39;, tickformat = &quot;,.0%&quot;),
+         barmode = &#39;stack&#39;)
 
-# Print the interactive plot
-interactive_trend_plot</code></pre>
+p2_plotly</code></pre>
 <p><img
-src="final-data-obesity_files/figure-gfm/unnamed-chunk-4-1.png" /><!-- --></p>
+src="final-data1_files/figure-gfm/unnamed-chunk-6-1.png" /><!-- --></p>
+<p>we can see from the bar chart, public transportation is the most
+popular commuting mode in most borough, except for the Staten Island,
+where the car/cruck/van is the most popular commuting mode.</p>
 </div>
 
 
