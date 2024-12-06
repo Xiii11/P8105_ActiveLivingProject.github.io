@@ -2,7 +2,7 @@ name: "P8105 Final Project!"
 output_dir: "."
 navbar:
   title: "Home"
-  right:
+  left:
     - text: "Data Source"
       href: datasource.html
     - text: "EDA"
@@ -13,10 +13,13 @@ navbar:
           href: final.html
     - text: "Model Analysis"
       href: model.html
+  right:
     - text: "Final Report"
       href: report.html
     - text: "The Team"
       href: about.html
+    - icon: fa-envelope fa-lg
+      href: mailto:<ys3766@cumc.columbia.edu>,<qc2337@cumc.columbia.edu>,<aw3621@cumc.columbia.edu>,<xp2213@cumc.columbia.edu>
     - icon: fa-github fa-lg
       href: https://github.com/Xiii11/P8105_ActiveLivingProject.github.io
 output:
