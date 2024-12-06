@@ -215,6 +215,8 @@ knitr::kable(
 ### Conclusion:
 #### While both sidewalk area percentage and walking commuter rates are modeled as predictors of obesity rates, only walking commuter rates show a statistically significant relationship. This highlights the importance of promoting active commuting as a means to potentially reduce obesity rates. The model indicates that encouraging walking as a commute mode may have a measurable impact on public health outcomes.
 
+
+
 Next, we are curious whether there are interaction effects between sidewalk area percentage and walking commuter rates on obesity rates.
 ```{r, message = FALSE, warning = FALSE}
 lm_interaction <- lm(obs_percent ~ percent_of_land_area * walked_percent, data = sw_obs_data)
