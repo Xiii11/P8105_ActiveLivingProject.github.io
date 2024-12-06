@@ -4,7 +4,6 @@ output:
   html_document:
     toc: true
     toc_float: true
-    theme: lumen
     code_folding: hide
 ---
 Load packages and import cleaned dataframes.
@@ -55,19 +54,23 @@ commute_long =
 custom_colors = c("Bronx" = "lightpink", "Brooklyn" = "darkolivegreen", "Manhattan" = "gold", "Queens" = "thistle", "Staten Island" = "#a6cee3")
 
 p1_plotly <- plot_ly(data = commute_long, 
-                     x = ~Method,  
+                     x = ~factor(Method, 
+            levels = c("bicycle", "car_truck_or_van", "public_transportation", "walked"),
+            labels = c("Bicycle", "Car/Truck/Van", "Public Transit", "Walking")),  
                      y = ~Count,  
                      type = 'bar', 
                      color = ~geography, 
                      colors = custom_colors,  
-                     text = ~paste("Borough: ", geography, "<br>Method: ", Method, "<br>Count: ", Count),
-                     hoverinfo = 'text', 
-                     marker = list(line = list(color = 'black', width = 1))) |>  
+                     hoverinfo = 'text',
+                     hovertext = ~paste("Borough:", geography, 
+                                    "<br>Method:", Method,
+                                    "<br>Percentage:", sprintf("%.1f%%", Count)),
+                     marker = list(line = list(color = 'black', width = 1))) |>   
   layout(title = "Commuting Methods by Borough",
-         xaxis = list(title = 'Commuting Method', tickangle = 45),  
+         xaxis = list(tickangle = 45),  
          yaxis = list(title = 'Count of Commuters'), 
          barmode = 'group', 
-         legend = list(title = "Borough"))  
+         showlegend = FALSE)  
 
 
 ggplotly(p1_plotly, tooltip = "text")
@@ -96,15 +99,16 @@ p2_plotly <- plot_ly(data = commute_percent_long,
                      y = ~Percent, 
                      type = 'bar', 
                      color = ~Method, 
-                     colors = custom_colors,  
-                     text = ~paste("Borough: ", geography, "<br>Method: ", Method, "<br>Percentage: ", sprintf("%.1f%%", Percent)),
                      hoverinfo = 'text',
-                     marker = list(line = list(color = 'black', width = 1))) |>  
+                     hovertext = ~paste("Borough:", geography, 
+                                    "<br>Method:", Method,
+                                    "<br>Percentage:", sprintf("%.1f%%", Percent)),
+                     marker = list(line = list(color = 'black', width = 1))) |>   
   layout(title = "Percentage Distribution of Commuting Methods by Borough",
          xaxis = list(title = 'Borough', tickangle = 45),
          yaxis = list(title = 'Percentage (%)', ticksuffix = "%"),
          barmode = 'stack',  
-         legend = list(title = "Commuting Method")) 
+         showlegend = FALSE) 
 
 ggplotly(p2_plotly, tooltip = "text")
 
@@ -167,7 +171,8 @@ obesity_plotly <- plot_ly(data = overweight_df,
   layout(title = "Obesity Rates and Numbers by Borough in NYC, 2022",
          xaxis = list(title = "Borough", tickangle = 45),
          yaxis = list(title = "Obesity Rate (%)"),
-         legend = list(title = "Borough"))
+         showlegend = FALSE)
+
 ggplotly(obesity_plotly, tooltip = "text")
 ```
 The above graph showcases the obesity rates and corresponding numbers across various boroughs in NYC for the year 2022. The data is represented by a bar chart, where each color-coded bar corresponds to a different borough. The Bronx stands out with the highest obesity rate, significantly surpassing the other boroughs, whereas Manhattan reports the lowest rate, indicating a stark contrast in obesity prevalence within the city. Queens, Brooklyn, and Staten Island exhibit moderate obesity rates, illustrating varied health profiles across these regions. 
@@ -190,7 +195,7 @@ obesity_trend_plotly <- plot_ly(data = overweight_overall_df,
   layout(title = "Trend of Obesity Rates by Year and Borough",
          xaxis = list(title = "Year", tickangle = 45),
          yaxis = list(title = "Obesity Rate (%)"),
-         legend = list(title = "Borough")) 
+         showlegend = FALSE) 
 
 ggplotly(obesity_trend_plotly, tooltip = "text")
 ```

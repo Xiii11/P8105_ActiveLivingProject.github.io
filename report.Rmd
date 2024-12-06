@@ -48,7 +48,7 @@ commuting_df =
 borough_df = 
   commuting_df  |> 
   filter(geo_type_desc == "Borough") |> 
-  select(-geo_type_desc) |>  
+  dplyr::select(-geo_type_desc) |>  
   rename(borough = geography) |>  
   mutate(across(
     c(bicycle_number, 
@@ -63,7 +63,7 @@ commuting_data = borough_df |>
     names_to = c("method", ".value"),
     names_pattern = "(.*)_(number|percent)$"
   ) |> 
-  select(-geo_rank) |> 
+  dplyr::select(-geo_rank) |> 
   arrange(geo_id)
 
 commuting_data |> 
@@ -106,7 +106,7 @@ overweight_overall_df <- overweight_overall_df %>%
 
 datatable(
   overweight_overall_df %>%
-    select(year, geography, number, percent),
+    dplyr::select(year, geography, number, percent),
   options = list(
     pageLength = 10,
     autoWidth = TRUE,

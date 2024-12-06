@@ -22,7 +22,7 @@ overweight_df <- read_csv("data/overweight2022.csv") %>%
 ```
 
     ## Rows: 40 Columns: 7
-    ## ── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    ## ── Column specification ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
     ## Delimiter: ","
     ## chr (4): GeoTypeDesc, Geography, Number, Percent
     ## dbl (3): TimePeriod, GeoID, GeoRank
@@ -58,7 +58,7 @@ overweight_overall_df <- read_csv("data/overweightoverall.csv") %>%
 ```
 
     ## Rows: 800 Columns: 7
-    ## ── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    ## ── Column specification ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
     ## Delimiter: ","
     ## chr (4): GeoType, Geography, Number, Percent
     ## dbl (3): TimePeriod, GeoID, GeoRank
