@@ -13,7 +13,7 @@
 
 <title>Data Source</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
@@ -35,8 +35,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -385,9 +385,39 @@ overweight or obese and the percentage prevalence.</p>
 </div>
 <div id="data-import-and-tidy" class="section level2">
 <h2><strong>Data Import and Tidy</strong></h2>
-<div id="part-1-commuting-mode-and-obesity" class="section level3">
-<h3><em>Part 1: Commuting mode and Obesity</em></h3>
-</div>
+<p>We loaded essential libraries from the tidyverse ecosystem along with
+other helpful packages like janitor for cleaning column names, ggplot2
+for visualization, and plotly for interactive plots. We proceed to
+import our data using both read.csv() and read_csv() from the readr
+package, specifying NA values to accurately handle missing data right
+from the start. We then standardize column names to a uniform format
+with janitor::clean_names() function, which simplifies further coding
+and analysis. Moreover,we also transform the data by converting numeric
+fields from string format to actual numbers, removing commas for
+accurate calculations, and filtering the dataset to include only
+borough-level data ### <em>Part 1: Commuting mode and Obesity</em> For
+commnuting mode, to find out the most popular commuting ways in
+different boroughs, we reformat the data into a long format, listing
+each mode of commuting per borough and then use this formatted data to
+create interactive bar charts with plotly, showing the count of
+commuters by method for each borough and providing detailed hover text.
+The plot_ly() function is used to construct these visualizations,
+providing dynamic insights with options like hover text for detailed
+data points, and layout() to enhance chart readability and aesthetics.
+We then repeat the process for percentages, showing what portion of the
+population uses each commuting method</p>
+<p>Similarly,for overweight&amp;obesity dataset, we first create a bar
+chart using ggplot2 to display obesity rates and corresponding numbers
+for each NYC borough, enhancing clarity with direct textual annotations
+on the bars. To make the chart interactive and allow dynamic
+exploration, we employ plotly, transforming the static ggplot into an
+interactive visualization. Additionally, we develop a trend line plot to
+illustrate changes in obesity rates over the years across boroughs. This
+line plot, also made interactive with plotly, includes tooltips that
+provide detailed data insights when users hover over any point, thus
+enabling a deeper understanding of obesity trends within each
+borough.</p>
+<p>###<em>Part 2:</em></p>
 </div>
 
 
