@@ -5,8 +5,12 @@ navbar:
   right:
     - text: "Data Source"
       href: datasource.html
-    - text:  "EDA"
-      href: eda.html
+    - text: "EDA"
+      menu:
+        - text: "Borough Level"
+          href: final.html
+        - text: "Neighborhood Level"
+          href: eda.html
     - text: "Model Analysis"
       href: model.html
     - text: "Final Report"
