@@ -16,6 +16,7 @@ library(plotly)
 library(gridExtra)
 library(reshape2)
 library(mediation)
+library(dplyr)
 
 commuting_df = read.csv("data/commuting.csv", na = c("NA",".","")) |> 
   janitor::clean_names() |> 
@@ -43,7 +44,7 @@ sidewalk_df = read_csv("data/sidewalk.csv", na = c("NA",".","")) |>
 
 commuting_sidewalk_df = 
   inner_join(commuting_df, sidewalk_df, by = c("geo_id", "geo_rank", "geography")) |> 
-  select(-time_period.x, -time_period.y, everything()) |> 
+  dplyr::select(-time_period.x, -time_period.y, everything()) |> 
   mutate(
     bicycle_info = paste0(bicycle_number, " (", bicycle_percent, "%)"),
     car_truck_van_info = paste0(car_truck_or_van_number, " (", car_truck_or_van_percent, "%)"),
@@ -55,7 +56,7 @@ commuting_sidewalk_df =
 ## **Association between sidewalk areas and the percentage of walking among commuters **
 ```{r, message = FALSE, warning = FALSE}
 side_walking_data <- commuting_sidewalk_df |> 
-  select(geography, percent_of_land_area, walked_percent) |> 
+  dplyr::select(geography, percent_of_land_area, walked_percent) |> 
   mutate(
     walked_percent = as.numeric(walked_percent),
     percent_of_land_area = as.numeric(percent_of_land_area)
@@ -125,9 +126,9 @@ knitr::kable(detailed_model_table,caption = "Detailed Linear Model Summary")
 sw_obs_data = overweight_overall_df |> 
   filter(time_period %in% c(2014, 2022)) |> 
   mutate(obs_percent = as.numeric(gsub("\\*|\\(|\\)", "", obs_percent))) |> 
-  select(geo_id, geography, obs_percent) |> 
+  dplyr::select(geo_id, geography, obs_percent) |> 
   inner_join(commuting_sidewalk_df, by = c("geo_id", "geography")) |> 
-  select(geography, percent_of_land_area, walked_percent, obs_percent) |> 
+  dplyr::select(geography, percent_of_land_area, walked_percent, obs_percent) |> 
   mutate(
     walked_percent = as.numeric(walked_percent),
     percent_of_land_area = as.numeric(percent_of_land_area),
@@ -215,17 +216,20 @@ knitr::kable(
 ### Conclusion:
 #### While both sidewalk area percentage and walking commuter rates are modeled as predictors of obesity rates, only walking commuter rates show a statistically significant relationship. This highlights the importance of promoting active commuting as a means to potentially reduce obesity rates. The model indicates that encouraging walking as a commute mode may have a measurable impact on public health outcomes.
 
+Next, we are curious whether there are interaction effects between sidewalk area percentage and walking commuter rates on obesity rates. An interaction model was built to explore whether the effect of sidewalk area percentage on obesity depends on walking commuter rates.
 
-
-Next, we are curious whether there are interaction effects between sidewalk area percentage and walking commuter rates on obesity rates.
-```{r, message = FALSE, warning = FALSE}
-lm_interaction <- lm(obs_percent ~ percent_of_land_area * walked_percent, data = sw_obs_data)
-summary(lm_interaction)
-```
 
 ```{r}
-interaction_summary <- summary(lm_interaction)
+# Run the interaction model
+lm_interaction <- lm(obs_percent ~ percent_of_land_area * walked_percent, data = sw_obs_data)
 
+# Summarize the model
+interaction_summary <- summary(lm_interaction)
+```
+
+
+```{r}
+# Extract interaction model parameters
 interaction_results <- data.frame(
   Term = rownames(interaction_summary$coefficients),
   Estimate = interaction_summary$coefficients[, "Estimate"],
@@ -234,15 +238,18 @@ interaction_results <- data.frame(
   `p-value` = interaction_summary$coefficients[, "Pr(>|t|)"]
 )
 
+# Display the interaction model results
 knitr::kable(
   interaction_results,
   caption = "Interaction Analysis Results",
   digits = 3
 )
+
 ```
 
+
+
 ```{r}
-library(ggplot2)
 
 # Generate an interaction plot
 ggplot(sw_obs_data, aes(x = percent_of_land_area, y = obs_percent, color = walked_percent)) +
