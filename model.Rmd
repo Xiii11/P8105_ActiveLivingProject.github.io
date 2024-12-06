@@ -216,9 +216,12 @@ knitr::kable(
 ### Conclusion:
 #### While both sidewalk area percentage and walking commuter rates are modeled as predictors of obesity rates, only walking commuter rates show a statistically significant relationship. This highlights the importance of promoting active commuting as a means to potentially reduce obesity rates. The model indicates that encouraging walking as a commute mode may have a measurable impact on public health outcomes.
 
-Next, we are curious whether there are interaction effects between sidewalk area percentage and walking commuter rates on obesity rates. To test this, an interaction model was built to explore whether the effect of sidewalk area percentage on obesity depends on walking commuter rates.
 
-```{r}
+
+## **Interaction Analysis**
+#### Next, we are curious whether there are **interaction effects** between sidewalk area percentage and walking commuter rates on obesity rates. To test this, an interaction model was built to explore whether the effect of sidewalk area percentage on obesity depends on walking commuter rates.
+
+```{r, message = FALSE, warning = FALSE}
 # Run the interaction model
 lm_interaction <- lm(obs_percent ~ percent_of_land_area * walked_percent, data = sw_obs_data)
 
@@ -227,10 +230,9 @@ interaction_summary <- summary(lm_interaction)
 ```
 
 The coefficients from the interaction model are summarized in the following table:
-```{r}
+```{r, message = FALSE, warning = FALSE}
 # Extract interaction model parameters
 interaction_results <- data.frame(
-  Term = rownames(interaction_summary$coefficients),
   Estimate = interaction_summary$coefficients[, "Estimate"],
   `Std. Error` = interaction_summary$coefficients[, "Std. Error"],
   `t-value` = interaction_summary$coefficients[, "t value"],
@@ -246,11 +248,12 @@ knitr::kable(
 
 ```
 
-The results indicate that the interaction term (percent_of_land_area:walked_percent) is not statistically significant (p = 0.932), suggesting that the relationship between sidewalk area percentage and obesity rates does not depend on walking commuter rates. This implies that sidewalk area percentage and walking commuter rates operate independently in influencing obesity outcomes.
+The results indicate that the interaction term (percent_of_land_area:walked_percent) is not statistically significant (p = 0.932), suggesting that the relationship between sidewalk area percentage and obesity rates does not depend on walking commuter rates. This implies that sidewalk area percentage and walking commuter rates **operate independently** in influencing obesity outcomes.
 
-# Visualizing the Interaction Effects
+
+## Visualizing the Interaction Effects
 To better understand the potential interaction, we created a plot that categorizes walking commuter rates into four levels: Low, Moderate, High, and Very High. Each category is represented by a distinct color, with regression lines and shaded confidence intervals illustrating the relationship between sidewalk area percentage and obesity rates for each category.
-```{r}
+```{r, message = FALSE, warning = FALSE}
 # Create categories for walking commuter rates
 sw_obs_data$walked_percent_category <- cut(
   sw_obs_data$walked_percent,
@@ -280,24 +283,24 @@ ggplot(sw_obs_data, aes(x = percent_of_land_area, y = obs_percent, color = walke
 
 ```
 
+
 # Results and Insights
 The plot illustrates the interaction between sidewalk area percentage and obesity rates across four categories of walking commuter rates. Regression lines for each category are relatively flat and similar in slope, indicating that the relationship between sidewalk area percentage and obesity rates does not vary meaningfully with walking commuter rates. The confidence intervals overlap substantially, reinforcing the statistical finding of a non-significant interaction effect.
 
 Together, the plot and the interaction analysis table confirm that there is no significant interaction between sidewalk area percentage and walking commuter rates on obesity rates. While walking commuter rates and sidewalk area percentage may independently contribute to obesity outcomes, their combined effect does not exhibit meaningful synergy. Future research could investigate other potential mediators or moderators, such as socioeconomic status or access to recreational infrastructure, to better understand the determinants of obesity in urban settings.
 
 
-#Testing for Mediation: Walking Commuter Rates as a Mediator
-We now explore whether walking commuter rates mediate the relationship between sidewalk area percentage and obesity rates. Mediation analysis helps determine if the effect of sidewalk area percentage on obesity rates operates indirectly through walking commuter rates.
+
+## **Testing for Mediation: Walking Commuter Rates as a Mediator**
+
+We now explore whether walking commuter rates **mediate** the relationship between sidewalk area percentage and obesity rates. Mediation analysis helps determine if the effect of sidewalk area percentage on obesity rates operates indirectly through walking commuter rates.
 
 
-```{r}
+```{r, message = FALSE, warning = FALSE}
 # mediator model
 mediator_model <- lm(walked_percent ~ percent_of_land_area, data = sw_obs_data)
 # outcome model
 outcome_model <- lm(obs_percent ~ percent_of_land_area + walked_percent, data = sw_obs_data)
-
-summary(mediator_model)
-summary(outcome_model)
 
 mediation_result <- mediate(
   model.m = mediator_model,
@@ -307,12 +310,10 @@ mediation_result <- mediate(
   boot = TRUE, # Use bootstrapping for CI
   sims = 1000  # Number of bootstrap simulations=1000
 )
-
-summary(mediation_result)
 ```
 
 
-```{r}
+```{r, message = FALSE, warning = FALSE}
 mediation_results <- data.frame(
   Effect = c("ACME (Indirect Effect)", "ADE (Direct Effect)", "Total Effect", "Proportion Mediated"),
   Estimate = c(mediation_result$d0, mediation_result$z0, mediation_result$tau.coef, mediation_result$n0),
@@ -329,7 +330,7 @@ knitr::kable(
 ```
 
 
-```{r}
+```{r, message = FALSE, warning = FALSE}
 effects_data <- data.frame(
   Effect = c("ACME (Indirect Effect)", "ADE (Direct Effect)", "Total Effect"),
   Estimate = c(mediation_result$d0, mediation_result$z0, mediation_result$tau.coef),
