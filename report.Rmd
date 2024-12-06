@@ -98,8 +98,7 @@ overweight_overall_df <- read_csv("data/overweightoverall.csv") %>%
   mutate(
     obesity_rate = as.numeric(sub("\\s*\\(.*$", "", percent)),
     geo_type = tolower(geo_type)
-  ) %>%
-  filter(geo_type == "borough")
+  )
 
 overweight_overall_df <- overweight_overall_df %>%
   rename(year = time_period)
