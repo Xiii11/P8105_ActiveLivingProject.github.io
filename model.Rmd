@@ -291,48 +291,52 @@ We now explore whether walking commuter rates mediate the relationship between s
 
 
 ```{r}
-
-```
-
-
-
-
-
-```{r}
+# mediator model
 mediator_model <- lm(walked_percent ~ percent_of_land_area, data = sw_obs_data)
+# outcome model
 outcome_model <- lm(obs_percent ~ percent_of_land_area + walked_percent, data = sw_obs_data)
 
+summary(mediator_model)
+summary(outcome_model)
+
 mediation_result <- mediate(
-  mediator_model,
-  outcome_model,
+  model.m = mediator_model,
+  model.y = outcome_model,
   treat = "percent_of_land_area",
   mediator = "walked_percent",
-  boot = TRUE, # Bootstrap for robust confidence intervals
-  sims = 1000  # Number of bootstrap simulations
+  boot = TRUE, # Use bootstrapping for CI
+  sims = 1000  # Number of bootstrap simulations=1000
 )
 
 summary(mediation_result)
 ```
 
-The mediation analysis demonstrates that walking commuter percentage significantly mediates the relationship between sidewalk area percentage and obesity rates. The Average Causal Mediation Effect (ACME) is statistically significant, indicating that for every unit increase in sidewalk area percentage, obesity rates decrease by approximately 0.91 units due to its influence on walking behavior. This highlights walking as a critical pathway through which sidewalk infrastructure impacts obesity outcomes. In contrast, the Average Direct Effect (ADE) is not significant, suggesting that sidewalk area percentage does not independently affect obesity rates outside of its influence on walking.
 
-The total effect of sidewalk area percentage on obesity rates is significant, with a decrease of 1.54 units for every unit increase in sidewalk area. Notably, the proportion of the effect mediated by walking commuter rates is approximately 59%, emphasizing that more than half of the influence of sidewalk coverage on obesity is explained by its impact on walking. These findings reinforce the importance of walking as an intermediary variable linking urban infrastructure to public health outcomes.
-
-These results underscore the potential of urban planning strategies, such as increasing sidewalk coverage, to reduce obesity rates by promoting active commuting behaviors like walking. While sidewalk area itself may not directly impact obesity, its ability to foster environments conducive to walking plays a pivotal role in improving health outcomes. Policymakers should consider prioritizing pedestrian-friendly infrastructure and complementary interventions to encourage walking and other forms of physical activity.
-
-In conclusion, the mediation analysis confirms that the relationship between sidewalk area and obesity rates is largely mediated by walking behavior. These findings support the value of enhancing walkability in urban areas to address public health challenges like obesity, while also prompting future research to explore other mediating factors and potential variations across demographic or geographic contexts. 
-
-Next, we will try to plot mediation analysis
 ```{r}
-# Create a data frame for effects
-effects_data <- data.frame(
-  Effect = c("ACME (Indirect Effect)", "ADE (Direct Effect)", "Total Effect"),
-  Estimate = c(-0.910, -0.631, -1.542),
-  CI_Lower = c(-1.436, -1.460, -2.349),
-  CI_Upper = c(-0.430, 0.180, -0.740)
+mediation_results <- data.frame(
+  Effect = c("ACME (Indirect Effect)", "ADE (Direct Effect)", "Total Effect", "Proportion Mediated"),
+  Estimate = c(mediation_result$d0, mediation_result$z0, mediation_result$tau.coef, mediation_result$n0),
+  `CI Lower` = c(mediation_result$d0.ci[1], mediation_result$z0.ci[1], mediation_result$tau.ci[1], mediation_result$n0.ci[1]),
+  `CI Upper` = c(mediation_result$d0.ci[2], mediation_result$z0.ci[2], mediation_result$tau.ci[2], mediation_result$n0.ci[2]),
+  `p-value` = c(mediation_result$d0.p, mediation_result$z0.p, mediation_result$tau.p, mediation_result$n0.p)
 )
 
-# Plot the effects with confidence intervals
+knitr::kable(
+  mediation_results,
+  caption = "Mediation Analysis Results",
+  digits = 3
+)
+```
+
+
+```{r}
+effects_data <- data.frame(
+  Effect = c("ACME (Indirect Effect)", "ADE (Direct Effect)", "Total Effect"),
+  Estimate = c(mediation_result$d0, mediation_result$z0, mediation_result$tau.coef),
+  CI_Lower = c(mediation_result$d0.ci[1], mediation_result$z0.ci[1], mediation_result$tau.ci[1]),
+  CI_Upper = c(mediation_result$d0.ci[2], mediation_result$z0.ci[2], mediation_result$tau.ci[2])
+)
+
 ggplot(effects_data, aes(x = Effect, y = Estimate)) +
   geom_bar(stat = "identity", fill = "skyblue", alpha = 0.8) +
   geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.2, color = "black") +
@@ -345,3 +349,10 @@ ggplot(effects_data, aes(x = Effect, y = Estimate)) +
 
 ```
 
+The mediation analysis demonstrates that walking commuter rates __significantly mediate__ the relationship between sidewalk area percentage and obesity rates. 
+
+The __Average Causal Mediation Effect (ACME)__ is statistically significant (estimate: -0.910, 95% CI: [-1.476, -0.439], p < 0.001), indicating that for every unit increase in sidewalk area percentage, obesity rates decrease by approximately 0.91 units through walking behavior. This highlights walking as a critical pathway through which sidewalk infrastructure reduces obesity.
+
+The __Average Direct Effect (ADE)__ is not significant, suggesting that sidewalk area percentage does not independently impact obesity rates outside of its influence on walking. However, the __Total Effect__ is significant, with a 1.54-unit decrease in obesity rates for every unit increase in sidewalk area percentage. Approximately 59% of this total effect is mediated by walking, emphasizing the role of walking commuter behavior in linking sidewalk coverage to public health outcomes.
+
+These findings highlight the potential of urban planning strategies, such as increasing sidewalk coverage, to promote walking and reduce obesity rates. While sidewalk area alone may not directly reduce obesity, its role in fostering environments that encourage active commuting is pivotal. Policymakers should prioritize pedestrian-friendly infrastructure alongside initiatives to promote walking, addressing public health challenges like obesity while supporting broader urban health goals.
