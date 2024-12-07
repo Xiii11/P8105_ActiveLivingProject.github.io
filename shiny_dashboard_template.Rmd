@@ -20,9 +20,7 @@ library(dplyr)
 library(sf)
 library(RColorBrewer)
 library(shinyWidgets)
-```
 
-```{r, message=FALSE, warning=FALSE}
 # Load and prepare data
 overweight_overall_df = read_csv("data/overweightoverall.csv", na = c("NA",".","")) |> 
   janitor::clean_names() |> 

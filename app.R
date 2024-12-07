@@ -143,7 +143,7 @@ map_data = spatial_data |>
 
 # Define UI
 ui = fluidPage(
-  titlePanel("NYC Health & Space Connections"),
+  titlePanel("NYC Obesity & Walkability Atlas"),
   sidebarLayout(
     sidebarPanel(
       selectInput(
@@ -314,19 +314,35 @@ server = function(input, output, session) {
     if (input$geo_type == "UHF34") {
       if (input$uhf34_area != "") {
         data = data |>  
-          filter(geo_type == "UHF34", 
-                 geography == input$uhf34_area)
+          filter(
+            str_detect(
+              str_to_lower(geography), 
+              str_to_lower(input$uhf34_area)
+            ) |
+              str_detect(
+                str_to_lower(area), 
+                str_to_lower(input$uhf34_area)
+              )
+          )
+      }
+    } else if (input$geo_type == "UHF42") {  # Add UHF42 handling
+      if (input$uhf42_area != "") {
+        data = data |>  
+          filter(
+            str_detect(
+              str_to_lower(geography), 
+              str_to_lower(input$uhf42_area)
+            ) |
+              str_detect(
+                str_to_lower(area), 
+                str_to_lower(input$uhf42_area)
+              )
+          )
       }
     } else if (input$geo_type == "borough") {
       if (input$borough != "") {
-        data <- data |>  
-          filter(borough == input$borough)
-      }
-    } else if (input$geo_type == "UHF42") {
-      if (input$uhf42_area != "") {
-        data <- data |>  
-          filter(geo_type == "UHF42",
-                 geography == input$uhf42_area)
+        data = data |>  
+          filter(str_to_lower(borough) == str_to_lower(input$borough))
       }
     }
     

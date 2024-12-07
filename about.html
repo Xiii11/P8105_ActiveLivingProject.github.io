@@ -16,7 +16,7 @@
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -33,6 +33,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
@@ -221,6 +222,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -347,6 +351,9 @@ div.tocify {
   <a href="report.html">Final Report</a>
 </li>
 <li>
+  <a href="http://xiii11.shinyapps.io/p8105_activelivingproject">Shiny</a>
+</li>
+<li>
   <a href="about.html">The Team</a>
 </li>
 <li>
@@ -368,6 +375,14 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Our Team Members</h1>
@@ -382,7 +397,7 @@ div.tocify {
 Track</p>
 <p>Columbia University Mailman School of Public Health</p>
 <p>Fun fact: Anni decided to become a registered yoga teacher because of
-lululemon trainer discount.</p>
+lululemon trainer discount. 🧘</p>
 <p>Learn more about <a href="https://aw2468.github.io/">Anni</a></p>
 </div>
 <div id="qi-cai" class="section level2">
@@ -391,13 +406,14 @@ lululemon trainer discount.</p>
 Track</p>
 <p>Columbia University Mailman School of Public Health</p>
 <p>Fun fact: I’m a purist when it comes to bread—no cheese, butter, or
-honey for me. Just plain, dry bread.</p>
+honey for me. Just plain, dry bread. 🍞</p>
 <p>Learn more about <a href="https://cathy237-cq.github.io">Qi</a></p>
 </div>
 <div id="xi-peng" class="section level2">
 <h2><strong>Xi Peng</strong></h2>
 <p>MPH-Epidemiology-Advanced Epidemiology Track</p>
 <p>Columbia University Mailman School of Public Health</p>
+<p>Fun fact: Xi sleeps with her eyes open. 👀</p>
 <p>Learn more about <a href="https://xiii11.github.io/">Xi</a></p>
 </div>
 <div id="yifan-shi" class="section level2">
@@ -405,13 +421,13 @@ honey for me. Just plain, dry bread.</p>
 <p>MPH-Epidemiology-Health of an Aging Society Track</p>
 <p>Columbia University Mailman School of Public Health</p>
 <p>Fun fact: Yifan spends Monday mornings as a part-time horticulturist
-at the High Line.</p>
+at the High Line. 🌳</p>
 <p>Learn more about <a
 href="https://11fan5.github.io/yifan.github.io/">Yifan</a></p>
 <hr />
-<p><span style="font-size: 1.5em;"> Thank you for reviewing this website
-and hope you find the resources helpful! <img
-src="Pics/giphy%20(1).webp" /></p>
+<p><span style="font-size: 1.2em;"> Thank you for reviewing this website
+and hope you find the resources helpful!</p>
+<p><img src="Pics/giphy%20(1).webp" /></p>
 </div>
 
 
@@ -449,6 +465,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {

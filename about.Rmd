@@ -4,6 +4,8 @@ output:
   html_document:
     toc: true
     toc_float: true
+    theme: flatly
+    code_folding: hide
 ---
 
 ----------------
@@ -13,7 +15,7 @@ MPH-Epidemiology-Applied Biostatistics and Public Health Data Science Track
 
 Columbia University Mailman School of Public Health
 
-Fun fact: Anni decided to become a registered yoga teacher because of lululemon trainer discount.
+Fun fact: Anni decided to become a registered yoga teacher because of lululemon trainer discount. 🧘
 
 Learn more about [Anni](https://aw2468.github.io/)
 
@@ -22,7 +24,7 @@ MPH-Epidemiology-Applied Biostatistics and Public Health Data Science Track
 
 Columbia University Mailman School of Public Health
 
-Fun fact: I’m a purist when it comes to bread—no cheese, butter, or honey for me. Just plain, dry bread.
+Fun fact: I’m a purist when it comes to bread—no cheese, butter, or honey for me. Just plain, dry bread. 🍞
 
 Learn more about [Qi](https://cathy237-cq.github.io)
 
@@ -31,6 +33,8 @@ MPH-Epidemiology-Advanced Epidemiology Track
 
 Columbia University Mailman School of Public Health
 
+Fun fact: Xi sleeps with her eyes open. 👀
+
 Learn more about [Xi](https://xiii11.github.io/)
 
 ## **Yifan Shi**
@@ -38,11 +42,12 @@ MPH-Epidemiology-Health of an Aging Society Track
 
 Columbia University Mailman School of Public Health
 
-Fun fact: Yifan spends Monday mornings as a part-time horticulturist at the High Line.
+Fun fact: Yifan spends Monday mornings as a part-time horticulturist at the High Line. 🌳
 
 Learn more about [Yifan](https://11fan5.github.io/yifan.github.io/)
 
 ---
 
-<span style="font-size: 1.5em;"> Thank you for reviewing this website and hope you find the resources helpful!
+<span style="font-size: 1.2em;"> Thank you for reviewing this website and hope you find the resources helpful!
+
 ![](Pics/giphy (1).webp)

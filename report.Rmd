@@ -28,7 +28,7 @@ The purposes of this project is to answer the following questions:
 # **Data Sources and Cleaning**
 Due to the limitations of the variables and information within the dataset, the data cleaning process was conducted independently for each analysis part.
 
-## Part 1. Major Datasets
+## *Part 1. Major Datasets*
 Firstly, we processed both `neighborhood- and borough-level` commuting data, focusing on four commuting methods: bicycle, car/truck/van, public transportation, and walking. These methods are represented in terms of both absolute numbers and percentages. We cleaned the dataset by removing unnecessary columns, renaming variables for clarity (e.g., `geography` renamed to `neighborhood` and `borough` accordingly based on analysis needs), and converting numeric data from character format to ensure proper analysis.
 
 Next, we pivot the data into a long format, enabling a flexible structure for analysis and visualization by method and borough. The dataset is sorted by `geo_id` for a consistent ordering of boroughs. This preparation provides a clean and organized dataset that supports further exploratory analysis of commuting patterns and their relationships to sidewalk and obesity factors.
@@ -128,7 +128,7 @@ datatable(
 
 <br>
 
-## Part 2. Essential Variables Overview
+## *Part 2. Essential Variables Overview*
 ```{r, message = FALSE, warning = FALSE}
 library(tidyverse)
 
@@ -634,11 +634,17 @@ ggplotly(obesity_trend_plotly, tooltip = "text")
 
 This graph shows the changes in obesity rates across New York City's boroughs from the early 2000s to 2022. Matching with what we had in last graph, the Bronx has consistently high obesity rates, suggesting ongoing health challenges there. Manhattan generally has the lowest rates, possibly due to different lifestyle factors. Brooklyn, Queens, and Staten Island show varied rates over the years, with ups and downs. We will explore more on the relationship between obesity and other factors in the model building part.
 
+<br>
+
+## *Shiny*
+
+Navigate through NYC's health indicators using our interactive [Shiny](https://xiii11.shinyapps.io/p8105_activelivingproject/) platform. Compare obesity rates and sidewalk coverage between neighborhoods and boroughs to understand urban health patterns.
+
 <br><br>
 
 # **Model Building**
 
-## **Simple Linear Regression**
+## *Simple Linear Regression*
 
 To investigate the direct relationship between sidewalk area percentage and walking commuter rates, a simple linear regression model was constructed. This model quantifies how sidewalk infrastructure influences the proportion of residents who commute by walking. By establishing a foundational understanding of this relationship, the analysis sets the stage for exploring more complex interactions.
 
@@ -751,7 +757,7 @@ Key Findings:
 
 These results highlight the substantial impact of sidewalk infrastructure on walking behavior. Higher sidewalk area percentages are strongly associated with increased walking commuter rates. However, the unexplained variance suggests that other factors, such as neighborhood characteristics or availability of public transit, may also influence walking behavior.
 
-## **Multiple Linear Regression**
+## *Multiple Linear Regression*
 
 Building on the simple regression analysis, a multiple linear regression model was developed to assess how sidewalk area percentage and walking commuter rates jointly influence obesity rates. This approach allows for a more comprehensive understanding of how urban design and active commuting behaviors interact to affect public health outcomes.
 
@@ -881,7 +887,7 @@ However, the analyses also revealed unexplained variance, suggesting that other 
 <br><br>
 
 
-## **Interaction Analysis**
+## *Interaction Analysis*
 Next, we are curious whether there are **interaction effects** between sidewalk area percentage and walking commuter rates on obesity rates. To test this, an interaction model was built to explore whether the effect of sidewalk area percentage on obesity depends on walking commuter rates.
 
 $$Y_{Obesity Percentage} = \beta_0 + \beta_1X_{SidewalkArea} + \beta_2X_{WalkingPercent} + \beta_3(X_{SidewalkArea} \times X_{WalkingPercent}) + \epsilon$$
@@ -955,7 +961,7 @@ The plot illustrates the interaction between sidewalk area percentage and obesit
 Together, the plot and the interaction analysis table confirm that there is no significant interaction between sidewalk area percentage and walking commuter rates on obesity rates. While walking commuter rates and sidewalk area percentage may independently contribute to obesity outcomes, their combined effect does not exhibit meaningful synergy. Future research could investigate other potential mediators or moderators, such as socioeconomic status or access to recreational infrastructure, to better understand the determinants of obesity in urban settings.
 
 
-## **Causal Mediation Analysis**
+## *Causal Mediation Analysis*
 
 **Testing for Mediation: Walking Commuter Rates as a Mediator**
 
@@ -1039,7 +1045,7 @@ The mediation analysis demonstrates that walking commuter rates __significantly 
 These findings highlight the potential of urban planning strategies, such as increasing sidewalk coverage, to promote walking and reduce obesity rates. While sidewalk area alone may not directly reduce obesity, its role in fostering environments that encourage active commuting is pivotal. Policymakers should prioritize pedestrian-friendly infrastructure alongside initiatives to promote walking, addressing public health challenges like obesity while supporting broader urban health goals.
 
 
-## **Clustering Analysis**
+## *Clustering Analysis*
 
 We now explore how neighborhoods can be grouped based on three key variables: **sidewalk area percentage**, **walking commuter percentage**, and **obesity rates**. By identifying clusters of neighborhoods with similar characteristics, we aim to uncover distinct patterns that can inform public health interventions and urban planning strategies.
 
@@ -1127,6 +1133,9 @@ The findings emphasize the need for integrated urban planning strategies that co
 This project provides actionable insights for urban planners and policymakers aiming to reduce obesity rates through infrastructure and behavior change interventions. By promoting walking as a commuting mode, cities can achieve both public health and environmental sustainability goals.
 
 
+<br><br>
 
+[Back to Home](index.html)
 
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>
 
