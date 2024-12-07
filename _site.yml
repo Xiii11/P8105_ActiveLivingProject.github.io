@@ -17,7 +17,7 @@ navbar:
   right:
     - text: "Final Report"
       href: report.html
-    - text: "The Team"
+    - text: "Our Team"
       href: about.html
     - icon: fa-envelope fa-lg
       href: mailto:<ys3766@cumc.columbia.edu>,<qc2337@cumc.columbia.edu>,<aw3621@cumc.columbia.edu>,<xp2213@cumc.columbia.edu>
