@@ -4,7 +4,6 @@ output:
   html_document:
     toc: true
     toc_float: true
-    theme: lumen
 ---
 
 ----------------
@@ -36,6 +35,9 @@ Learn more about [Xi](https://xiii11.github.io/)
 
 ## **Yifan Shi**
 MPH-Epidemiology-Health of an Aging Society
+
+Columbia University Mailman School of Public Health
+
 Learn more about [Yifan](https://11fan5.github.io/yifan.github.io/)
 
 ---

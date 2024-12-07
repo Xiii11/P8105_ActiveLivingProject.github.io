@@ -118,7 +118,7 @@ interactive_plot <- ggplotly(obesity_plot)
 interactive_plot
 ```
 
-![](final-data-obesity_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](finaldataobesity_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
 # Create a line plot to show the trend of obesity rates by year for each borough
@@ -158,4 +158,4 @@ interactive_trend_plot <- ggplotly(obesity_trend_plot, tooltip = "text")
 interactive_trend_plot
 ```
 
-![](final-data-obesity_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](finaldataobesity_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->

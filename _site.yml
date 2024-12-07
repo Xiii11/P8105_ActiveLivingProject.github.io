@@ -1,5 +1,6 @@
 name: "P8105 Final Project!"
 output_dir: "."
+theme: flatly
 navbar:
   title: "Home"
   left:

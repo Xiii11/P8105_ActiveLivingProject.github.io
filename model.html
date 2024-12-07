@@ -16,7 +16,7 @@
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -477,16 +477,13 @@ commuting_sidewalk_df =
 </div>
 <div id="simple-linear-regression" class="section level1">
 <h1><strong>Simple Linear Regression</strong></h1>
-<div
-id="we-begin-by-examining-the-direct-relationship-between-sidewalk-area-percentage-and-walking-commuter-rates.-a-simple-linear-regression-model-was-built-to-quantify-how-the-availability-of-sidewalk-infrastructure-influences-the-proportion-of-residents-who-walk-to-work.-this-analysis-serves-as-a-foundation-for-understanding-the-basic-relationship-between-urban-design-and-commuting-behavior-before-exploring-more-complex-relationships."
-class="section level4">
-<h4>We begin by examining the direct relationship between sidewalk area
+<p>We begin by examining the direct relationship between sidewalk area
 percentage and walking commuter rates. A <strong>simple linear
 regression</strong> model was built to quantify how the availability of
 sidewalk infrastructure influences the proportion of residents who walk
 to work. This analysis serves as a foundation for understanding the
 basic relationship between urban design and commuting behavior before
-exploring more complex relationships.</h4>
+exploring more complex relationships.</p>
 <p><span class="math display">\[Y_{Walking Commuters Percentage}=\beta_0
 + \beta_1X_{Sidewalk Area Percentage} + \epsilon\]</span></p>
 <pre class="r"><code>side_walking_data = commuting_sidewalk_df |&gt; 
@@ -615,7 +612,6 @@ knitr::kable(simplr_model_statistics,
 </tr>
 </tbody>
 </table>
-</div>
 <div id="statistical-results-and-interpretation" class="section level4">
 <h4><strong>Statistical Results and Interpretation</strong>:</h4>
 <ul>
@@ -646,16 +642,13 @@ interpreted cautiously below the observed data range.</p></li>
 </div>
 <div id="multiple-linear-regression" class="section level1">
 <h1><strong>Multiple Linear Regression</strong></h1>
-<div
-id="we-expand-our-analysis-by-examining-how-both-sidewalk-area-percentage-and-walking-commuter-rates-jointly-influence-obesity-rates-in-urban-areas.-a-multiple-linear-regression-model-was-built-to-quantify-how-these-two-aspects-of-urban-infrastructure-and-commuting-behavior-together-might-affect-obesity-levels.-this-analysis-helps-understand-the-complex-relationships-between-urban-design-transportation-choices-and-public-health-outcomes."
-class="section level4">
-<h4>We expand our analysis by examining how both sidewalk area
-percentage and walking commuter rates jointly influence obesity rates in
-urban areas. A <strong>multiple linear regression model</strong> was
-built to quantify how these two aspects of urban infrastructure and
-commuting behavior together might affect obesity levels. This analysis
-helps understand the complex relationships between urban design,
-transportation choices, and public health outcomes.</h4>
+<p>We expand our analysis by examining how both sidewalk area percentage
+and walking commuter rates jointly influence obesity rates in urban
+areas. A <strong>multiple linear regression model</strong> was built to
+quantify how these two aspects of urban infrastructure and commuting
+behavior together might affect obesity levels. This analysis helps
+understand the complex relationships between urban design,
+transportation choices, and public health outcomes.</p>
 <p><span class="math display">\[Y_{Obesity Percentage}=\beta_0 +
 \beta_1X_{Sidewalk Area Percentage} + \beta_2X_{Walking Commuters
 Percentage} + \epsilon\]</span></p>
@@ -837,7 +830,6 @@ knitr::kable(multr_model_statistics,
 </tr>
 </tbody>
 </table>
-</div>
 <div id="statistical-results-and-interpretation-1"
 class="section level4">
 <h4><strong>Statistical Results and Interpretation</strong>:</h4>
@@ -890,14 +882,11 @@ alone.</p>
 </div>
 <div id="interaction-analysis" class="section level1">
 <h1><strong>Interaction Analysis</strong></h1>
-<div
-id="next-we-are-curious-whether-there-are-interaction-effects-between-sidewalk-area-percentage-and-walking-commuter-rates-on-obesity-rates.-to-test-this-an-interaction-model-was-built-to-explore-whether-the-effect-of-sidewalk-area-percentage-on-obesity-depends-on-walking-commuter-rates."
-class="section level4">
-<h4>Next, we are curious whether there are <strong>interaction
+<p>Next, we are curious whether there are <strong>interaction
 effects</strong> between sidewalk area percentage and walking commuter
 rates on obesity rates. To test this, an interaction model was built to
 explore whether the effect of sidewalk area percentage on obesity
-depends on walking commuter rates.</h4>
+depends on walking commuter rates.</p>
 <p><span class="math display">\[Y_{Obesity Percentage} = \beta_0 +
 \beta_1X_{SidewalkArea} + \beta_2X_{WalkingPercent} +
 \beta_3(X_{SidewalkArea} \times X_{WalkingPercent}) +
@@ -979,9 +968,8 @@ percentage and obesity rates does not depend on walking commuter rates.
 This implies that sidewalk area percentage and walking commuter rates
 <strong>operate independently</strong> in influencing obesity
 outcomes.</p>
-</div>
-<div id="visualizing-interaction-effects" class="section level2">
-<h2><strong>Visualizing Interaction Effects</strong></h2>
+<div id="visualizing-interaction-effects" class="section level4">
+<h4><strong>Visualizing Interaction Effects</strong></h4>
 <p>To better understand the potential interaction, we created a plot
 that categorizes walking commuter rates into four levels: Low, Moderate,
 High, and Very High. Each category is represented by a distinct color,
@@ -1015,8 +1003,8 @@ ggplot(sw_obs_data, aes(x = percent_of_land_area, y = obs_percent, color = walke
     legend.text = element_text(size = 10) # Style legend text
   )</code></pre>
 <p><img src="model_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<div id="results-and-insights" class="section level4">
-<h4><strong>Results and Insights</strong></h4>
+<div id="results-and-insights" class="section level5">
+<h5><strong>Results and Insights</strong><br></h5>
 <p>The plot illustrates the interaction between sidewalk area percentage
 and obesity rates across four categories of walking commuter rates.
 Regression lines for each category are relatively flat and similar in
@@ -1039,8 +1027,10 @@ urban settings.</p>
 </div>
 <div id="mediation-analysis" class="section level1">
 <h1><strong>Mediation Analysis</strong></h1>
-<p><strong>Testing for Mediation: Walking Commuter Rates as a
-Mediator</strong></p>
+<div id="testing-for-mediation-walking-commuter-rates-as-a-mediator"
+class="section level4">
+<h4><strong>Testing for Mediation: Walking Commuter Rates as a
+Mediator</strong></h4>
 <p>We now explore whether walking commuter rates
 <strong>mediate</strong> the relationship between sidewalk area
 percentage and obesity rates. Mediation analysis helps determine if the
@@ -1096,55 +1086,37 @@ knitr::kable(
 <tr class="odd">
 <td align="left">ACME (Indirect Effect)</td>
 <td align="right">-0.910</td>
-<<<<<<< HEAD
-<td align="right">-1.470</td>
-<td align="right">-0.420</td>
-=======
-<td align="right">-1.444</td>
-<td align="right">-0.478</td>
->>>>>>> 7a274e55e997b940bb4e74d212e2a643b2cfd78f
+<td align="right">-1.472</td>
+<td align="right">-0.447</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="even">
 <td align="left">ADE (Direct Effect)</td>
 <td align="right">-0.631</td>
-<<<<<<< HEAD
-<td align="right">-1.534</td>
-<td align="right">0.169</td>
-<td align="right">0.112</td>
-=======
-<td align="right">-1.497</td>
-<td align="right">0.256</td>
-<td align="right">0.164</td>
->>>>>>> 7a274e55e997b940bb4e74d212e2a643b2cfd78f
+<td align="right">-1.498</td>
+<td align="right">0.196</td>
+<td align="right">0.128</td>
 </tr>
 <tr class="odd">
 <td align="left">Total Effect</td>
 <td align="right">-1.542</td>
-<<<<<<< HEAD
-<td align="right">-2.401</td>
-<td align="right">-0.777</td>
-=======
-<td align="right">-2.418</td>
-<td align="right">-0.700</td>
->>>>>>> 7a274e55e997b940bb4e74d212e2a643b2cfd78f
+<td align="right">-2.432</td>
+<td align="right">-0.744</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="even">
 <td align="left">Proportion Mediated</td>
 <td align="right">0.590</td>
-<<<<<<< HEAD
-<td align="right">0.288</td>
-<td align="right">1.178</td>
-=======
-<td align="right">0.301</td>
-<td align="right">1.291</td>
->>>>>>> 7a274e55e997b940bb4e74d212e2a643b2cfd78f
+<td align="right">0.286</td>
+<td align="right">1.225</td>
 <td align="right">0.000</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Visualizing Mediation Effects</strong></p>
+<p><br></p>
+</div>
+<div id="visualizing-mediation-effects" class="section level4">
+<h4><strong>Visualizing Mediation Effects</strong></h4>
 <pre class="r"><code>effects_data &lt;- data.frame(
   Effect = c(&quot;ACME (Indirect Effect)&quot;, &quot;ADE (Direct Effect)&quot;, &quot;Total Effect&quot;),
   Estimate = c(mediation_result$d0, mediation_result$z0, mediation_result$tau.coef),
@@ -1189,10 +1161,11 @@ public health challenges like obesity while supporting broader urban
 health goals.</p>
 <hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
 </div>
+</div>
 <div id="clustering-analysis" class="section level1">
 <h1><strong>Clustering Analysis</strong></h1>
-<div id="interactive-visualization" class="section level3">
-<h3><strong>Interactive Visualization</strong></h3>
+<div id="interactive-visualization" class="section level4">
+<h4><strong>Interactive Visualization</strong></h4>
 <p>The interactive plot visualizes neighborhoods grouped into clusters
 based on three variables: <strong>sidewalk area percentage</strong>,
 <strong>walking commuter percentage</strong>, and <strong>obesity
@@ -1237,15 +1210,10 @@ interactive_plot &lt;- plot_ly(
 
 # Display the interactive plot
 interactive_plot</code></pre>
-<<<<<<< HEAD
-<div class="plotly html-widget html-fill-item" id="htmlwidget-c2a931752ae4f30d7598" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-c2a931752ae4f30d7598">{"x":{"visdat":{"111b6109ee1ed":["function () ","plotlyVisDat"]},"cur_data":"111b6109ee1ed","attrs":{"111b6109ee1ed":{"x":{},"y":{},"mode":"markers","text":{},"marker":{"size":10,"opacity":0.69999999999999996},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Clustering of Neighborhoods by Sidewalk Area, Walking Commuter Rates, and Obesity Rates","xaxis":{"domain":[0,1],"automargin":true,"title":"Sidewalk Area Percentage"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Walking Commuter Percentage"},"legend":{"title":{"text":"Cluster"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.1999999999999993,4.5999999999999996,7,6.5999999999999996,7.5999999999999996,3.7000000000000002,6.2000000000000002,3.5,3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.0999999999999996,4.5999999999999996,7.7000000000000002,3.7000000000000002,6.2000000000000002,3.5],"y":[7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,3.7000000000000002,3.2000000000000002,10.4,5.7000000000000002,1.8999999999999999,5.5999999999999996,7.2000000000000002,2.7000000000000002,7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,4.9000000000000004,3.2000000000000002,4.0999999999999996,5.5999999999999996,7.2000000000000002,2.7000000000000002],"mode":"markers","text":["Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 70.7","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 69.3","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 66.9","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 67.8","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 70.6","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 59.7","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 68.5","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 60.6","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 64.4","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 65.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 65.5","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 61.9","Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 60.9","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 67.6","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 69.8","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 69.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 70.2","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 64.4","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 69.6","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 62.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 67.9","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 65.1"],"marker":{"color":"rgba(102,194,165,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(102,194,165,1)"}},"type":"scatter","name":"1","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[10.5,8.0999999999999996,7.4000000000000004,7.4000000000000004,8.9000000000000004,11,9.0999999999999996,7.7999999999999998,8,7.7000000000000002,7.7999999999999998,7,6.5999999999999996,10.5,8.1999999999999993,7.4000000000000004,7.4000000000000004,10.800000000000001,8.9000000000000004,11,7,9.0999999999999996,7.7999999999999998,6.5999999999999996,8,7.5999999999999996,7.7999999999999998,7,6.5999999999999996],"y":[6,4.9000000000000004,7.7000000000000002,9.1999999999999993,10.1,11.1,5.5,8,4.2999999999999998,4.0999999999999996,8.5,5.7999999999999998,9.5,6,3.7000000000000002,7.7000000000000002,9.1999999999999993,8.1999999999999993,10.1,11.1,10.4,5.5,8,5.7000000000000002,4.2999999999999998,1.8999999999999999,8.5,5.7999999999999998,9.5],"mode":"markers","text":["Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 56.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 65.7","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 49.3","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 54.5","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.6","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 63.1","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 55.7","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 56.1","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 62.1","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 58.6","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 54.6","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 57.4","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 56.2","Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 63.1","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 60.6","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 60.6","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 62.1","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 66.7","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.5","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 61.2","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 62.7","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 57.6","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 64.3","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 53.3","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 63.7","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 53.4","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 58.7","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 59.6","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 58.5"],"marker":{"color":"rgba(252,141,98,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(252,141,98,1)"}},"type":"scatter","name":"2","textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.800000000000001,10.1,6.7999999999999998,9.9000000000000004,9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.1,6.7999999999999998,9.9000000000000004],"y":[11.1,11.199999999999999,13.699999999999999,14.9,8.1999999999999993,13.1,10.300000000000001,18.899999999999999,11.1,11.199999999999999,13.699999999999999,14.9,13.1,10.300000000000001,18.899999999999999],"mode":"markers","text":["Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 41.2","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 46.7","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 44.9","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 52","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 49.9","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 48.3","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 46.6","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 48.4","Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 36.7","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 47.2","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 53.4","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 50.3","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 49.8","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 51.1","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 47.5"],"marker":{"color":"rgba(141,160,203,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(141,160,203,1)"}},"type":"scatter","name":"3","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-=======
-<div class="plotly html-widget html-fill-item" id="htmlwidget-4fc1d570a17f830c4a5a" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-4fc1d570a17f830c4a5a">{"x":{"visdat":{"15f243ecfe69c":["function () ","plotlyVisDat"]},"cur_data":"15f243ecfe69c","attrs":{"15f243ecfe69c":{"x":{},"y":{},"mode":"markers","text":{},"marker":{"size":10,"opacity":0.69999999999999996},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Clustering of Neighborhoods by Sidewalk Area, Walking Commuter Rates, and Obesity Rates","xaxis":{"domain":[0,1],"automargin":true,"title":"Sidewalk Area Percentage"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Walking Commuter Percentage"},"legend":{"title":{"text":"Cluster"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.1999999999999993,4.5999999999999996,7,6.5999999999999996,7.5999999999999996,3.7000000000000002,6.2000000000000002,3.5,3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.0999999999999996,4.5999999999999996,7.7000000000000002,3.7000000000000002,6.2000000000000002,3.5],"y":[7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,3.7000000000000002,3.2000000000000002,10.4,5.7000000000000002,1.8999999999999999,5.5999999999999996,7.2000000000000002,2.7000000000000002,7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,4.9000000000000004,3.2000000000000002,4.0999999999999996,5.5999999999999996,7.2000000000000002,2.7000000000000002],"mode":"markers","text":["Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 70.7","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 69.3","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 66.9","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 67.8","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 70.6","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 59.7","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 68.5","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 60.6","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 64.4","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 65.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 65.5","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 61.9","Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 60.9","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 67.6","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 69.8","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 69.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 70.2","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 64.4","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 69.6","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 62.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 67.9","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 65.1"],"marker":{"color":"rgba(102,194,165,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(102,194,165,1)"}},"type":"scatter","name":"1","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[10.5,8.0999999999999996,7.4000000000000004,7.4000000000000004,8.9000000000000004,11,9.0999999999999996,7.7999999999999998,8,7.7000000000000002,7.7999999999999998,7,6.5999999999999996,10.5,8.1999999999999993,7.4000000000000004,7.4000000000000004,10.800000000000001,8.9000000000000004,11,7,9.0999999999999996,7.7999999999999998,6.5999999999999996,8,7.5999999999999996,7.7999999999999998,7,6.5999999999999996],"y":[6,4.9000000000000004,7.7000000000000002,9.1999999999999993,10.1,11.1,5.5,8,4.2999999999999998,4.0999999999999996,8.5,5.7999999999999998,9.5,6,3.7000000000000002,7.7000000000000002,9.1999999999999993,8.1999999999999993,10.1,11.1,10.4,5.5,8,5.7000000000000002,4.2999999999999998,1.8999999999999999,8.5,5.7999999999999998,9.5],"mode":"markers","text":["Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 56.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 65.7","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 49.3","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 54.5","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.6","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 63.1","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 55.7","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 56.1","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 62.1","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 58.6","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 54.6","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 57.4","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 56.2","Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 63.1","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 60.6","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 60.6","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 62.1","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 66.7","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.5","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 61.2","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 62.7","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 57.6","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 64.3","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 53.3","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 63.7","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 53.4","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 58.7","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 59.6","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 58.5"],"marker":{"color":"rgba(252,141,98,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(252,141,98,1)"}},"type":"scatter","name":"2","textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.800000000000001,10.1,6.7999999999999998,9.9000000000000004,9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.1,6.7999999999999998,9.9000000000000004],"y":[11.1,11.199999999999999,13.699999999999999,14.9,8.1999999999999993,13.1,10.300000000000001,18.899999999999999,11.1,11.199999999999999,13.699999999999999,14.9,13.1,10.300000000000001,18.899999999999999],"mode":"markers","text":["Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 41.2","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 46.7","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 44.9","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 52","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 49.9","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 48.3","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 46.6","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 48.4","Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 36.7","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 47.2","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 53.4","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 50.3","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 49.8","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 51.1","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 47.5"],"marker":{"color":"rgba(141,160,203,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(141,160,203,1)"}},"type":"scatter","name":"3","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
->>>>>>> 7a274e55e997b940bb4e74d212e2a643b2cfd78f
-<div id="cluster-characteristics" class="section level4">
-<h4><strong>Cluster Characteristics</strong></h4>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-c925dd1fd9d5006a6ff4" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-c925dd1fd9d5006a6ff4">{"x":{"visdat":{"10f8565913b7":["function () ","plotlyVisDat"]},"cur_data":"10f8565913b7","attrs":{"10f8565913b7":{"x":{},"y":{},"mode":"markers","text":{},"marker":{"size":10,"opacity":0.69999999999999996},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Clustering of Neighborhoods by Sidewalk Area, Walking Commuter Rates, and Obesity Rates","xaxis":{"domain":[0,1],"automargin":true,"title":"Sidewalk Area Percentage"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Walking Commuter Percentage"},"legend":{"title":{"text":"Cluster"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.1999999999999993,4.5999999999999996,7,6.5999999999999996,7.5999999999999996,3.7000000000000002,6.2000000000000002,3.5,3.5,6.9000000000000004,7.0999999999999996,4.9000000000000004,8.0999999999999996,4.5999999999999996,7.7000000000000002,3.7000000000000002,6.2000000000000002,3.5],"y":[7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,3.7000000000000002,3.2000000000000002,10.4,5.7000000000000002,1.8999999999999999,5.5999999999999996,7.2000000000000002,2.7000000000000002,7.2000000000000002,4.9000000000000004,8.4000000000000004,5.9000000000000004,4.9000000000000004,3.2000000000000002,4.0999999999999996,5.5999999999999996,7.2000000000000002,2.7000000000000002],"mode":"markers","text":["Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 70.7","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 69.3","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 66.9","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 67.8","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 70.6","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 59.7","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 68.5","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 60.6","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 64.4","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 65.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 65.5","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 61.9","Geography: Kingsbridge - Riverdale <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 60.9","Geography: Northeast Bronx <br>Sidewalk Area %: 6.9 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 67.6","Geography: Fordham - Bronx Pk <br>Sidewalk Area %: 7.1 <br>Walking Commuter %: 8.4 <br>Obesity Rate %: 69.8","Geography: Pelham - Throgs Neck <br>Sidewalk Area %: 4.9 <br>Walking Commuter %: 5.9 <br>Obesity Rate %: 69.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 70.2","Geography: Canarsie - Flatlands <br>Sidewalk Area %: 4.6 <br>Walking Commuter %: 3.2 <br>Obesity Rate %: 64.4","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 69.6","Geography: Rockaways <br>Sidewalk Area %: 3.7 <br>Walking Commuter %: 5.6 <br>Obesity Rate %: 62.7","Geography: Bronx <br>Sidewalk Area %: 6.2 <br>Walking Commuter %: 7.2 <br>Obesity Rate %: 67.9","Geography: Staten Island <br>Sidewalk Area %: 3.5 <br>Walking Commuter %: 2.7 <br>Obesity Rate %: 65.1"],"marker":{"color":"rgba(102,194,165,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(102,194,165,1)"}},"type":"scatter","name":"1","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[10.5,8.0999999999999996,7.4000000000000004,7.4000000000000004,8.9000000000000004,11,9.0999999999999996,7.7999999999999998,8,7.7000000000000002,7.7999999999999998,7,6.5999999999999996,10.5,8.1999999999999993,7.4000000000000004,7.4000000000000004,10.800000000000001,8.9000000000000004,11,7,9.0999999999999996,7.7999999999999998,6.5999999999999996,8,7.5999999999999996,7.7999999999999998,7,6.5999999999999996],"y":[6,4.9000000000000004,7.7000000000000002,9.1999999999999993,10.1,11.1,5.5,8,4.2999999999999998,4.0999999999999996,8.5,5.7999999999999998,9.5,6,3.7000000000000002,7.7000000000000002,9.1999999999999993,8.1999999999999993,10.1,11.1,10.4,5.5,8,5.7000000000000002,4.2999999999999998,1.8999999999999999,8.5,5.7999999999999998,9.5],"mode":"markers","text":["Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 56.5","Geography: East Flatbush - Flatbush <br>Sidewalk Area %: 8.1 <br>Walking Commuter %: 4.9 <br>Obesity Rate %: 65.7","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 49.3","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 54.5","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.6","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 63.1","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 55.7","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 56.1","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 62.1","Geography: Jamaica <br>Sidewalk Area %: 7.7 <br>Walking Commuter %: 4.1 <br>Obesity Rate %: 58.6","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 54.6","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 57.4","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 56.2","Geography: Bedford Stuyvesant - Crown Heights <br>Sidewalk Area %: 10.5 <br>Walking Commuter %: 6 <br>Obesity Rate %: 63.1","Geography: East New York <br>Sidewalk Area %: 8.2 <br>Walking Commuter %: 3.7 <br>Obesity Rate %: 60.6","Geography: Bensonhurst - Bay Ridge <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 7.7 <br>Obesity Rate %: 60.6","Geography: Coney Island - Sheepshead Bay <br>Sidewalk Area %: 7.4 <br>Walking Commuter %: 9.2 <br>Obesity Rate %: 62.1","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 66.7","Geography: Washington Heights <br>Sidewalk Area %: 8.9 <br>Walking Commuter %: 10.1 <br>Obesity Rate %: 58.5","Geography: Central Harlem - Morningside Heights <br>Sidewalk Area %: 11 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 61.2","Geography: East Harlem <br>Sidewalk Area %: 7 <br>Walking Commuter %: 10.4 <br>Obesity Rate %: 62.7","Geography: Long Island City - Astoria <br>Sidewalk Area %: 9.1 <br>Walking Commuter %: 5.5 <br>Obesity Rate %: 57.6","Geography: West Queens <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8 <br>Obesity Rate %: 64.3","Geography: Ridgewood - Forest Hills <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 5.7 <br>Obesity Rate %: 53.3","Geography: Southwest Queens <br>Sidewalk Area %: 8 <br>Walking Commuter %: 4.3 <br>Obesity Rate %: 63.7","Geography: Southeast Queens <br>Sidewalk Area %: 7.6 <br>Walking Commuter %: 1.9 <br>Obesity Rate %: 53.4","Geography: Brooklyn <br>Sidewalk Area %: 7.8 <br>Walking Commuter %: 8.5 <br>Obesity Rate %: 58.7","Geography: Queens <br>Sidewalk Area %: 7 <br>Walking Commuter %: 5.8 <br>Obesity Rate %: 59.6","Geography: New York City <br>Sidewalk Area %: 6.6 <br>Walking Commuter %: 9.5 <br>Obesity Rate %: 58.5"],"marker":{"color":"rgba(252,141,98,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(252,141,98,1)"}},"type":"scatter","name":"2","textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.800000000000001,10.1,6.7999999999999998,9.9000000000000004,9.3000000000000007,8.8000000000000007,6.0999999999999996,9.5,10.1,6.7999999999999998,9.9000000000000004],"y":[11.1,11.199999999999999,13.699999999999999,14.9,8.1999999999999993,13.1,10.300000000000001,18.899999999999999,11.1,11.199999999999999,13.699999999999999,14.9,13.1,10.300000000000001,18.899999999999999],"mode":"markers","text":["Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 41.2","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 46.7","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 44.9","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 52","Geography: Williamsburg - Bushwick <br>Sidewalk Area %: 10.8 <br>Walking Commuter %: 8.2 <br>Obesity Rate %: 49.9","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 48.3","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 46.6","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 48.4","Geography: Greenpoint <br>Sidewalk Area %: 9.3 <br>Walking Commuter %: 11.1 <br>Obesity Rate %: 36.7","Geography: Downtown - Heights - Slope <br>Sidewalk Area %: 8.8 <br>Walking Commuter %: 11.2 <br>Obesity Rate %: 47.2","Geography: Sunset Park <br>Sidewalk Area %: 6.1 <br>Walking Commuter %: 13.7 <br>Obesity Rate %: 53.4","Geography: Borough Park <br>Sidewalk Area %: 9.5 <br>Walking Commuter %: 14.9 <br>Obesity Rate %: 50.3","Geography: Upper West Side <br>Sidewalk Area %: 10.1 <br>Walking Commuter %: 13.1 <br>Obesity Rate %: 49.8","Geography: Flushing - Clearview <br>Sidewalk Area %: 6.8 <br>Walking Commuter %: 10.3 <br>Obesity Rate %: 51.1","Geography: Manhattan <br>Sidewalk Area %: 9.9 <br>Walking Commuter %: 18.9 <br>Obesity Rate %: 47.5"],"marker":{"color":"rgba(141,160,203,1)","size":10,"opacity":0.69999999999999996,"line":{"color":"rgba(141,160,203,1)"}},"type":"scatter","name":"3","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="cluster-characteristics" class="section level5">
+<h5><strong>Cluster Characteristics</strong></h5>
 <ul>
 <li><p><strong>Cluster 1 (Green)</strong>: Includes neighborhoods with
 <strong>low sidewalk area percentages</strong> and <strong>low walking
@@ -1263,9 +1231,10 @@ the <strong>highest sidewalk area percentages</strong> and
 likely the most walkable and may experience lower obesity rates due to
 increased active commuting.</p></li>
 </ul>
+<p><br></p>
 </div>
-<div id="insights-from-the-plot" class="section level4">
-<h4><strong>Insights from the Plot</strong></h4>
+<div id="insights-from-the-plot" class="section level5">
+<h5><strong>Insights from the Plot</strong></h5>
 <ol style="list-style-type: decimal">
 <li><p><strong>Positive Trend Between Sidewalk Area and Walking
 Rates</strong>: Neighborhoods with higher sidewalk area percentages tend
@@ -1280,9 +1249,10 @@ the importance of investing in sidewalk infrastructure to promote
 walking, which could improve public health outcomes like obesity
 rates.</p></li>
 </ol>
+<p><br></p>
 </div>
-<div id="conclusion" class="section level4">
-<h4><strong>Conclusion</strong></h4>
+<div id="conclusion" class="section level5">
+<h5><strong>Conclusion</strong></h5>
 <p>The clusters provide actionable insights into neighborhood
 characteristics. For example, neighborhoods in Cluster 1 would benefit
 most from improved pedestrian infrastructure to encourage walking and

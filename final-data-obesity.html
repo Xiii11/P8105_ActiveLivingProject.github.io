@@ -327,7 +327,11 @@ overweight_df &lt;- read_csv(&quot;data/overweight2022.csv&quot;) %&gt;%
   filter(geo_type_desc == &quot;Borough&quot;) %&gt;%
   select(-percent_numeric)  </code></pre>
 <pre><code>## Rows: 40 Columns: 7
+<<<<<<< HEAD
 ## ── Column specification ────────────────────────────────────
+=======
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+>>>>>>> f901471a9dbd3a9682db9ba26c4dca62ae20435c
 ## Delimiter: &quot;,&quot;
 ## chr (4): GeoTypeDesc, Geography, Number, Percent
 ## dbl (3): TimePeriod, GeoID, GeoRank
@@ -356,7 +360,11 @@ print(na_check)</code></pre>
   ) %&gt;%
   filter(geo_type == &quot;borough&quot;)  </code></pre>
 <pre><code>## Rows: 800 Columns: 7
+<<<<<<< HEAD
 ## ── Column specification ────────────────────────────────────
+=======
+## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+>>>>>>> f901471a9dbd3a9682db9ba26c4dca62ae20435c
 ## Delimiter: &quot;,&quot;
 ## chr (4): GeoType, Geography, Number, Percent
 ## dbl (3): TimePeriod, GeoID, GeoRank

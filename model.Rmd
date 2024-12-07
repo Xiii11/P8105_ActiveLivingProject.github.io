@@ -4,8 +4,8 @@ output:
   html_document:
     toc: true
     toc_float: true
-    theme: lumen
     code_folding: hide
+    theme: flatly
 ---
 
 # **Introduction**
@@ -68,7 +68,7 @@ commuting_sidewalk_df =
 
 # **Simple Linear Regression**
 
-#### We begin by examining the direct relationship between sidewalk area percentage and walking commuter rates. A **simple linear regression** model was built to quantify how the availability of sidewalk infrastructure influences the proportion of residents who walk to work. This analysis serves as a foundation for understanding the basic relationship between urban design and commuting behavior before exploring more complex relationships.
+We begin by examining the direct relationship between sidewalk area percentage and walking commuter rates. A **simple linear regression** model was built to quantify how the availability of sidewalk infrastructure influences the proportion of residents who walk to work. This analysis serves as a foundation for understanding the basic relationship between urban design and commuting behavior before exploring more complex relationships.
 
 $$Y_{Walking Commuters Percentage}=\beta_0 + \beta_1X_{Sidewalk Area Percentage} + \epsilon$$
 ```{r, message = FALSE, warning = FALSE}
@@ -146,7 +146,7 @@ knitr::kable(simplr_model_statistics,
 
 # **Multiple Linear Regression**
 
-#### We expand our analysis by examining how both sidewalk area percentage and walking commuter rates jointly influence obesity rates in urban areas. A **multiple linear regression model** was built to quantify how these two aspects of urban infrastructure and commuting behavior together might affect obesity levels. This analysis helps understand the complex relationships between urban design, transportation choices, and public health outcomes.
+We expand our analysis by examining how both sidewalk area percentage and walking commuter rates jointly influence obesity rates in urban areas. A **multiple linear regression model** was built to quantify how these two aspects of urban infrastructure and commuting behavior together might affect obesity levels. This analysis helps understand the complex relationships between urban design, transportation choices, and public health outcomes.
 
 $$Y_{Obesity Percentage}=\beta_0 + \beta_1X_{Sidewalk Area Percentage} + \beta_2X_{Walking Commuters Percentage} + \epsilon$$
 ```{r, message = FALSE, warning = FALSE}
@@ -281,7 +281,7 @@ These results suggest that while both sidewalk availability and walking commuter
 
 # **Interaction Analysis**
 
-#### Next, we are curious whether there are **interaction effects** between sidewalk area percentage and walking commuter rates on obesity rates. To test this, an interaction model was built to explore whether the effect of sidewalk area percentage on obesity depends on walking commuter rates.
+Next, we are curious whether there are **interaction effects** between sidewalk area percentage and walking commuter rates on obesity rates. To test this, an interaction model was built to explore whether the effect of sidewalk area percentage on obesity depends on walking commuter rates.
 
 $$Y_{Obesity Percentage} = \beta_0 + \beta_1X_{SidewalkArea} + \beta_2X_{WalkingPercent} + \beta_3(X_{SidewalkArea} \times X_{WalkingPercent}) + \epsilon$$
 
@@ -316,7 +316,7 @@ knitr::kable(
 The results indicate that the interaction term (percent_of_land_area:walked_percent) is not statistically significant (p = 0.932), suggesting that the relationship between sidewalk area percentage and obesity rates does not depend on walking commuter rates. This implies that sidewalk area percentage and walking commuter rates **operate independently** in influencing obesity outcomes.
 
 
-## **Visualizing Interaction Effects**
+#### **Visualizing Interaction Effects**
 To better understand the potential interaction, we created a plot that categorizes walking commuter rates into four levels: Low, Moderate, High, and Very High. Each category is represented by a distinct color, with regression lines and shaded confidence intervals illustrating the relationship between sidewalk area percentage and obesity rates for each category.
 ```{r, message = FALSE, warning = FALSE}
 # Create categories for walking commuter rates
@@ -349,7 +349,7 @@ ggplot(sw_obs_data, aes(x = percent_of_land_area, y = obs_percent, color = walke
 ```
 
 
-#### **Results and Insights**
+##### **Results and Insights**<br>
 The plot illustrates the interaction between sidewalk area percentage and obesity rates across four categories of walking commuter rates. Regression lines for each category are relatively flat and similar in slope, indicating that the relationship between sidewalk area percentage and obesity rates does not vary meaningfully with walking commuter rates. The confidence intervals overlap substantially, reinforcing the statistical finding of a non-significant interaction effect.
 
 Together, the plot and the interaction analysis table confirm that there is no significant interaction between sidewalk area percentage and walking commuter rates on obesity rates. While walking commuter rates and sidewalk area percentage may independently contribute to obesity outcomes, their combined effect does not exhibit meaningful synergy. Future research could investigate other potential mediators or moderators, such as socioeconomic status or access to recreational infrastructure, to better understand the determinants of obesity in urban settings.
@@ -358,7 +358,7 @@ Together, the plot and the interaction analysis table confirm that there is no s
 
 # **Mediation Analysis**
 
-**Testing for Mediation: Walking Commuter Rates as a Mediator**
+#### **Testing for Mediation: Walking Commuter Rates as a Mediator**
 
 We now explore whether walking commuter rates **mediate** the relationship between sidewalk area percentage and obesity rates. Mediation analysis helps determine if the effect of sidewalk area percentage on obesity rates operates indirectly through walking commuter rates.
 
@@ -405,7 +405,9 @@ knitr::kable(
 )
 ```
 
-**Visualizing Mediation Effects**
+<br>
+
+#### **Visualizing Mediation Effects**
 ```{r, message = FALSE, warning = FALSE}
 effects_data <- data.frame(
   Effect = c("ACME (Indirect Effect)", "ADE (Direct Effect)", "Total Effect"),
@@ -438,7 +440,7 @@ These findings highlight the potential of urban planning strategies, such as inc
 
 # **Clustering Analysis**
 
-### **Interactive Visualization**
+#### **Interactive Visualization**
 
 The interactive plot visualizes neighborhoods grouped into clusters based on three variables: **sidewalk area percentage**, **walking commuter percentage**, and **obesity rates**. The x-axis represents the **sidewalk area percentage**, while the y-axis shows the **walking commuter percentage**. Each point corresponds to a neighborhood, color-coded by its assigned cluster.
 
@@ -484,7 +486,7 @@ interactive_plot
 
 ```
 
-#### **Cluster Characteristics**
+##### **Cluster Characteristics**
 
 - **Cluster 1 (Green)**: Includes neighborhoods with **low sidewalk area percentages** and **low walking commuter percentages**. These neighborhoods may lack sufficient pedestrian infrastructure, which could contribute to higher obesity rates.
 
@@ -492,16 +494,18 @@ interactive_plot
 
 - **Cluster 3 (Blue)**: Comprises neighborhoods with the **highest sidewalk area percentages** and **walking commuter percentages**. These neighborhoods are likely the most walkable and may experience lower obesity rates due to increased active commuting.
 
+<br>
 
-#### **Insights from the Plot**
+##### **Insights from the Plot**
 1. **Positive Trend Between Sidewalk Area and Walking Rates**: Neighborhoods with higher sidewalk area percentages tend to exhibit higher walking commuter percentages, as seen in Cluster 3.
 
 2. **Cluster Overlap**: Some points from different clusters overlap, suggesting that additional factors (e.g., socioeconomic conditions, safety) may influence walkability and health outcomes.
 
 3. **Policy Implications**: The clustering highlights the importance of investing in sidewalk infrastructure to promote walking, which could improve public health outcomes like obesity rates.
 
+<br>
 
-#### **Conclusion**
+##### **Conclusion**
 The clusters provide actionable insights into neighborhood characteristics. For example, neighborhoods in Cluster 1 would benefit most from improved pedestrian infrastructure to encourage walking and reduce obesity rates. Meanwhile, the characteristics of neighborhoods in Cluster 3 demonstrate the positive outcomes of well-designed urban spaces that support active commuting.
 
 

@@ -1,12 +1,11 @@
 ---
 title: "Data Source"
-runtime: shiny
 output: 
   html_document:
     toc: true
     toc_float: true
-    theme: lumen
     code_folding: hide
+    theme: flatly
 ---
 
 ```{r setup, include=FALSE}
@@ -22,7 +21,7 @@ knitr::opts_chunk$set(
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
 ```
 
-## **Data Sources**
+## **Background**
 
 We utilized [Walking, driving, and cycling](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/walking-driving-and-cycling/?id=2415#display=summary) and [Overweight](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary) from The Official Website of the City of New York. 
 
@@ -30,8 +29,10 @@ The [Walking, driving, and cycling](https://a816-dohbesp.nyc.gov/IndicatorPublic
 
 The [Overweight](https://a816-dohbesp.nyc.gov/IndicatorPublic/data-explorer/overweight/?id=2061#display=summary) provides insights into the prevalence of `overweight or obesity` among adults across New York City. The data spans from 2003 to 2022, with yearly updates available. It offers granular breakdowns by geographical boundaries including citywide, borough, and UHF34 regions. The dataset includes key metrics such as the number of individuals classified as overweight or obese and the percentage prevalence.
 
+<br>
+
 ## **Data Import and Tidy**
-### *Part 1: Commuting mode and Obesity*
+### *Part 1: Major Datasets*
 
 Firstly, we processed both `neighborhood- and borough-level` commuting data, focusing on four commuting methods: bicycle, car/truck/van, public transportation, and walking. These methods are represented in terms of both absolute numbers and percentages. We clean the dataset by removing unnecessary columns, renaming variables for clarity (e.g., `geography` renamed to `neighborhood` and `borough` accordingly based on analysis needs), and converting numeric data from character format to ensure proper analysis.
 
@@ -92,57 +93,43 @@ Similarly, for overweight & obesity dataset, we first create a bar chart using g
 
 The final dataset `obesity_data` showed below.
 
-```{r}
-library(shiny)
-library(tidyverse)
-library(DT)
-library(readr)
+```{r, message = FALSE, warning = FALSE}
+# Load and clean the data
 library(janitor)
+library(DT) 
+overweight_overall_df <- read_csv("data/overweightoverall.csv") %>%
+  clean_names() %>%
+  mutate(
+    obesity_rate = as.numeric(sub("\\s*\\(.*$", "", percent)),
+    geo_type = tolower(geo_type)
+  ) %>%
+  filter(geo_type == "borough")
 
-ui <- fluidPage(
-  titlePanel("Interactive Obesity Data Overview"),
-  
-  DTOutput("data_table")
-)
+overweight_overall_df <- overweight_overall_df %>%
+  rename(year = time_period)
 
-server <- function(input, output) {
-  
-  data <- reactive({
-    read_csv("data/overweightoverall.csv") %>%
-      clean_names() %>%
-      mutate(
-        obesity_rate = as.numeric(sub("\\s*\\(.*$", "", percent)),  
-        geo_type = tolower(geo_type)  
-      ) %>%
-      rename(year = time_period)  
-  })
-  
-  output$data_table <- renderDT({
-    datatable(
-      data() %>%
-        select(year, geography, number, percent),  
-      options = list(
-        pageLength = 10,
-        autoWidth = TRUE,
-        searchHighlight = TRUE,
-        searchPanes = list(columns = c(1)),  
-        dom = 'Bfrtip',
-        buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-      ),
-      extensions = 'Buttons',
-      class = 'cell-border stripe'
-    ) %>%
-    formatStyle(
-      columns = c('number', 'percent'),
-      valueColumns = 'number',
-      backgroundColor = styleInterval(cuts = c(500000), values = c('white', '#FFDDC1'))
-    )
-  })
-}
-
-shinyApp(ui = ui, server = server)
+datatable(
+  overweight_overall_df %>%
+    select(year, geography, number, percent),
+  options = list(
+    pageLength = 10,
+    autoWidth = TRUE,
+    searchHighlight = TRUE,
+    searchPanes = list(columns = c(1)),
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+  ),
+  extensions = 'Buttons',
+  class = 'cell-border stripe'
+) %>%
+  formatStyle(
+    columns = c('number', 'percent'),
+    valueColumns = 'number',
+    backgroundColor = styleInterval(cuts = c(500000), values = c('white', '#FFDDC1'))
+  )
 
 ```
+
 
 <br><br>
 
