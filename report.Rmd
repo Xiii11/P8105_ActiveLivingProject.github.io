@@ -493,25 +493,29 @@ The presented dataset examines the distribution of `commuting methods` across di
 # Define custom colors for each borough
 custom_colors = c("Bronx" = "lightpink", "Brooklyn" = "darkolivegreen", "Manhattan" = "gold", "Queens" = "thistle", "Staten Island" = "#a6cee3")
 
-p1_plotly <- plot_ly(data = commute_long, 
-                     x = ~factor(Method, 
-            levels = c("bicycle", "car_truck_or_van", "public_transportation", "walked"),
-            labels = c("Bicycle", "Car/Truck/Van", "Public Transit", "Walking")),  
-                     y = ~Count,  
-                     type = 'bar', 
-                     color = ~geography, 
-                     colors = custom_colors,  
+p1_plotly = plot_ly(data = commute_long,
+                     x = ~factor(Method),
+                     y = ~Count,
+                     type = 'bar',
+                     color = ~geography,
+                     colors = custom_colors,
                      hoverinfo = 'text',
-                     hovertext = ~paste("Borough:", geography, 
-                                    "<br>Method:", Method,
-                                    "<br>Number of Cummuter:", Count),
-                     marker = list(line = list(color = 'black', width = 1))) |>   
-  layout(title = "Commuting Methods by Borough",
-         xaxis = list(tickangle = 45),  
-         yaxis = list(title = 'Count of Commuters'), 
-         barmode = 'group', 
-         showlegend = FALSE)  
-
+                     hovertext = ~paste("Borough:", geography,
+                                      "<br>Method:", Method,
+                                      "<br>Number of Commuter:", Count),
+                     marker = list(line = list(color = 'black', width = 1))) |>
+  layout(
+    title = "Commuting Methods by Borough",
+    xaxis = list(
+        title = "Commute Mode", 
+        tickangle = 45,
+        ticktext = c("Bicycle", "Car/Truck/Van", "Public Transit", "Walking"),
+        tickvals = c("bicycle", "car_truck_or_van", "public_transportation", "walked")
+    ),
+    yaxis = list(title = "Count of Commuters"),
+    barmode = 'group',
+    showlegend = FALSE
+)
 
 ggplotly(p1_plotly, tooltip = "text")
 ```
