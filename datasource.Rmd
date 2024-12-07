@@ -93,7 +93,7 @@ Similarly, for overweight & obesity dataset, we first create a bar chart using g
 
 The final dataset `obesity_data` showed below.
 
-```{r}
+```{r, message = FALSE, warning = FALSE}
 # Load and clean the data
 library(janitor)
 library(DT) 
