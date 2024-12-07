@@ -63,7 +63,10 @@ commuting_data = borough_df |>
     names_pattern = "(.*)_(number|percent)$"
   ) |> 
   dplyr::select(-geo_rank) |> 
-  arrange(geo_id)
+  arrange(geo_id)|> 
+   mutate(
+    method = str_replace(method, "car_truck_or_van", "car_truck_van")
+  )
 
 commuting_data |> 
   knitr::kable(
@@ -73,7 +76,6 @@ commuting_data |>
   ) |> 
   kableExtra::kable_styling(
     bootstrap_options = c("striped", "hover", "condensed"),
-    font_size = 12
   ) |> 
   kableExtra::scroll_box(width = "100%", height = "300px")
 
@@ -119,7 +121,6 @@ datatable(
   formatStyle(
     columns = c('number', 'percent'),
     valueColumns = 'number'
-
   )
 
 ```

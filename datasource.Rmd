@@ -68,7 +68,10 @@ commuting_data = borough_df |>
     names_pattern = "(.*)_(number|percent)$"
   ) |> 
   select(-geo_rank) |> 
-  arrange(geo_id)
+  arrange(geo_id)  |> 
+   mutate(
+    method = str_replace(method, "car_truck_or_van", "car_truck_van")
+  )
 
 commuting_data |> 
   knitr::kable(
@@ -77,8 +80,7 @@ commuting_data |>
     align = rep("l", ncol(commuting_data))  
   ) |> 
   kableExtra::kable_styling(
-    bootstrap_options = c("striped", "hover", "condensed"),
-    font_size = 12
+    bootstrap_options = c("striped", "hover", "condensed")
   ) |> 
   kableExtra::scroll_box(width = "100%", height = "300px")
 
@@ -124,8 +126,7 @@ datatable(
 ) %>%
   formatStyle(
     columns = c('number', 'percent'),
-    valueColumns = 'number',
-    backgroundColor = styleInterval(cuts = c(500000), values = c('white', '#FFDDC1'))
+    valueColumns = 'number'
   )
 
 ```
@@ -245,6 +246,7 @@ sidewalk_table = tibble(
   value2 = c(2.7, 11.3)
 )
 
+
 sidewalk_table |> 
   knitr::kable(
     caption = "Summary Statistics for Sidewalk Area",
@@ -252,7 +254,6 @@ sidewalk_table |>
     align = "c",
     digits = 2
   )
-
 ```
 
 
