@@ -7,8 +7,6 @@ output:
     code_folding: hide
     theme: flatly
 ---
-Load packages and import cleaned dataframes.
-
 Firstly, we gain an initial understanding of the commuting patterns across New York City's boroughs by analyzing the distribution of various commuting methods.A bar chart provides a clear visual representation of the total amount of transportation modes used in each borough. A percentage distribution bar chart is used to highlight the relative popularity of each mode of transport within the boroughs. 
 
 ```{r, message = FALSE}
