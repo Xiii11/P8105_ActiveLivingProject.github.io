@@ -8,7 +8,6 @@ output:
     code_folding: hide
 ---
 
-
 # **Motivation**
 According to the [New York State Department of Health](https://www.health.ny.gov/press/releases/2023/2023-06-20_obesity.htm), approximately two-thirds of adult New Yorkers have a Body Mass Index (BMI) classified as either obese (29.1%) or overweight (34.5%), impacting over 8.4 million adults across New York State. Additionally, the [NYC Mayor's Office of Climate and Environmental Justice](https://climate.cityofnewyork.us/initiatives/nyc-greenhouse-gas-inventories/?utm_source=chatgpt.com) reports that transportation accounts for approximately 30% of the city's greenhouse gas emissions. By examining the impact of active design on physical activity and transportation, this project aims to provide insights that can inform policies to improve public health and reduce environmental impact in New York City.
 
@@ -30,7 +29,7 @@ The purposes of this project is to answer the following questions:
 Due to the limitations of the variables and information within the dataset, the data cleaning process was conducted independently for each analysis part.
 
 ## Part 1. Major Datasets
-Firstly, we processed both `neighborhood- and borough-level` commuting data, focusing on four commuting methods: bicycle, car/truck/van, public transportation, and walking. These methods are represented in terms of both absolute numbers and percentages. We clean the dataset by removing unnecessary columns, renaming variables for clarity (e.g., `geography` renamed to `neighborhood` and `borough` accordingly based on analysis needs), and converting numeric data from character format to ensure proper analysis.
+Firstly, we processed both `neighborhood- and borough-level` commuting data, focusing on four commuting methods: bicycle, car/truck/van, public transportation, and walking. These methods are represented in terms of both absolute numbers and percentages. We cleaned the dataset by removing unnecessary columns, renaming variables for clarity (e.g., `geography` renamed to `neighborhood` and `borough` accordingly based on analysis needs), and converting numeric data from character format to ensure proper analysis.
 
 Next, we pivot the data into a long format, enabling a flexible structure for analysis and visualization by method and borough. The dataset is sorted by `geo_id` for a consistent ordering of boroughs. This preparation provides a clean and organized dataset that supports further exploratory analysis of commuting patterns and their relationships to sidewalk and obesity factors.
 
@@ -805,7 +804,6 @@ sw_obs_data_plot =
 
 sw_obs_data_plot
 
-
 # Create the coefficient results table for multiple regression
 multr_coefficient_results = data.frame(
   Effect = c("Intercept", "Sidewalk Area Slope", "Walking Commuters Slope"),
@@ -884,10 +882,7 @@ However, the analyses also revealed unexplained variance, suggesting that other 
 
 
 ## **Interaction Analysis**
-
-An interaction model was constructed to determine if the relationship between sidewalk area percentage and obesity rates depended on walking commuter rates. The results showed no significant interaction effect (p = 0.932), indicating that the effects of sidewalk area and walking commuter rates on obesity operate independently. Neither sidewalk area (p = 0.556) nor walking commuter rates (p = 0.317) had significant direct effects on obesity rates in this model.
-
-#### Next, we are curious whether there are **interaction effects** between sidewalk area percentage and walking commuter rates on obesity rates. To test this, an interaction model was built to explore whether the effect of sidewalk area percentage on obesity depends on walking commuter rates.
+Next, we are curious whether there are **interaction effects** between sidewalk area percentage and walking commuter rates on obesity rates. To test this, an interaction model was built to explore whether the effect of sidewalk area percentage on obesity depends on walking commuter rates.
 
 $$Y_{Obesity Percentage} = \beta_0 + \beta_1X_{SidewalkArea} + \beta_2X_{WalkingPercent} + \beta_3(X_{SidewalkArea} \times X_{WalkingPercent}) + \epsilon$$
 
@@ -919,8 +914,7 @@ knitr::kable(
 
 ```
 
-The results indicate that the interaction term (percent_of_land_area:walked_percent) is not statistically significant (p = 0.932), suggesting that the relationship between sidewalk area percentage and obesity rates does not depend on walking commuter rates. This implies that sidewalk area percentage and walking commuter rates **operate independently** in influencing obesity outcomes.
-
+The results indicate that the interaction term (percent_of_land_area:walked_percent) is not statistically significant (p = 0.932), suggesting that the relationship between sidewalk area percentage and obesity rates does not depend on walking commuter rates. Neither sidewalk area (p = 0.556) nor walking commuter rates (p = 0.317) had significant direct effects on obesity rates in this model. This implies that sidewalk area percentage and walking commuter rates **operate independently** in influencing obesity outcomes.
 
 **Visualizing Interaction Effects**
 To better understand the potential interaction, we created a plot that categorizes walking commuter rates into four levels: Low, Moderate, High, and Very High. Each category is represented by a distinct color, with regression lines and shaded confidence intervals illustrating the relationship between sidewalk area percentage and obesity rates for each category.
@@ -960,12 +954,8 @@ The plot illustrates the interaction between sidewalk area percentage and obesit
 
 Together, the plot and the interaction analysis table confirm that there is no significant interaction between sidewalk area percentage and walking commuter rates on obesity rates. While walking commuter rates and sidewalk area percentage may independently contribute to obesity outcomes, their combined effect does not exhibit meaningful synergy. Future research could investigate other potential mediators or moderators, such as socioeconomic status or access to recreational infrastructure, to better understand the determinants of obesity in urban settings.
 
-<hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
 
-
-### **Causal Mediation Analysis**
-
-Mediation analysis demonstrated that walking commuter rates significantly mediated the relationship between sidewalk area percentage and obesity rates.
+## **Causal Mediation Analysis**
 
 **Testing for Mediation: Walking Commuter Rates as a Mediator**
 
@@ -1014,6 +1004,7 @@ knitr::kable(
 )
 ```
 
+
 Visualizing Mediation Effects
 ```{r, message = FALSE, warning = FALSE}
 effects_data <- data.frame(
@@ -1049,6 +1040,16 @@ These findings highlight the potential of urban planning strategies, such as inc
 
 
 ## **Clustering Analysis**
+
+We now explore how neighborhoods can be grouped based on three key variables: **sidewalk area percentage**, **walking commuter percentage**, and **obesity rates**. By identifying clusters of neighborhoods with similar characteristics, we aim to uncover distinct patterns that can inform public health interventions and urban planning strategies.
+
+The goals are to:
+
+1. Highlight variations in walkability, active commuting, and obesity rates across neighborhoods. 
+
+2. Identify actionable insights to promote healthier lifestyles through improved urban design.
+
+Using k-means clustering and interactive visualizations, this analysis provides a deeper understanding of neighborhood-level diversity and its implications for targeted interventions and resource allocation.
 
 ### Interactive Visualization
 
