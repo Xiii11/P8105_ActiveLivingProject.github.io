@@ -526,12 +526,14 @@ The clusters provide actionable insights into neighborhood characteristics. For 
 This analysis demonstrates the influence of urban design on public health, specifically through the relationships between sidewalk infrastructure, walking commuter rates, and obesity.
 
 Key insights include:
+
 1. Sidewalk coverage significantly increases walking commuter rates, as shown through regression analysis.  
 2. Walking commuter rates are a strong predictor of reduced obesity levels.  
 3. Mediation analysis highlights walking behavior as a key pathway linking sidewalk infrastructure to lower obesity rates.  
 4. Neighborhood clustering reveals variations in walkability and health outcomes, providing actionable insights for targeted improvements.
 
-### **Policy Implications**
+**Policy Implications**
+
 Enhancing pedestrian-friendly infrastructure is critical to promoting active lifestyles and addressing public health challenges like obesity. Future work should integrate socioeconomic and environmental factors to support equitable urban planning.
 
 

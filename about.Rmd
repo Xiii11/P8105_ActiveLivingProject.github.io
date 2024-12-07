@@ -9,7 +9,7 @@ output:
 ----------------
 
 ## **Anni Wang**
-MPH-Epidemiology-Applied Biostatistics and Public HealthData Science Track
+MPH-Epidemiology-Applied Biostatistics and Public Health Data Science Track
 
 Columbia University Mailman School of Public Health
 
@@ -18,11 +18,11 @@ Fun fact: Anni decided to become a registered yoga teacher because of lululemon 
 Learn more about [Anni](https://aw2468.github.io/)
 
 ## **Qi Cai**
-MPH-Epidemiology-Applied Biostatistics and Public HealthData Science Track
+MPH-Epidemiology-Applied Biostatistics and Public Health Data Science Track
 
 Columbia University Mailman School of Public Health
 
-Fun fact:I’m a purist when it comes to bread—no cheese, butter, or honey for me. Just plain, dry bread.
+Fun fact: I’m a purist when it comes to bread—no cheese, butter, or honey for me. Just plain, dry bread.
 
 Learn more about [Qi](https://cathy237-cq.github.io)
 
@@ -34,9 +34,11 @@ Columbia University Mailman School of Public Health
 Learn more about [Xi](https://xiii11.github.io/)
 
 ## **Yifan Shi**
-MPH-Epidemiology-Health of an Aging Society
+MPH-Epidemiology-Health of an Aging Society Track
 
 Columbia University Mailman School of Public Health
+
+Fun fact: Yifan spends Monday mornings as a part-time horticulturist at the High Line.
 
 Learn more about [Yifan](https://11fan5.github.io/yifan.github.io/)
 
