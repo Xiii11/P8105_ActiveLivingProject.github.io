@@ -440,6 +440,17 @@ These findings highlight the potential of urban planning strategies, such as inc
 
 # **Clustering Analysis**
 
+We now explore how neighborhoods can be grouped based on three key variables: **sidewalk area percentage**, **walking commuter percentage**, and **obesity rates**. By identifying clusters of neighborhoods with similar characteristics, we aim to uncover distinct patterns that can inform public health interventions and urban planning strategies.
+
+The goals are to:
+
+1. Highlight variations in walkability, active commuting, and obesity rates across neighborhoods. 
+
+2. Identify actionable insights to promote healthier lifestyles through improved urban design.
+
+Using k-means clustering and interactive visualizations, this analysis provides a deeper understanding of neighborhood-level diversity and its implications for targeted interventions and resource allocation.
+
+
 #### **Interactive Visualization**
 
 The interactive plot visualizes neighborhoods grouped into clusters based on three variables: **sidewalk area percentage**, **walking commuter percentage**, and **obesity rates**. The x-axis represents the **sidewalk area percentage**, while the y-axis shows the **walking commuter percentage**. Each point corresponds to a neighborhood, color-coded by its assigned cluster.
@@ -508,6 +519,19 @@ interactive_plot
 ##### **Conclusion**
 The clusters provide actionable insights into neighborhood characteristics. For example, neighborhoods in Cluster 1 would benefit most from improved pedestrian infrastructure to encourage walking and reduce obesity rates. Meanwhile, the characteristics of neighborhoods in Cluster 3 demonstrate the positive outcomes of well-designed urban spaces that support active commuting.
 
+<hr style="height: 5px; border: none; background: linear-gradient(to right, lightblue, white);">
 
+# **Overall Conclusion**
+
+This analysis demonstrates the influence of urban design on public health, specifically through the relationships between sidewalk infrastructure, walking commuter rates, and obesity.
+
+Key insights include:
+1. Sidewalk coverage significantly increases walking commuter rates, as shown through regression analysis.  
+2. Walking commuter rates are a strong predictor of reduced obesity levels.  
+3. Mediation analysis highlights walking behavior as a key pathway linking sidewalk infrastructure to lower obesity rates.  
+4. Neighborhood clustering reveals variations in walkability and health outcomes, providing actionable insights for targeted improvements.
+
+### **Policy Implications**
+Enhancing pedestrian-friendly infrastructure is critical to promoting active lifestyles and addressing public health challenges like obesity. Future work should integrate socioeconomic and environmental factors to support equitable urban planning.
 
 
