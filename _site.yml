@@ -17,6 +17,8 @@ navbar:
   right:
     - text: "Final Report"
       href: report.html
+    - text: "Health Indicators"
+      href: http://xiii11.shinyapps.io/p8105_activelivingproject
     - text: "The Team"
       href: about.html
     - icon: fa-envelope fa-lg

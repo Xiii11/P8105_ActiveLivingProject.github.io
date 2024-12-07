@@ -208,7 +208,7 @@ obesity_table |>
 The mean obesity rate across regions is 57.43%, with a standard deviation of 9.47%, indicating moderate variability. The minimum observed obesity rate is 30.1%, while the maximum is 78.7%. This variation suggests disparities between regions, potentially influenced by factors such as urban design, socioeconomic conditions, and access to health resources. Areas with lower rates may benefit from better infrastructure or healthier lifestyles, while regions with higher rates may require targeted interventions to address obesity-related challenges.
 
 
-Our first explanatory variable, sidewalk area, is calculated as the total curb-to-building sidewalk area (in square kilometers) within the UHF neighborhood and borough, divided by the total land area (excluding inland water bodies), and expressed as a percentage.
+Our first explanatory variable, sidewalk area, is calculated as the total curb-to-building sidewalk area (in square kilometers) within the [UHF](https://www.nyc.gov/assets/doh/downloads/pdf/survey/uhf_map_100604.pdf) neighborhood and borough, divided by the total land area (excluding inland water bodies), and expressed as a percentage.
 
 To explore how urban design affects health outcomes, we summarize sidewalk area coverage percentages as follows:
 ```{r, message = FALSE, warning = FALSE}
