@@ -7,7 +7,6 @@ output:
     code_folding: hide
 ---
 
-Load packages and import cleaned dataframes.
 ```{r, message = FALSE}
 library(ggridges)
 library(tidyverse)
