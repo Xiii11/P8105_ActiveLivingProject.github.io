@@ -65,7 +65,7 @@ p1_plotly <- plot_ly(data = commute_long,
                      hoverinfo = 'text',
                      hovertext = ~paste("Borough:", geography, 
                                     "<br>Method:", Method,
-                                    "<br>Percentage:", sprintf("%.1f%%", Count)),
+                                    "<br>Number of Commuter:", Count),
                      marker = list(line = list(color = 'black', width = 1))) |>   
   layout(title = "Commuting Methods by Borough",
          xaxis = list(tickangle = 45),  
@@ -99,7 +99,8 @@ p2_plotly <- plot_ly(data = commute_percent_long,
                      x = ~geography,  
                      y = ~Percent, 
                      type = 'bar', 
-                     color = ~Method, 
+                     color = ~Method,
+                     colors = unname(custom_colors),
                      hoverinfo = 'text',
                      hovertext = ~paste("Borough:", geography, 
                                     "<br>Method:", Method,
@@ -112,9 +113,6 @@ p2_plotly <- plot_ly(data = commute_percent_long,
          showlegend = FALSE) 
 
 ggplotly(p2_plotly, tooltip = "text")
-
-
-
 ```
 
 The presented dataset examines the percentage distribution of commuting modes across New York City's boroughs. The bar chart highlights that public transportation is the most widely used commuting mode in most boroughs, with over 50% of commuters relying on it in areas like Manhattan, Queens, and the Bronx. In contrast, Staten Island deviates from this trend, where cars, trucks, and vans dominate as the primary commuting mode, accounting for the majority of transportation. Walking also contributes notably in Manhattan, reflecting its dense urban environment.

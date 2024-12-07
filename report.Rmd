@@ -292,7 +292,7 @@ Having outlined the essential variables, we delve deeper into exploring the rela
 
 # **EDA**
 
-## *Neighborhood Level*:
+## *Neighborhood Level*
 We first explore the distribution of interested outcome variable, Sidewalk Coverage, then explore the distributions of two exposure variables and their relationship of Sidewalk Coverage.
 
 The analysis begins by examining the distribution of sidewalk coverage percentages across neighborhoods, as shown in the first bar chart. Sidewalk coverage ranges from approximately 2.7% to 11.3%, with the interquartile range (IQR) between 6.2% and 9.5%. The median value sits at 7.65%. These findings highlight the significant variability in sidewalk coverage across neighborhoods, which could have implications for urban mobility, public health, and commuting behaviors. Neighborhoods with higher sidewalk coverage may be better equipped to promote walkability and active modes of transport, while areas with lower coverage might rely more heavily on vehicular commuting.
@@ -447,9 +447,9 @@ These findings suggest that targeted investments in improving sidewalk infrastru
 
 <br>
 
-## *Borough Level*:
+## *Borough Level*
 
-Firstly, we gain an initial understanding of the commuting patterns across New York City's boroughs by analyzing the distribution of various commuting methods.A bar chart provides a clear visual representation of the total amount of transportation modes used in each borough. A percentage distribution bar chart is used to highlight the relative popularity of each mode of transport within the boroughs. 
+From the borough level, we gain an initial understanding of the commuting patterns across New York City's boroughs by analyzing the distribution of various commuting methods.A bar chart provides a clear visual representation of the total amount of transportation modes used in each borough. A percentage distribution bar chart is used to highlight the relative popularity of each mode of transport within the boroughs. 
 
 ```{r, message = FALSE}
 library(tidyverse)
@@ -492,24 +492,28 @@ commute_long =
 The presented dataset examines the distribution of `commuting methods` across different `boroughs`, epresented by the total number of each transportation mode utilized.
 
 ```{r}
+# Define custom colors for each borough
 custom_colors = c("Bronx" = "lightpink", "Brooklyn" = "darkolivegreen", "Manhattan" = "gold", "Queens" = "thistle", "Staten Island" = "#a6cee3")
 
 p1_plotly <- plot_ly(data = commute_long, 
-                     x = ~Method,  
+                     x = ~factor(Method, 
+            levels = c("bicycle", "car_truck_or_van", "public_transportation", "walked"),
+            labels = c("Bicycle", "Car/Truck/Van", "Public Transit", "Walking")),  
                      y = ~Count,  
                      type = 'bar', 
                      color = ~geography, 
                      colors = custom_colors,  
-                     text = ~paste("Borough: ", geography, "<br>Method: ", Method, "<br>Count: ", Count),
-                     hoverinfo = 'text', 
-                     marker = list(line = list(color = 'black', width = 1))) |>  
+                     hoverinfo = 'text',
+                     hovertext = ~paste("Borough:", geography, 
+                                    "<br>Method:", Method,
+                                    "<br>Number of Cummuter:", Count),
+                     marker = list(line = list(color = 'black', width = 1))) |>   
   layout(title = "Commuting Methods by Borough",
-         xaxis = list(title = 'Commuting Method', tickangle = 45),  
+         xaxis = list(tickangle = 45),  
          yaxis = list(title = 'Count of Commuters'), 
          barmode = 'group', 
-         legend = list(title = list(text = "Borough")),
-         margin = list(t = 50, l = 50, r = 50, b = 100) 
-         )  
+         showlegend = FALSE)  
+
 
 ggplotly(p1_plotly, tooltip = "text")
 ```
@@ -534,18 +538,18 @@ p2_plotly <- plot_ly(data = commute_percent_long,
                      x = ~geography,  
                      y = ~Percent, 
                      type = 'bar', 
-                     color = ~Method, 
-                     colors = custom_colors,  
-                     text = ~paste("Borough: ", geography, "<br>Method: ", Method, "<br>Percentage: ", sprintf("%.1f%%", Percent)),
+                     color = ~Method,
+                     colors = unname(custom_colors),
                      hoverinfo = 'text',
-                     marker = list(line = list(color = 'black', width = 1))) |>  
+                     hovertext = ~paste("Borough:", geography, 
+                                    "<br>Method:", Method,
+                                    "<br>Percentage:", sprintf("%.1f%%", Percent)),
+                     marker = list(line = list(color = 'black', width = 1))) |>   
   layout(title = "Percentage Distribution of Commuting Methods by Borough",
          xaxis = list(title = 'Borough', tickangle = 45),
          yaxis = list(title = 'Percentage (%)', ticksuffix = "%"),
          barmode = 'stack',  
-         legend = list(title = list(text = "Borough")),
-         margin = list(t = 50, l = 50, r = 50, b = 100)
-         ) 
+         showlegend = FALSE) 
 
 ggplotly(p2_plotly, tooltip = "text")
 ```
